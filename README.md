@@ -7,3 +7,13 @@
 
 The script setupCombine.pl will clone and compile HiggsAnalysisTools and CombineHarvester. 
 Run ./setupCombine.pl  for an instruction
+
+
+The following settings will be used by default:
+
+    SCRAM_ARCH=slc6_amd64_gcc530	
+    CMSSW_8_1_0	
+
+
+
+Some documentation:  https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit/wiki/gettingstarted#for-end-users-that-dont-need-to-commit-or-do-any-development
