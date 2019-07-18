@@ -62,6 +62,7 @@ if( $ARGV[0] eq "--Combine"){
 
     system(sprintf("echo \"git clone https://github.com/cms-analysis/CombineHarvester.git CombineHarvester\" >> Install_Combine_$time"));
     system(sprintf("echo \"scram b -j 4  \" >> Install_Combine_$time"));
+    system(sprintf("echo \"cp -r ../../../T3M  CombineHarvester \" >> Install_Combine_$time"));
 
 
     printf("\n\nInstructions:");
