@@ -12,5 +12,7 @@ void changehistoname(){
 
   hdata->Write("data_obs",TObject::kWriteDelete);
   hsig->Write("signal",TObject::kWriteDelete);
+  hsig->Write("signal_up",TObject::kWriteDelete);
   hbkg->Write("background",TObject::kWriteDelete);
+  hbkg->Write("background_up",TObject::kWriteDelete);
 }
