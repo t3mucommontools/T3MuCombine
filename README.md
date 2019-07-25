@@ -26,4 +26,12 @@ cd CombineHarvester/T3M
  combineTool.py -M AsymptoticLimits -d workspace.root
 
 
+
+The script writedatacard.py suppose to create data cards automatically by CombineHarvester by running: 
+
+./writedatacard.py -i inputdata/input_histograms.root
+
+However, something is not right, the Harvester is happy with this script and gives a meaninfull print out, but no actual data card is produced (to be fixed)
+
+
 Some documentation:  https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit/wiki/gettingstarted#for-end-users-that-dont-need-to-commit-or-do-any-development
