@@ -48,11 +48,17 @@ if __name__ == "__main__":
         file, '$PROCESS', '$PROCESS_$SYSTEMATIC')
 
 
-
     cb.PrintAll()
 
 
 
-    writer = ch.CardWriter('outcard.txt','input_.root')
+
+    writer = ch.CardWriter('outcard.dat','input_file.root')
+    writer.SetWildcardMasses([])
+    writer.CreateDirectories(False)
+
     writer.WriteCards('LIMITS', cb)
+
+
+
 
