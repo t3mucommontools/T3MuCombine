@@ -42,7 +42,7 @@ createDataCards(int signalsample = 0, Bool_t dobands = false)
   TString fileBkgName("CMS_"+bkgname+"_13TeV");
 
 
-  TString card_name("model_card.rs");
+  TString card_name("models_card.rs");
   HLFactory hlf("HLFactory", card_name, false);
   RooWorkspace* w = hlf.GetWs();
   RooFitResult* fitresults;
