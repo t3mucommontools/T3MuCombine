@@ -8,8 +8,8 @@ using namespace RooStats ;
 static const Int_t NCAT = 6;
 Double_t MMIN = 1.65;
 Double_t MMAX = 1.9;
-double signalScaler=1;
-double analysisLumi = 1.;   // 1/fb
+double signalScaler=1;      // meaningless scale so far
+double analysisLumi = 1.;   // 1/fb  
 
 void AddSigData(RooWorkspace*,  std::vector<string>);
 void AddBkgData(RooWorkspace*,  std::vector<string>);
@@ -20,7 +20,7 @@ void MakeBkgWS(RooWorkspace* w, const char* filename,  std::vector<string>);
 void MakeDataCard(RooWorkspace* w, const char* fileBaseName, const char* fileBkgName,  std::vector<string> cat_names);
 
 
-// void MakePlots(RooWorkspace*, );
+// void MakePlots(RooWorkspace*, );  // to be done later
 
 
 void SetConstantParams(const RooArgSet* params);
@@ -57,7 +57,7 @@ createDataCards(int signalsample = 0, Bool_t dobands = false)
   MakeSigWS(w, fileBaseName, cat_names);
   BkgModelFit(w, cat_names, fitresults);
   MakeBkgWS(w, fileBkgName,cat_names);
-  //AddSigData(w, mass, signalsample,cat_names);
+
 
   MakeDataCard(w, fileBaseName, fileBkgName,   cat_names);
 
@@ -182,15 +182,12 @@ MakeBkgWS(RooWorkspace* w, const char* fileBaseName, std::vector<string> cat_nam
   RooDataSet* data;
   RooExtendPdf* bkg_fitPdf;
 
-
   RooWorkspace *wAll = new RooWorkspace("w_all","w_all");
   data = (RooDataSet*) w->data("Bkg_");
-
 
   wAll->import(*data,Rename("data_obs"));
   wAll->import(*w->pdf("bkg_fit_1par_"));
   wAll->import(*w->data("Bkg_"));
-
 
   TString filename(wsDir+TString(fileBaseName)+".root");
   wAll->writeToFile(filename);
@@ -219,7 +216,6 @@ void MakeDataCard(RooWorkspace* w, const char* fileBaseName, const char* fileBkg
   outFile << "imax 1" << endl;
   outFile << "kmax *" << endl;
   outFile << "---------------" << endl;
- 
   outFile << "shapes data_obs  T3M"  << wsDir+TString(fileBkgName)+".root" << " w_all:data_obs" << endl;
   outFile << "shapes bkg T3M"    << wsDir+TString(fileBkgName)+".root" << " w_all:bkg_fit_1par_" << endl;
   outFile << "shapes signal T3M" << wsDir+TString(fileBaseName)+".root" << " w_all:t3m_sig_shape" << endl;
@@ -227,16 +223,12 @@ void MakeDataCard(RooWorkspace* w, const char* fileBaseName, const char* fileBkg
   outFile << "bin          1  "  << endl;
   outFile <<  "observation   "  <<  data->sumEntries() << endl;
   outFile << "------------------------------" << endl;
-
   outFile << "bin                  T3M  T3M           "<< endl;
   outFile << "process              signal     bkg     " << endl;
   outFile << "process                 0        1      " << endl;
   outFile <<  "rate                      "  << " " << signal->sumEntries()*signalScaler << " " << 1 << endl;
   outFile << "--------------------------------" << endl;
-
-  
   outFile << "lumi_13TeV       lnN  1.027      - " << endl;
-
   outFile.close();
   
   cout << "Write data card in: " << filename << " file" << endl;
