@@ -60,9 +60,9 @@ if __name__ == "__main__":
 #            print histo_prefix+c[0]+s
            
             if s[0] =="Data":
-                histo1 = get_projection(get_histogram(args.input_file+":"+histo_prefix+c[0]+s[0]),c[1][1], -1)
+                histo1 = get_projection(get_histogram(args.input_file+":"+histo_prefix+c[0]+s[0]), c[1][1], -1)
                 histo1.SetName("background"+c[0]+"1")
-                histo2 = get_projection(get_histogram(args.input_file+":"+histo_prefix+c[0]+s[0]),c[1][0], c[1][1])
+                histo2 = get_projection(get_histogram(args.input_file+":"+histo_prefix+c[0]+s[0]), c[1][0], c[1][1])
                 histo2.SetName("background"+c[0]+"2")
 
                 histosBkg.append(histo1)
@@ -100,12 +100,36 @@ if __name__ == "__main__":
 
     for h in histosBkg:
         h.Write()
-#        print h.GetName()
 
-#    for c in categories:
-#        hSig = TH1F("Signal"+c[0]+"1","",histosMC[0].GetNbins()
-    
+#    for h in histosMC:
+#        h.Write()
+#       print h.GetName()
+
+    histoSubCategory1 =[]
+    histoSubCategory2 =[]
+    for c in categories:
+        for h in histosMC:
+            if c[0]+"1" in h.GetName():
+                histoSubCategory1.append(h)
+            if c[0]+"2" in h.GetName():
+                histoSubCategory2.append(h)
+
+                
+
+    print histoSubCategory1
+    print histoSubCategory2
+
+
+
+    histoMCA1 = []
+    histoMCA2 = []
+    histoMCB1 = []
+    histoB2 = []
+    histoA1 = []
+    histoA1 = []
+    histoA1 = []
     SignalA1 = histosMC[0]
+
     SignalA1.SetName("signalA1")
     SignalA1.Add(histosMC[2])
     SignalA1.Add(histosMC[4])
