@@ -18,9 +18,15 @@ The following settings will be used by default:
 
 
 After compilation:
-
+```
 cd CombineHarvester/T3M
-./run.py -i inputfile.root (or ./run.py  with default root file)
+```
+
+```
+./run.py -i inputfile.root 
+```
+
+(or ```./run.py```  with default root file)
 
 
 
