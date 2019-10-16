@@ -148,15 +148,22 @@ MakePlots(RooWorkspace* w,   std::vector<string> cat_names){
   TLatex *text = new TLatex();
   text->SetNDC();
   text->SetTextSize(0.04);
-
+  TCut sidebands = TCut("(m3m < 1.73 && m3m > 1.65) || (m3m < 2.0 && m3m > 1.81)");
+  cout<<" bkg fit "<<endl;
 
   RooPlot* plot[NCAT];
   for(unsigned int category=0; category< NCAT; category++){
     plot[category] = m3m->frame();
     signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kCyan+2),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.75));
     sigpdf[category]->plotOn(plot[category], RooFit::LineColor(kCyan+2),RooFit::LineWidth(2.1));
-    dataAll[category]->plotOn(plot[category],RooFit::MarkerColor(kGray+3),RooFit::MarkerStyle(21),RooFit::MarkerSize(0.75));
-    bkgpdf[category]->plotOn(plot[category],Range("fullRange"),RooFit::LineColor(kGray+3),RooFit::LineWidth(2.1));
+
+    Double_t Nratio(0.);
+    Double_t Nentries(static_cast<Double_t>(dataAll[category]->sumEntries()));
+    Nratio=(static_cast<Double_t>((dataAll[category]->reduce(sidebands)->sumEntries())))/(static_cast<Double_t>(Nentries));
+
+    dataAll[category]->plotOn(plot[category],CutRange("SB1,SB2"),RooFit::MarkerColor(kGray+3),RooFit::MarkerStyle(21),RooFit::MarkerSize(0.75));
+    //dataAll[category]->plotOn(plot[category],RooFit::MarkerColor(kGray+3),RooFit::MarkerStyle(21),RooFit::MarkerSize(0.75));
+    bkgpdf[category]->plotOn(plot[category],Normalization(Nratio, RooAbsReal::Relative), Range("fullRange"),RooFit::LineColor(kGray+3),RooFit::LineWidth(2.1));
     plot[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
     plot[category]->SetMinimum(0.01);
     plot[category]->SetMaximum(1.40*plot[category]->GetMaximum());
@@ -171,7 +178,7 @@ MakePlots(RooWorkspace* w,   std::vector<string> cat_names){
     plot[category]->Draw("SAME");
     TLegend *legmc = new TLegend(0.12,0.70,0.43,0.86);
     
-    legmc->AddEntry(plot[category]->getObject(0),"MC Signal (B=10-e8)","LPE");
+    legmc->AddEntry(plot[category]->getObject(0),"MC Signal (B=10-e7)","LPE");
     legmc->AddEntry(plot[category]->getObject(1),"Signal Model","L");
     legmc->AddEntry(plot[category]->getObject(2),"Data","LPE");
     legmc->AddEntry(plot[category]->getObject(3),"Data Model","L");
@@ -242,7 +249,10 @@ BkgModelFit(RooWorkspace* w,  std::vector<string>, RooFitResult** fitresults, bo
   for(unsigned int category=0; category< NCAT; category++)
     {
       data[category]   = (RooDataSet*) w->data(TString::Format("Bkg_%s",cat_names.at(category).c_str()));
-      bkg_fitTmp_1par[category] = new RooGenericPdf(TString::Format("bkg_fit_1par_%s",cat_names.at(category).c_str()), "exp(@1*@0)", RooArgList(*w->var("m3m"), *w->var(TString::Format("bkg_exp_slope_%s",cat_names.at(category).c_str()))));   // Generig BKG pdf for more careful description
+      bkg_fitTmp_1par[category] = new RooGenericPdf(TString::Format("bkg_fit_1par_%s",cat_names.at(category).c_str()), "exp(@1*@0 + @2)", 
+						    RooArgList(*w->var("m3m"), 
+							       *w->var(TString::Format("bkg_exp_slope_%s",cat_names.at(category).c_str())),
+							       *w->var(TString::Format("bkg_exp_offset_%s",cat_names.at(category).c_str()))));   // Generig BKG pdf for more careful description
       fitresults[category]=bkg_fitTmp_1par[category]->fitTo(*data[category], Strategy(1), Minos(kFALSE), Range("SB1,SB2"),SumW2Error(kTRUE), Save(kTRUE),RooFit::PrintEvalErrors(-1));
       
       w->import(*bkg_fitTmp_1par[category]);
@@ -265,8 +275,8 @@ MakeSigWS(RooWorkspace* w, const char* fileBaseName,  std::vector<string> cat_na
     //  SigPdf[category] = (RooAbsPdf*)  w->pdf("t3m_sig_shape"+TString::Format("_%s",cat_names.at(category).c_str()));
     //  wAll->import(*w->pdf("t3m_sig_CBshape"+TString::Format("_%s",cat_names.at(category).c_str())));
     //  wAll->import(*w->pdf("t3m_sig_GSshape"+TString::Format("_%s",cat_names.at(category).c_str())));
-  wAll->import(*w->pdf("SignalModel"+TString::Format("_%s",cat_names.at(category).c_str())));
-  wAll->import(*w->data(TString::Format("Sig_%s",cat_names.at(category).c_str())));
+    wAll->import(*w->pdf("SignalModel"+TString::Format("_%s",cat_names.at(category).c_str())));
+    wAll->import(*w->data(TString::Format("Sig_%s",cat_names.at(category).c_str())));
 
   //(2) factory of systematics
   //....
@@ -342,16 +352,34 @@ void MakeDataCard(RooWorkspace* w, const char* fileBaseName, const char* fileBkg
     outFile << "---------------" << endl;
     outFile << Form("bin            %s  ", cat_names.at(c).c_str()) << endl;
     outFile << "observation   "  <<  data[c]->sumEntries() << endl;
+    std::cout<<"category  "<< cat_names.at(c).c_str()  << "  Observed:  "<<  data[c]->sumEntries() << endl;
     outFile << "------------------------------" << endl;
 
     outFile << Form("bin               %s        %s     ",cat_names.at(c).c_str(),cat_names.at(c).c_str())<<  endl;
     outFile << "process              signal     bkg     " << endl;
     outFile << "process                0          1      " << endl;
-    outFile << "rate                "  << " " << signal[c]->sumEntries()*signalScaler << "    " << 1 << endl;
+    outFile << "rate                "  << " " << signal[c]->sumEntries()*signalScaler << "    " <<  data[c]->sumEntries()  << endl;
     outFile << "--------------------------------" << endl;
 
    
     outFile << "lumi_13TeV       lnN  1.027      - " << endl;
+    //outFile << "lumi_13TeV       lnN  1.027      - " << endl;
+    outFile << "lumi_13TeV        lnN  1.027     - " << endl;
+    //outFile << "DsNorm_13TeV      lnN  1.033     - " << endl;
+    outFile << "BRDToTau_13TeV    lnN  1.03      - " << endl;
+    outFile << "BRDsPhiPi_13TeV   lnN  1.08      - " << endl;
+    outFile << "BRBtoTau_13TeV    lnN  1.11      - " << endl;    
+    outFile << "BRBtoD_13TeV      lnN  1.16      - " << endl;
+    outFile << "fUnc_13TeV        lnN  1.11      - " << endl;
+    outFile << "DpmScaling_13TeV  lnN  1.03      - " << endl;
+    outFile << "BsScaling_13TeV   lnN  1.12      - " << endl;
+    outFile << "DsNorm_13TeV      lnN  1.05      - " << endl;
+    outFile << "UncTrigger_13TeV  lnN  1.12      - " << endl;
+    outFile << "UncRatioAcc_13TeV lnN  1.01      - " << endl;
+    outFile << "UncMuonEff_13TeV  lnN  1.015     - " << endl;
+    outFile << "MuES_13TeV        lnN  1.007     - " << endl;
+    outFile << "MuRes_13TeV       lnN  1.025     - " << endl;
+
 
     outFile.close();
   
