@@ -105,7 +105,7 @@ SigModelFit(RooWorkspace* w, std::vector<string> cat_names) {
       RooAbsReal* CBFraction = new RooRealVar(TString::Format("cb_fraction_%s",cat_names.at(category).c_str()),"",1,0,100);    
       RooAbsReal* GSFraction = new RooRealVar(TString::Format("gs_fraction_%s",cat_names.at(category).c_str()),"",1,0,100);
 
-      SignalModel[category] = new RooAddPdf(TString::Format("SignalModel_%s",cat_names.at(category).c_str()),"g+a",RooArgList(*pdfSigCB[category],*pdfSigGS[category]),*CBFraction);
+      SignalModel[category] = new RooAddPdf(TString::Format("SignalModel_%s",cat_names.at(category).c_str()),"g+c",RooArgList(*pdfSigCB[category],*pdfSigGS[category]),*CBFraction);
       SignalModel[category]->fitTo(*sigToFit[category],Range(minMassFit,maxMassFit));
       
 
