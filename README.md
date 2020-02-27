@@ -19,11 +19,11 @@ The following settings will be used by default:
 
 After compilation:
 ```
-cd CombineHarvester/T3M
+cd CombineHarvester/T3MLimit
 ```
 
 ```
-./run.py -i inputfile.root 
+./makeTheCard.py --help for an instruction 
 ```
 
 (or ```./run.py```  with default root file)
