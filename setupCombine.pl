@@ -62,10 +62,17 @@ if( $ARGV[0] eq "--Combine"){
 
     system(sprintf("echo \"git clone https://github.com/cms-analysis/CombineHarvester.git CombineHarvester\" >> Install_Combine_$time"));
     system(sprintf("echo \"scram b -j 4  \" >> Install_Combine_$time"));
-    system(sprintf("echo \"cp -r ../../../T3M  CombineHarvester \" >> Install_Combine_$time"));
+
     system(sprintf("echo \"cp -r ../../../T3M_INFN  CombineHarvester \" >> Install_Combine_$time"));
+
+    system(sprintf("echo \"cp -r ../../../T3M  CombineHarvester \" >> Install_Combine_$time"));
     system(sprintf("echo \"mkdir  CombineHarvester/T3M/workspaces \" >> Install_Combine_$time"));
     system(sprintf("echo \"mkdir  CombineHarvester/T3M/plots \" >> Install_Combine_$time"));
+
+    system(sprintf("echo \"cp -r ../../../T3MLimits  CombineHarvester \" >> Install_Combine_$time"));
+    system(sprintf("echo \"mkdir  CombineHarvester/T3MLimits/workspaces \" >> Install_Combine_$time"));
+    system(sprintf("echo \"mkdir  CombineHarvester/T3MLimits/plots \" >> Install_Combine_$time"));
+    system(sprintf("echo \"mkdir  CombineHarvester/T3MLimits/datacards \" >> Install_Combine_$time"));
 
 
     printf("\n\nInstructions:");
