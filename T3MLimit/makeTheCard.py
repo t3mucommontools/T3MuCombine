@@ -64,6 +64,7 @@ category     = ROOT.RooRealVar('category'           , 'category'            ,  0
 dataMCType   = ROOT.RooRealVar('dataMCType'         , 'dataMCType'          ,  0,  100)
 scale        = ROOT.RooRealVar('scale'              , 'scale'               ,  args.signalnorm)
 
+
 m3m.setRange('left' , fit_range_lo    , signal_range_lo)
 m3m.setRange('right', signal_range_hi , fit_range_hi)
 m3m.setRange('full' , fit_range_lo    , fit_range_hi)
@@ -83,8 +84,21 @@ expomodel = ROOT.RooAddPdf('bkg_extended_expo', 'bkg_extended_expo', ROOT.RooArg
 
 
 mean  = ROOT.RooRealVar('mean' , 'mean' ,   1.78, 1.6, 1.9)
-width = ROOT.RooRealVar('width', 'width',   0.02,   0, 0.1)
+width = ROOT.RooRealVar('width', 'width',   0.02, 0.0, 0.1)
 gaus  = ROOT.RooGaussian('sig_gaus', 'sig_gaus', m3m, mean, width)
+
+
+cbwidth = ROOT.RooRealVar('cbwidth','cbwidth', 0.02, 0.0, 0.1)
+cbalpha = ROOT.RooRealVar('cbalpha','cbalpha', 1.00, -20, 20 )
+cbn     = ROOT.RooRealVar('cbn'    ,'cbn'    , 2,    0  , 5  )
+cb      = ROOT.RooCBShape('cb'     ,'cb'     , m3m, mean, cbwidth, cbalpha, cbn)
+
+
+cb_fraction    = ROOT.RooRealVar('cb_fraction' , 'cbfraction' ,   0.2, 0, 1)
+gs_fraction    = ROOT.RooRealVar('gs_fraction' , 'gs_fraction',   0.2, 0, 1)
+combined_model = ROOT.RooAddPdf("combined_model", "g+a", ROOT.RooArgList(gaus,cb), ROOT.RooArgList(gs_fraction,cb_fraction))
+
+
 
 
 variables = ROOT.RooArgSet()
@@ -114,16 +128,25 @@ fullmc.plotOn(frame,
 )
 
 
+results_cb   = cb.fitTo(fullmc, ROOT.RooFit.Range(signal_range_lo, signal_range_hi), ROOT.RooFit.Save())
+results_cb.Print()
 results_gaus = gaus.fitTo(fullmc, ROOT.RooFit.Range(signal_range_lo, signal_range_hi), ROOT.RooFit.Save())
+results_gaus.Print()
+
+results_combined_pdf = combined_model.fitTo(fullmc, ROOT.RooFit.Range(signal_range_lo, signal_range_hi), ROOT.RooFit.Save())
+results_combined_pdf.Print()
+
+
 #results_gaus = gaus.fitTo(fullmc, ROOT.RooFit.Save(), ROOT.RooFit.SumW2Error(True))
 #results_gaus = gaus.chi2FitTo(fullmc, ROOT.RooFit.Save())
-gaus.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kCyan +2 ))
-#frame.Draw()
-#ROOT.gPad.SaveAs('mass_fit%s_%dbins.pdf'%(args.category, nbins))
+gaus.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kRed +2 ))
+cb.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kYellow +2 ))
+combined_model.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kCyan +2 ))
+frame.Draw()
+ROOT.gPad.SaveAs('plots/mass_fit%s_%dbins.png'%(args.category, nbins))
 
 
 DataSelector      = ROOT.RooFormulaVar('DataSelector', 'DataSelector', selection + ' & dataMCType == 1', ROOT.RooArgList(variables))
-
 BlindDataSelector = ROOT.RooFormulaVar('DataSelector', 'DataSelector', selection + ' & dataMCType == 1 &  abs(m3m  - 1.776) > %s' %( (signal_range_hi -signal_range_lo)/2) , ROOT.RooArgList(variables))
 #BlindDataSelector = ROOT.RooFormulaVar('DataSelector', 'DataSelector', selection + ' & dataMCType == 1' + ' &  m3m > %f & m3m < %f' %(signal_range_hi, signal_range_lo)  , ROOT.RooArgList(variables))
 
@@ -187,25 +210,32 @@ data =  ROOT.RooDataSet(
 
 # create workspace
 print 'creating workspace'
-w = ROOT.RooWorkspace('t3m_shapes')
+workspace = ROOT.RooWorkspace('t3m_shapes')
 
 
-w.factory('m3m[%f, %f]' % (fit_range_lo, fit_range_hi))
-w.factory("Exponential::bkg(m3m, a0%s[%f,%f,%f])" %(args.category, slope.getVal(), slope.getError(), slope.getError()) )  
+workspace.factory('m3m[%f, %f]' % (fit_range_lo, fit_range_hi))
+workspace.factory("Exponential::bkg(m3m, a0%s[%f,%f,%f])" %(args.category, slope.getVal(), slope.getError(), slope.getError()) )  
 
 
-w.factory('mean[%f]'  % mean .getVal())
-w.factory('sigma[%f]' % width.getVal())
-w.factory('RooGaussian::sig(m3m, mean, sigma)')
+workspace.factory('mean[%f]'  % mean .getVal())
+workspace.factory('sigma[%f]' % width.getVal())
+workspace.factory('RooGaussian::sig(m3m, mean, sigma)')
 
-it = w.allVars().createIterator()
-all_vars = [it.Next() for _ in range( w.allVars().getSize())]
+workspace.factory('cbsigma[%f]' % cbwidth.getVal())
+workspace.factory('cbalpha[%f]' % cbalpha.getVal())
+workspace.factory('cbn[%f]' % cbn.getVal())
+workspace.factory('RooCBShape::cbsig(m3m, mean, cbsigma, cbalpha, cbn)')
+
+
+
+it = workspace.allVars().createIterator()
+all_vars = [it.Next() for _ in range( workspace.allVars().getSize())]
 for var in all_vars:
     if var.GetName() in ['mean', 'sigma']:
         var.setConstant()
 
-getattr(w,'import')(data)
-w.Write()
+getattr(workspace,'import')(data)
+workspace.Write()
 output.Close()
 
 
@@ -230,7 +260,7 @@ observation       {obs:d}
 bin                                     category{cat}       category{cat}
 process                                 signal              background
 process                                 0                   1
-rate                                    {signal:.4f}        {bkg:.4f}
+rate                                   {signal:.4f}        {bkg:.4f}
 --------------------------------------------------------------------------------
 lumi              lnN                       1.025               -   
 BRDToTau_13TeV    lnN                       1.03                -
