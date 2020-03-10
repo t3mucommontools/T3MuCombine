@@ -11,7 +11,7 @@ import math
 import argparse
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--selection'      ,  help="Introduce your selection; [Default: %(default)s] "               , dest='selection'         , default='  bdt > 0.2')
+parser.add_argument('--selection'      ,  help="Introduce your selection; [Default: %(default)s] "               , dest='selection'         , default='  bdt > 0.1')
 parser.add_argument('--signalnorm'     ,  help="Signal Normalization; [Default: %(default)s] "                   , dest='signalnorm'        , type = float, default=0.001)
 parser.add_argument('--category'       ,  help="Category; [Default: %(default)s] "                               , dest='category'          , default='A')
 parser.add_argument('--datafile'       ,  help="Input Mini Tree; [Default: %(default)s] "                        , dest='datafile'          , default='T3MMiniTree.root')
@@ -54,7 +54,7 @@ tree = MiniTreeFile.Get('T3MMiniTree')
 
 
 mass_histo_mc = ROOT.TH1F('mass_histo_mc', 'mass_histo_mc', nbins, 1.6, 2.)
-#tree.Draw('m3m>>mass_histo_mc', '(' + selection + '& dataMCType !=1 ' + ') * event_weight * %f' %args.signalnorm)
+tree.Draw('m3m>>mass_histo_mc', '(' + selection + '& dataMCType !=1 ' + ') * event_weight * %f' %args.signalnorm)
 
 
 m3m          = ROOT.RooRealVar('m3m'                , '3#mu mass'           , fit_range_lo, fit_range_hi, 'GeV')
