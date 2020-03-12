@@ -64,20 +64,19 @@ if( $ARGV[0] eq "--Combine"){
     system(sprintf("echo \"scram b -j 4  \" >> Install_Combine_$time"));
 
     system(sprintf("echo \"cp -r ../../../T3M_INFN  CombineHarvester \" >> Install_Combine_$time"));
-
     system(sprintf("echo \"cp -r ../../../T3M  CombineHarvester \" >> Install_Combine_$time"));
+    system(sprintf("echo \"cp -r ../../../T3MLimit  CombineHarvester \" >> Install_Combine_$time"));
     system(sprintf("echo \"mkdir  CombineHarvester/T3M/workspaces \" >> Install_Combine_$time"));
     system(sprintf("echo \"mkdir  CombineHarvester/T3M/plots \" >> Install_Combine_$time"));
-
-    system(sprintf("echo \"cp -r ../../../T3MLimits  CombineHarvester \" >> Install_Combine_$time"));
-    system(sprintf("echo \"mkdir  CombineHarvester/T3MLimits/workspaces \" >> Install_Combine_$time"));
-    system(sprintf("echo \"mkdir  CombineHarvester/T3MLimits/plots \" >> Install_Combine_$time"));
-    system(sprintf("echo \"mkdir  CombineHarvester/T3MLimits/datacards \" >> Install_Combine_$time"));
+    system(sprintf("echo \"mkdir  CombineHarvester/T3MLimit/workspaces \" >> Install_Combine_$time"));
+    system(sprintf("echo \"mkdir  CombineHarvester/T3MLimit/plots \" >> Install_Combine_$time"));
+    system(sprintf("echo \"mkdir  CombineHarvester/T3MLimit/datacards \" >> Install_Combine_$time"));
 
 
     printf("\n\nInstructions:");
     printf("\nTo complete the installation do the following command (compilation might take some time ...):");
     printf("\nsource  Install_Combine_$time");
+
 }
 
 
