@@ -59,11 +59,12 @@ tree.Draw('m3m>>mass_histo_mc', '(' + selection + '& dataMCType !=1 ' + ') * eve
 
 m3m          = ROOT.RooRealVar('m3m'                , '3#mu mass'           , fit_range_lo, fit_range_hi, 'GeV')
 bdt          = ROOT.RooRealVar('bdt'                , 'bdt'                 , -1 , 1)
-event_weight = ROOT.RooRealVar('event_weight'       , 'event_weight'        ,  0,  5)
+event_weight = ROOT.RooRealVar('event_weight'       , 'event_weight'        ,  0,  5)  # this weight includes also the scale  mc signal scale
 category     = ROOT.RooRealVar('category'           , 'category'            ,  0,  5)
 dataMCType   = ROOT.RooRealVar('dataMCType'         , 'dataMCType'          ,  0,  100)
-scale        = ROOT.RooRealVar('scale'              , 'scale'               ,  args.signalnorm)
+scale        = ROOT.RooRealVar('scale'              , 'scale'               ,  args.signalnorm)  # reserved but not used
 
+print dataMCType.getVal()
 
 m3m.setRange('left' , fit_range_lo    , signal_range_lo)
 m3m.setRange('right', signal_range_hi , fit_range_hi)
@@ -110,9 +111,9 @@ variables.add(dataMCType)
 variables.add(scale)
 
 
-
 MCSelector = ROOT.RooFormulaVar('DataSelector', 'DataSelector', selection + ' & dataMCType !=1 ', ROOT.RooArgList(variables))
-fullmc = ROOT.RooDataSet('mc', 'mc', tree, variables, MCSelector, 'scale')
+fullmc = ROOT.RooDataSet('mc', 'mc', tree, variables, MCSelector,'event_weight')
+
 
 frame = m3m.frame()
 frame.SetTitle('')
@@ -139,8 +140,9 @@ results_combined_pdf.Print()
 
 #results_gaus = gaus.fitTo(fullmc, ROOT.RooFit.Save(), ROOT.RooFit.SumW2Error(True))
 #results_gaus = gaus.chi2FitTo(fullmc, ROOT.RooFit.Save())
-gaus.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kRed +2 ))
-cb.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kYellow +2 ))
+
+#gaus.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kRed +2 ))
+#cb.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kYellow +2 ))
 combined_model.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kCyan +2 ))
 frame.Draw()
 ROOT.gPad.SaveAs('plots/mass_fit%s_%dbins.png'%(args.category, nbins))
@@ -148,7 +150,6 @@ ROOT.gPad.SaveAs('plots/mass_fit%s_%dbins.png'%(args.category, nbins))
 
 DataSelector      = ROOT.RooFormulaVar('DataSelector', 'DataSelector', selection + ' & dataMCType == 1', ROOT.RooArgList(variables))
 BlindDataSelector = ROOT.RooFormulaVar('DataSelector', 'DataSelector', selection + ' & dataMCType == 1 &  abs(m3m  - 1.776) > %s' %( (signal_range_hi -signal_range_lo)/2) , ROOT.RooArgList(variables))
-#BlindDataSelector = ROOT.RooFormulaVar('DataSelector', 'DataSelector', selection + ' & dataMCType == 1' + ' &  m3m > %f & m3m < %f' %(signal_range_hi, signal_range_lo)  , ROOT.RooArgList(variables))
 
 
 
@@ -189,7 +190,7 @@ frame.Draw()
 legend = ROOT.TLegend(0.12,0.70,0.43,0.86)
 legend.AddEntry(frame.getObject(1),"Signal model gauss","L")
 legend.AddEntry(frame.getObject(4),"data model exp","L")
-legend.Draw()
+#legend.Draw()
 
 
 ROOT.gPad.SaveAs('plots/taumass_%s_%dbins.png'%(args.category, nbins))
