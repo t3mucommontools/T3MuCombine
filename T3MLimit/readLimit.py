@@ -66,7 +66,7 @@ def plotUpperLimits(labels,values,prefix):
         median.SetPoint(    i,    values[i], limit[2]) #    median
         green.SetPoint(  2*N-1-i, values[i], limit[1]) # - 1 sigma
         yellow.SetPoint( 2*N-1-i, values[i], limit[0]) # - 2 sigma
-        text_limits.write("bdt %s     median exp %s \n"%(values[i],limit[2]))
+        text_limits.write("bdt %.2f     median exp %.2f\n"%(values[i],limit[2]))
 
     W = 800
     H  = 600
