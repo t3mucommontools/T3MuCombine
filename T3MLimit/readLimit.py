@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import ROOT
-from ROOT import TFile, TTree, TCanvas, TGraph, TMultiGraph, TGraphErrors, TLegend
+from ROOT import TFile, TTree, TCanvas, TGraph, TMultiGraph, TGraphErrors, TLegend, TPaveLabel, TPaveText, TLatex
 import CMS_lumi, tdrstyle
 import subprocess # to execute shell command
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
@@ -54,6 +54,7 @@ def plotUpperLimits(labels,values,prefix):
  
     up2s = [ ]
     upm  = [ ]
+    text_limits=open("TextLimits%s"%(prefix)+".txt","w")
     for i in range(N):
         file_name = "higgsCombine"+labels[i]+".AsymptoticLimits.mH120.root"
         print "filename:  ", file_name
@@ -65,9 +66,8 @@ def plotUpperLimits(labels,values,prefix):
         median.SetPoint(    i,    values[i], limit[2]) #    median
         green.SetPoint(  2*N-1-i, values[i], limit[1]) # - 1 sigma
         yellow.SetPoint( 2*N-1-i, values[i], limit[0]) # - 2 sigma
+        text_limits.write("bdt %s     median exp %s \n"%(values[i],limit[2]))
 
-
-        print "val: ", i, values[i], limit[2]
     W = 800
     H  = 600
     T = 0.08*H
@@ -83,12 +83,14 @@ def plotUpperLimits(labels,values,prefix):
     c.SetRightMargin( R/W )
     c.SetTopMargin( T/H )
     c.SetBottomMargin( B/H )
-    c.SetTickx(0)
-    c.SetTicky(0)
     c.SetGrid()
+    c.SetFrameLineWidth(3);
+    c.SetTickx();
+    c.SetTicky();
     c.cd()
     frame = c.DrawFrame(1.4,0.001, 4.1, 10)
     frame.GetYaxis().CenterTitle()
+
     frame.GetYaxis().SetTitleSize(0.05)
     frame.GetXaxis().SetTitleSize(0.05)
     frame.GetXaxis().SetLabelSize(0.04)
@@ -98,9 +100,15 @@ def plotUpperLimits(labels,values,prefix):
     frame.GetYaxis().CenterTitle(False)
     frame.GetYaxis().SetTitle("B(#tau #rightarrow #mu#mu#mu) #times 10^{-7}")
     frame.GetXaxis().SetTitle("bdt")
+
+
+
+
     frame.SetMinimum(min(upm)*0.6)
     frame.SetMaximum(max(upm)*1.2)
     frame.GetXaxis().SetLimits(min(values),max(values)*1.2)
+
+
  
     yellow.SetFillColor(ROOT.kOrange)
     yellow.SetLineColor(ROOT.kOrange)
@@ -110,7 +118,7 @@ def plotUpperLimits(labels,values,prefix):
     green.SetFillColor(ROOT.kGreen+1)
     green.SetLineColor(ROOT.kGreen+1)
     green.SetFillStyle(1001)
- #   green.Draw('Fsame')
+#    green.Draw('Fsame')
  
     median.SetLineColor(1)
     median.SetLineWidth(2)
@@ -134,8 +142,17 @@ def plotUpperLimits(labels,values,prefix):
     legend.AddEntry(median, "Asymptotic CL_{s} expected",'L')
 #    legend.AddEntry(green, "#pm 1 std. deviation",'f')
 #    legend.AddEntry(yellow,"#pm 2 std. deviation",'f')
+
+
     legend.Draw()
- 
+    latex = TLatex()
+    latex.SetNDC()
+    latex.SetTextAngle(0)
+    latex.SetTextFont(42)
+    latex.SetTextAlign(31)
+
+    latex.DrawLatex(0.57, 0.85,prefix)
+    latex.Draw('same') 
     print " "
     c.SaveAs("Limit"+prefix+".png")
     c.Close()
@@ -154,9 +171,13 @@ def main():
  
     labels = [ ]
     values = [ ]
-    cuts = [-0.2, -0.15, -0.05, -0.04, -0.03, -0.02, -0.01, 0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.15, 0.16, 0.17, 0.18, 0.19,  0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28]
-#    cuts =[    0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.01, 0.15, 0.16, 0.17, 0.18, 0.19,  0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28]
-    prefix = 'CMS_T3MSignal_13TeV_B'
+    cuts = [-0.2, -0.15]
+
+  #  cuts = [-0.2, -0.15, -0.05, -0.04,-0.03, -0.02, -0.01, 0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.14,  0.15, 0.16, 0.17, 0.18, 0.19,  0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27 ,0.28]
+
+
+
+    prefix = 'CMS_T3MSignal_13TeV_C'
     for cl in cuts:
         values.append(cl)
         label = "%s" % (cl)

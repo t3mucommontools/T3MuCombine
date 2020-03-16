@@ -1,5 +1,6 @@
 #! /bin/env python
 
+
 import ROOT
 import os
 from math import pi, sqrt
@@ -54,7 +55,8 @@ tree = MiniTreeFile.Get('T3MMiniTree')
 
 
 mass_histo_mc = ROOT.TH1F('mass_histo_mc', 'mass_histo_mc', nbins, 1.6, 2.)
-tree.Draw('m3m>>mass_histo_mc', '(' + selection + '& dataMCType !=1 ' + ') * event_weight * %f' %args.signalnorm)
+#tree.Draw('m3m>>mass_histo_mc', '(' + selection + '& dataMCType !=1 ' + ') * event_weight * %f' %args.signalnorm)
+tree.Draw('m3m>>mass_histo_mc', '(' + selection + '& dataMCType !=1 ' + ') * event_weight')
 
 
 m3m          = ROOT.RooRealVar('m3m'                , '3#mu mass'           , fit_range_lo, fit_range_hi, 'GeV')
@@ -144,6 +146,9 @@ results_combined_pdf.Print()
 #gaus.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kRed +2 ))
 #cb.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kYellow +2 ))
 combined_model.plotOn(frame, ROOT.RooFit.LineColor(ROOT.kCyan +2 ))
+
+
+
 frame.Draw()
 ROOT.gPad.SaveAs('plots/mass_fit%s_%dbins.png'%(args.category, nbins))
 
@@ -178,6 +183,10 @@ else:
 expomodel.plotOn(frame, 
                  ROOT.RooFit.LineColor(ROOT.kBlack))
 
+
+
+
+
 ctmp_canvas = ROOT.TCanvas('Category %s' %args.category,"Categories",0,0,700,500);
 ctmp_canvas.SetFrameLineWidth(3);
 ctmp_canvas.SetTickx();
@@ -191,6 +200,14 @@ legend = ROOT.TLegend(0.12,0.70,0.43,0.86)
 legend.AddEntry(frame.getObject(1),"Signal model gauss","L")
 legend.AddEntry(frame.getObject(4),"data model exp","L")
 #legend.Draw()
+
+
+latex = ROOT.TLatex()
+latex.SetNDC()
+latex.SetTextAngle(0)
+latex.SetTextFont(42)
+latex.SetTextAlign(31)
+latex.DrawLatex(0.57, 0.85, 'mass_fit%s_%dbins'%(args.category, nbins))
 
 
 ROOT.gPad.SaveAs('plots/taumass_%s_%dbins.png'%(args.category, nbins))
