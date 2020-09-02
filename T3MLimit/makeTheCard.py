@@ -54,8 +54,10 @@ tree = MiniTreeFile.Get('T3MMiniTree')
 
 
 mass_histo_mc = ROOT.TH1F('mass_histo_mc', 'mass_histo_mc', nbins, 1.6, 2.)
-#tree.Draw('m3m>>mass_histo_mc', '(' + selection + '& dataMCType !=1 ' + ') * event_weight * %f' %args.signalnorm)
-tree.Draw('m3m>>mass_histo_mc', '(' + selection + '& dataMCType !=1 ' + ') * event_weight')
+#tree.Draw('m3m>>mass_histo_mc', '(' + selection + '& dataMCtype !=1 ' + ') * event_weight * %f' %args.signalnorm)
+tree.Draw('m3m>>mass_histo_mc', '(' + selection + '& dataMCtype !=1 ' + ') * event_weight')
+#print "INTEGRAL ",mass_histo_mc.Integral()
+
 
 
 m3m          = ROOT.RooRealVar('m3m'                , '3#mu mass'           , fit_range_lo, fit_range_hi, 'GeV')
@@ -64,10 +66,10 @@ m12          = ROOT.RooRealVar('m12'                , 'm12'                 ,  0
 m13          = ROOT.RooRealVar('m13'                , 'm13'                 ,  0 , 2)
 event_weight = ROOT.RooRealVar('event_weight'       , 'event_weight'        ,  0,  5)  # this weight includes also the scale  mc signal scale
 category     = ROOT.RooRealVar('category'           , 'category'            ,  0,  5)
-dataMCType   = ROOT.RooRealVar('dataMCType'         , 'dataMCType'          ,  0,  100)
+dataMCtype   = ROOT.RooRealVar('dataMCtype'         , 'dataMCtype'          ,  0,  100)
 scale        = ROOT.RooRealVar('scale'              , 'scale'               ,  args.signalnorm)  # reserved but not used
 
-print dataMCType.getVal()
+print dataMCtype.getVal()
 
 m3m.setRange('left' , fit_range_lo    , signal_range_lo)
 m3m.setRange('right', signal_range_hi , fit_range_hi)
@@ -112,11 +114,11 @@ variables.add(m12)
 variables.add(m13)
 variables.add(event_weight)
 variables.add(category)
-variables.add(dataMCType)
+variables.add(dataMCtype)
 variables.add(scale)
 
 
-MCSelector = ROOT.RooFormulaVar('MCSelector', 'MCSelector', selection + ' & dataMCType !=1 ', ROOT.RooArgList(variables))
+MCSelector = ROOT.RooFormulaVar('MCSelector', 'MCSelector', selection + ' & dataMCtype !=1 ', ROOT.RooArgList(variables))
 fullmc = ROOT.RooDataSet('mc', 'mc', tree, variables, MCSelector,'event_weight')
 
 
@@ -133,7 +135,7 @@ fullmc.plotOn(frame,
               ROOT.RooFit.FillColor(ROOT.kCyan  + 2),
 )
 
-
+#print " ", fullmc.sumEntries()
 results_cb   = cb.fitTo(fullmc, ROOT.RooFit.Range(signal_range_lo, signal_range_hi), ROOT.RooFit.Save())
 results_cb.Print()
 results_gaus = gaus.fitTo(fullmc, ROOT.RooFit.Range(signal_range_lo, signal_range_hi), ROOT.RooFit.Save())
@@ -165,8 +167,8 @@ latex.DrawLatex(0.57, 0.85, 'taushape%s_%dbins'%(args.category, nbins))
 ROOT.gPad.SaveAs('plots/%s/taushape%s_%dbins.png'%(args.varset,args.category, nbins))
 
 
-DataSelector      = ROOT.RooFormulaVar('DataSelector', 'DataSelector', selection + ' & dataMCType == 1', ROOT.RooArgList(variables))
-BlindDataSelector = ROOT.RooFormulaVar('DataSelector', 'DataSelector', selection + ' & dataMCType == 1 &  abs(m3m  - 1.776) > %s' %( (signal_range_hi -signal_range_lo)/2) , ROOT.RooArgList(variables))
+DataSelector      = ROOT.RooFormulaVar('DataSelector', 'DataSelector', selection + ' & dataMCtype == 1', ROOT.RooArgList(variables))
+BlindDataSelector = ROOT.RooFormulaVar('DataSelector', 'DataSelector', selection + ' & dataMCtype == 1 &  abs(m3m  - 1.776) > %s' %( (signal_range_hi -signal_range_lo)/2) , ROOT.RooArgList(variables))
 
 
 
@@ -331,7 +333,8 @@ MuRes_13TeV       lnN                       1.025               -
          cat      = args.category,
          wdir      = args.varset,
          obs      = fulldata.numEntries() if blinded==False else -1,
-         signal   = mass_histo_mc.Integral(),
+#         signal   = mass_histo_mc.Integral(),   # the histogramm integral returns a screwed value, no clue why, to be sorted later
+         signal   = fullmc.sumEntries(),         # use the ArgDataSet entries instead
          bkg      = nbkg.getVal(),
          )
 )
