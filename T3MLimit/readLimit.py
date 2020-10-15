@@ -4,6 +4,8 @@ import ROOT
 from ROOT import TFile, TTree, TCanvas, TGraph, TMultiGraph, TGraphErrors, TLegend, TPaveLabel, TPaveText, TLatex
 import CMS_lumi, tdrstyle
 import subprocess # to execute shell command
+import argparse
+
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
  
 # CMS style
@@ -20,13 +22,13 @@ def executeDataCards(labels,values, cardprefix):
  
     for value in values:
         label = "%s" % (value)
-        combine_command = "combineTool.py -M AsymptoticLimits  -n %s -d %s" % (value,cardprefix+label+'.txt')
+        combine_command = "combineTool.py -M AsymptoticLimits  -n %s -d %s" % (cardprefix+label,cardprefix+label+'.txt')
         print ""
         print ">>> " + combine_command
         p = subprocess.Popen(combine_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         for line in p.stdout.readlines():
             print line.rstrip("\n")
-        print ">>>   higgsCombine"+label+".Asymptotic.mH125.root created"
+        print ">>>   higgsCombine"+cardprefix+label+".Asymptotic.mH125.root created"
         retval = p.wait()
  
  
@@ -45,7 +47,7 @@ def getLimits(file_name):
  
  
 # PLOT upper limits
-def plotUpperLimits(labels,values,prefix):
+def plotUpperLimits(labels,values,prefix,outputLabel):
  
     N = len(labels)
     yellow = TGraph(2*N)   
@@ -54,9 +56,9 @@ def plotUpperLimits(labels,values,prefix):
  
     up2s = [ ]
     upm  = [ ]
-    text_limits=open("TextLimits%s"%(prefix)+".txt","w")
+    text_limits=open("TextLimits%s"%(prefix)+outputLabel+".txt","w")
     for i in range(N):
-        file_name = "higgsCombine"+labels[i]+".AsymptoticLimits.mH120.root"
+        file_name = "higgsCombine"+prefix+labels[i]+".AsymptoticLimits.mH120.root"
         print "filename:  ", file_name
         limit = getLimits(file_name)
         up2s.append(limit[4])
@@ -104,8 +106,9 @@ def plotUpperLimits(labels,values,prefix):
 
 
 
-    frame.SetMinimum(min(upm)*0.6)
-    frame.SetMaximum(max(upm)*1.2)
+    frame.SetMinimum(0.5)
+    frame.SetMaximum(10.)
+
     frame.GetXaxis().SetLimits(min(values),max(values)*1.2)
 
 
@@ -154,7 +157,7 @@ def plotUpperLimits(labels,values,prefix):
     latex.DrawLatex(0.57, 0.85,prefix)
     latex.Draw('same') 
     print " "
-    c.SaveAs("Limit"+prefix+".png")
+    c.SaveAs("Limit"+prefix+outputLabel+".png")
     c.Close()
  
  
@@ -169,23 +172,25 @@ def frange(start, stop, step):
 # MAIN
 def main():
  
-    labels = [ ]
-    values = [ ]
-    cuts = [-0.2, -0.15]
 
-  #  cuts = [-0.2, -0.15, -0.05, -0.04,-0.03, -0.02, -0.01, 0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.14,  0.15, 0.16, 0.17, 0.18, 0.19,  0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27 ,0.28]
+    cuts=[-0.2, -0.15, -0.05, -0.04 ,-0.03, -0.02, -0.01, 0, 0.02,  0.04,  0.06,  0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.14,  0.15, 0.16, 0.17, 0.18, 0.19,  0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26]
+    prefixes = ['CMS_T3MSignal_13TeV_Var2016A','CMS_T3MSignal_13TeV_Var2016B','CMS_T3MSignal_13TeV_Var2016C']
 
 
+    outputLabel = ''
+    for prefix in prefixes:
+        labels = [ ]
+        values = [ ]
 
-    prefix = 'CMS_T3MSignal_13TeV_C'
-    for cl in cuts:
-        values.append(cl)
-        label = "%s" % (cl)
-        labels.append(label)
-    print values
-    print labels
-    executeDataCards(labels,values,prefix)
-    plotUpperLimits(labels,values,prefix)
+        for cl in cuts:
+            values.append(cl)
+            label = "%s" % (cl)
+            labels.append(label)
+        print values
+        print labels
+        print "prefix", prefix
+        executeDataCards(labels,values,prefix)
+        plotUpperLimits(labels,values,prefix,outputLabel)
  
  
  
