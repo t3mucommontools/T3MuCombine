@@ -3,9 +3,9 @@ imax 1
 jmax 1
 kmax *
 ---------------
-shapes data_obs  A2 ../workspaces/CMS_T3MBkg_13TeV.root w_all:data_obs_A2
-shapes bkg A2 ../workspaces/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A2
-shapes signal A2 ../workspaces/CMS_T3MSignal_13TeV.root w_all:SignalModel_A2
+shapes data_obs  A2 ../workspaces/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_A2
+shapes bkg A2 ../workspaces/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A2
+shapes signal A2 ../workspaces/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_A2
 ---------------
 bin            A2  
 observation   83
