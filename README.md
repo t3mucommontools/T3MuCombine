@@ -18,7 +18,7 @@ There is just one option to it --Combine, do:
 ```sh
 ./setupCombine --Combine MyWorkDir
 ```
-
+This will produce text file that you need to source to setup everything (just pay attention to the instruction on your screen)
 
 
 The following settings will be used by default:
@@ -29,9 +29,13 @@ The following settings will be used by default:
 
 After compilation:
 ```
-cd CombineHarvester/T3MLimit
+cd /MyWorkDir/CMSSW_8_1_0/src/CombineHarvester/
 ```
+And choose your working area; The place for combining all categories is /MyWorkDir/CMSSW_8_1_0/src/CombineHarvester/T3MCombineAll
 
+
+
+For UF people: the working area is T3MLimit
 ```
 ./makeTheCard.py --help for an instruction 
 ```
