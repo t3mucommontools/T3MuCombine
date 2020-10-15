@@ -1,0 +1,29 @@
+# HF Tau to three mu
+imax 1
+jmax 1
+kmax *
+---------------
+shapes data_obs  A1_2018 ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A1_2018
+shapes bkg A1_2018 ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A1_2018
+shapes signal A1_2018 ../workspaces_2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A1_2018
+---------------
+bin            A1_2018  
+observation   125
+------------------------------
+bin               A1_2018        A1_2018     
+process              signal     bkg     
+process                0          1      
+rate                 7.10587    125
+--------------------------------
+DsNorm_13TeV_2018      lnN  1.03      - 
+BRDToTau_13TeV_2018    lnN  1.03      - 
+BRDsPhiPi_13TeV_2018   lnN  1.08      - 
+BRBtoD_13TeV_2018      lnN  1.05      - 
+BRBtoTau_13TeV_2018    lnN  1.03      - 
+fUnc_13TeV_2018        lnN  1.03      - 
+DpmScaling_13TeV_2018  lnN  1.03      - 
+BsScaling_13TeV_2018   lnN  1.04      - 
+UncTrigger_13TeV_2018  lnN  1.05      - 
+UncBDTCut_13TeV_2018   lnN  1.05      - 
+UncRatioAcc_13TeV_2018 lnN  1.01      - 
+UncMuonEff_13TeV_2018  lnN  1.015     - 
