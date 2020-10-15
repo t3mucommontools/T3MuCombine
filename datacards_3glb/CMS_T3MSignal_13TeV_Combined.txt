@@ -1,0 +1,74 @@
+Combination of CMS_T3MSignal_13TeV_Combined_2017.txt  CMS_T3MSignal_13TeV_Combined_2018.txt
+imax 12 number of bins
+jmax 1 number of processes minus 1
+kmax 24 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes bkg       ch1_ch1   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A1_2017
+shapes data_obs  ch1_ch1   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:data_obs_A1_2017
+shapes signal    ch1_ch1   ../workspaces_2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_A1_2017
+shapes bkg       ch1_ch2   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A2_2017
+shapes data_obs  ch1_ch2   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:data_obs_A2_2017
+shapes signal    ch1_ch2   ../workspaces_2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_A2_2017
+shapes bkg       ch1_ch3   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B1_2017
+shapes data_obs  ch1_ch3   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:data_obs_B1_2017
+shapes signal    ch1_ch3   ../workspaces_2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_B1_2017
+shapes bkg       ch1_ch4   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B2_2017
+shapes data_obs  ch1_ch4   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:data_obs_B2_2017
+shapes signal    ch1_ch4   ../workspaces_2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_B2_2017
+shapes bkg       ch1_ch5   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C1_2017
+shapes data_obs  ch1_ch5   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:data_obs_C1_2017
+shapes signal    ch1_ch5   ../workspaces_2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_C1_2017
+shapes bkg       ch1_ch6   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C2_2017
+shapes data_obs  ch1_ch6   ../workspaces_2017/CMS_T3MBkg_13TeV.root w_all:data_obs_C2_2017
+shapes signal    ch1_ch6   ../workspaces_2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_C2_2017
+shapes bkg       ch2_ch1   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A1_2018
+shapes data_obs  ch2_ch1   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A1_2018
+shapes signal    ch2_ch1   ../workspaces_2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A1_2018
+shapes bkg       ch2_ch2   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A2_2018
+shapes data_obs  ch2_ch2   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A2_2018
+shapes signal    ch2_ch2   ../workspaces_2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A2_2018
+shapes bkg       ch2_ch3   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B1_2018
+shapes data_obs  ch2_ch3   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B1_2018
+shapes signal    ch2_ch3   ../workspaces_2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B1_2018
+shapes bkg       ch2_ch4   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B2_2018
+shapes data_obs  ch2_ch4   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B2_2018
+shapes signal    ch2_ch4   ../workspaces_2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B2_2018
+shapes bkg       ch2_ch5   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C1_2018
+shapes data_obs  ch2_ch5   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C1_2018
+shapes signal    ch2_ch5   ../workspaces_2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C1_2018
+shapes bkg       ch2_ch6   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C2_2018
+shapes data_obs  ch2_ch6   ../workspaces_2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C2_2018
+shapes signal    ch2_ch6   ../workspaces_2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C2_2018
+----------------------------------------------------------------------------------------------------------------------------------
+bin          ch1_ch1  ch1_ch2  ch1_ch3  ch1_ch4  ch1_ch5  ch1_ch6  ch2_ch1  ch2_ch2  ch2_ch3  ch2_ch4  ch2_ch5  ch2_ch6
+observation  2        410      3        629      33       294      125      1080     63       2478     15       518    
+----------------------------------------------------------------------------------------------------------------------------------
+bin                                       ch1_ch1   ch1_ch1   ch1_ch2   ch1_ch2   ch1_ch3   ch1_ch3   ch1_ch4   ch1_ch4   ch1_ch5   ch1_ch5   ch1_ch6   ch1_ch6   ch2_ch1   ch2_ch1   ch2_ch2   ch2_ch2   ch2_ch3   ch2_ch3   ch2_ch4   ch2_ch4   ch2_ch5   ch2_ch5   ch2_ch6   ch2_ch6 
+process                                   signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg     
+process                                   0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1       
+rate                                      1.14244   2         9.34331   410       0.583163  3         14.448    629       3.07982   33        5.11041   294       7.10587   125       16.3769   1080      6.69368   63        40.6215   2478      3.1446    15        13.7504   518     
+----------------------------------------------------------------------------------------------------------------------------------
+BRBtoD_13TeV_2017       lnN               1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         -         -         -         -         -         -         -         -         -         -         -         -       
+BRBtoD_13TeV_2018       lnN               -         -         -         -         -         -         -         -         -         -         -         -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
+BRBtoTau_13TeV_2017     lnN               1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         -         -         -         -         -         -         -         -         -         -         -         -       
+BRBtoTau_13TeV_2018     lnN               -         -         -         -         -         -         -         -         -         -         -         -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+BRDToTau_13TeV_2017     lnN               1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         -         -         -         -         -         -         -         -         -         -         -         -       
+BRDToTau_13TeV_2018     lnN               -         -         -         -         -         -         -         -         -         -         -         -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+BRDsPhiPi_13TeV_2017    lnN               1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         -         -         -         -         -         -         -         -         -         -         -         -       
+BRDsPhiPi_13TeV_2018    lnN               -         -         -         -         -         -         -         -         -         -         -         -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -       
+BsScaling_13TeV_2017    lnN               1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         -         -         -         -         -         -         -         -         -         -         -         -       
+BsScaling_13TeV_2018    lnN               -         -         -         -         -         -         -         -         -         -         -         -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -       
+DpmScaling_13TeV_2017   lnN               1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         -         -         -         -         -         -         -         -         -         -         -         -       
+DpmScaling_13TeV_2018   lnN               -         -         -         -         -         -         -         -         -         -         -         -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+DsNorm_13TeV_2017       lnN               1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         -         -         -         -         -         -         -         -         -         -         -         -       
+DsNorm_13TeV_2018       lnN               -         -         -         -         -         -         -         -         -         -         -         -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+UncBDTCut_13TeV_2017    lnN               1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         -         -         -         -         -         -         -         -         -         -         -         -       
+UncBDTCut_13TeV_2018    lnN               -         -         -         -         -         -         -         -         -         -         -         -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
+UncMuonEff_13TeV_2017   lnN               1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         -         -         -         -         -         -         -         -         -         -         -         -       
+UncMuonEff_13TeV_2018   lnN               -         -         -         -         -         -         -         -         -         -         -         -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -       
+UncRatioAcc_13TeV_2017   lnN              1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         -         -         -         -         -         -         -         -         -         -         -         -       
+UncRatioAcc_13TeV_2018   lnN              -         -         -         -         -         -         -         -         -         -         -         -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -       
+UncTrigger_13TeV_2017   lnN               1.14      -         1.14      -         1.14      -         1.14      -         1.14      -         1.14      -         -         -         -         -         -         -         -         -         -         -         -         -       
+UncTrigger_13TeV_2018   lnN               -         -         -         -         -         -         -         -         -         -         -         -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
+fUnc_13TeV_2017         lnN               1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         -         -         -         -         -         -         -         -         -         -         -         -       
+fUnc_13TeV_2018         lnN               -         -         -         -         -         -         -         -         -         -         -         -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
