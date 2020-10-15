@@ -78,7 +78,7 @@ if( $ARGV[0] eq "--Combine"){
 
     printf("\n\nInstructions:");
     printf("\nTo complete the installation do the following command (compilation might take some time ...):");
-    printf("\nsource  Install_Combine_$time");
+    printf("\nsource  Install_Combine_$time \n");
 
 }
 
