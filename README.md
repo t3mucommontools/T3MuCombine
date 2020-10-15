@@ -9,6 +9,16 @@ The script setupCombine.pl will clone and compile HiggsAnalysisTools and Combine
 Run ./setupCombine.pl  for an instruction
 
 
+```sh 
+./setupCombine.pl --help
+```
+
+There is just one option to it --Combine, do:
+
+```sh
+./setupCombine --Combine MyWorkDir
+```
+
 
 
 The following settings will be used by default:
