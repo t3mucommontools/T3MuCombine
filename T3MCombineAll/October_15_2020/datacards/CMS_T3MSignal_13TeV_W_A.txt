@@ -1,0 +1,25 @@
+
+imax 1 number of bins
+jmax * number of processes minus 1
+kmax * number of nuisance parameters
+--------------------------------------------------------------------------------
+shapes background    Wtau3mu_A       ../workspaces/CMS_T3M_13TeV_W_A.root t3m_shapes:bkg
+shapes signal        Wtau3mu_A       ../workspaces/CMS_T3M_13TeV_W_A.root t3m_shapes:sig
+shapes data_obs      Wtau3mu_A       ../workspaces/CMS_T3M_13TeV_W_A.root t3m_shapes:data_obs
+--------------------------------------------------------------------------------
+bin               Wtau3mu_A
+observation       -1
+--------------------------------------------------------------------------------
+bin                                     Wtau3mu_A       Wtau3mu_A
+process                                 signal              background
+process                                 0                   1
+rate                                    4.3449        24.4843
+--------------------------------------------------------------------------------
+lumi          lnN                       1.017               -   
+xs_W          lnN                       1.037               -   
+br_Wtaunu     lnN                       1.0021              -   
+br_Wmunu      lnN                       1.0015              -   
+mc_stat_A lnN                       1.0076        -   
+--------------------------------------------------------------------------------
+bkgNorm_A rateParam                 Wtau3mu_A        background      1.
+a0_A      param   -1.8910 1.8017
