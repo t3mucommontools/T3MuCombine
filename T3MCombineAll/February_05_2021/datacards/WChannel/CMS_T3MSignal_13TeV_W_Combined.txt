@@ -1,0 +1,36 @@
+Combination of A=./2017_2018_fixed-2/datacards/CMS_T3MSignal_13TeV_W_A.txt  B=./2017_2018_fixed-2/datacards/CMS_T3MSignal_13TeV_W_B.txt  C=./2017_2018_fixed-2/datacards/CMS_T3MSignal_13TeV_W_C.txt
+imax 3 number of bins
+jmax 1 number of processes minus 1
+kmax 10 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes background  A           ../../workspaces/WChannel/CMS_T3M_13TeV_W_A.root t3m_shapes:bkg
+shapes data_obs    A           ../../workspaces/WChannel/CMS_T3M_13TeV_W_A.root t3m_shapes:data_obs
+shapes signal      A           ../../workspaces/WChannel/CMS_T3M_13TeV_W_A.root t3m_shapes:sig
+shapes background  B           ../../workspaces/WChannel/CMS_T3M_13TeV_W_B.root t3m_shapes:bkg
+shapes data_obs    B           ../../workspaces/WChannel/CMS_T3M_13TeV_W_B.root t3m_shapes:data_obs
+shapes signal      B           ../../workspaces/WChannel/CMS_T3M_13TeV_W_B.root t3m_shapes:sig
+shapes background  C           ../../workspaces/WChannel/CMS_T3M_13TeV_W_C.root t3m_shapes:bkg
+shapes data_obs    C           ../../workspaces/WChannel/CMS_T3M_13TeV_W_C.root t3m_shapes:data_obs
+shapes signal      C           ../../workspaces/WChannel/CMS_T3M_13TeV_W_C.root t3m_shapes:sig
+----------------------------------------------------------------------------------------------------------------------------------
+bin          A       B       C     
+observation  -1      -1      -1    
+----------------------------------------------------------------------------------------------------------------------------------
+bin                             A           A           B           B           C           C         
+process                         signal      background  signal      background  signal      background
+process                         0           1           0           1           0           1         
+rate                            3.5719      15.8147     5.8851      54.5097     2.0398      31.1365   
+----------------------------------------------------------------------------------------------------------------------------------
+br_Wmunu                lnN     1.0015      -           1.0015      -           1.0015      -         
+br_Wtaunu               lnN     1.0021      -           1.0021      -           1.0021      -         
+lumi                    lnN     1.017       -           1.017       -           1.017       -         
+mc_stat_A               lnN     1.0118      -           -           -           -           -         
+mc_stat_B               lnN     -           -           1.0092      -           -           -         
+mc_stat_C               lnN     -           -           -           -           1.0156      -         
+xs_W                    lnN     1.037       -           1.037       -           1.037       -         
+a0_B          param  -0.6248 1.1942
+a0_C          param  0.8740 1.6022
+a0_A          param  -2.2291 2.2549
+bkgNorm_C     rateParam C background 1.  
+bkgNorm_A     rateParam A background 1.  
+bkgNorm_B     rateParam B background 1.  
