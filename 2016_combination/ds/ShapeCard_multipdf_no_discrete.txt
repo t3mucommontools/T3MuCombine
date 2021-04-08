@@ -1,0 +1,46 @@
+imax 6 number of bins
+jmax 1 number of processes minus 1
+kmax * number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes bkg       a1        bkgWorkspace_multipdf_A1.root w:Background2
+shapes data_obs  a1        dataWorkspace_A1.root w:data
+shapes sig       a1        sigWorkspace_A1.root w:Signal
+shapes bkg       a2        bkgWorkspace_multipdf_A2.root w:Background2
+shapes data_obs  a2        dataWorkspace_A2.root w:data
+shapes sig       a2        sigWorkspace_A2.root w:Signal
+shapes bkg       b1        bkgWorkspace_multipdf_B1.root w:Background2
+shapes data_obs  b1        dataWorkspace_B1.root w:data
+shapes sig       b1        sigWorkspace_B1.root w:Signal
+shapes bkg       b2        bkgWorkspace_multipdf_B2.root w:Background2
+shapes data_obs  b2        dataWorkspace_B2.root w:data
+shapes sig       b2        sigWorkspace_B2.root w:Signal
+shapes bkg       c1        bkgWorkspace_multipdf_C1.root w:Background2
+shapes data_obs  c1        dataWorkspace_C1.root w:data
+shapes sig       c1        sigWorkspace_C1.root w:Signal
+shapes bkg       c2        bkgWorkspace_multipdf_C2.root w:Background2
+shapes data_obs  c2        dataWorkspace_C2.root w:data
+shapes sig       c2        sigWorkspace_C2.root w:Signal
+----------------------------------------------------------------------------------------------------------------------------------
+bin          a1     a2     b1     b2     c1     c2   
+observation  337    2356   105    2089   359   1462
+----------------------------------------------------------------------------------------------------------------------------------
+bin                             a1         a1         a2         a2         b1         b1         b2         b2         c1         c1         c2         c2       
+process                         sig        bkg        sig        bkg        sig        bkg        sig        bkg        sig        bkg        sig        bkg      
+process                         0          1          0          1          0          1          0          1          0          1          0          1        
+rate        6.352  1       10.221 1       3.827  1       17.982 1       9.125 1       9.329 1
+--------------------------------------------------------------------------------
+ySig_dm                    lnN     1.10       -          1.10       -          1.10       -          1.10       -          1.10       -          1.10       -
+ySig_bdratio               lnN     1.03       -          1.03       -          1.03       -          1.03       -          1.03       -          1.03       -
+ySig_tm                    lnN     1.02       -          1.02       -          1.02       -          1.02       -          1.02       -          1.02       -
+ySig_dsmmp                 lnN     1.08       -          1.08       -          1.08       -          1.08       -          1.08       -          1.08       -
+ySig_dstn                  lnN     1.03       -          1.03       -          1.03       -          1.03       -          1.03       -          1.03       -
+ySig_dscal                 lnN     1.03       -          1.03       -          1.03       -          1.03       -          1.03       -          1.03       -
+ySig_bscal                 lnN     1.03       -          1.03       -          1.03       -          1.03       -          1.03       -          1.03       -
+ySig_trk                   lnN     1.02       -          1.02       -          1.02       -          1.02       -          1.02       -          1.02       -
+ySig_bds                   lnN     1.04       -          1.04       -          1.04       -          1.04       -          1.04       -          1.04       -
+ySig_bt                    lnN     1.02       -          1.02       -          1.02       -          1.02       -          1.02       -          1.02       -
+ySig_reco                  lnN     1.01       -          1.01       -          1.01       -          1.01       -          1.01       -          1.01       -
+ySig_bdt                   lnN     1.05       -          1.05       -          1.05       -          1.05       -          1.05       -          1.05       -
+ySig_emtf                  lnN     1.04       -          1.04       -          1.22       -          1.22       -          1.30       -          1.30       -
+UncMean       param     0.0     1.0
+UncSigma       param     0.0     1.0
