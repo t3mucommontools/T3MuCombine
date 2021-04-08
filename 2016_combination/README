@@ -1,0 +1,449 @@
+# combineCards.py a1=datacard_a1.txt a2=datacard_a2.txt b1=datacard_b1.txt b2=datacard_b2.txt c1=datacard_c1.txt c2=datacard_c2.txt barrel=datacard_barrel0.91.txt endcap=datacard_endcap0.76.txt > datacard_combined.txt
+
+combineCards.py ds=ds/ShapeCard_multipdf.txt w=w/datacard_comb_b0.91_e0.76.txt > datacard_combined.txt
+
+text2workspace.py datacard_combined.txt -o model_combined.root
+
+
+FIT W CHANNEL
+
+EXPECTED @90% CL
+combine -d datacard_comb_w.txt -H AsymptoticLimits -M HybridNew --expectedFromGrid 0.025 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=0.2 --plot=limit_w_channel_scan_minus_two_0.90_WP_b0p91_e0p76.png
+combine -d datacard_comb_w.txt -H AsymptoticLimits -M HybridNew --expectedFromGrid 0.160 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=0.2 --plot=limit_w_channel_scan_minus_one_0.90_WP_b0p91_e0p76.png
+combine -d datacard_comb_w.txt -H AsymptoticLimits -M HybridNew --expectedFromGrid 0.500 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=0.2 --plot=limit_w_channel_scan_central_0.90_WP_b0p91_e0p76.png  
+combine -d datacard_comb_w.txt -H AsymptoticLimits -M HybridNew --expectedFromGrid 0.840 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=0.2 --plot=limit_w_channel_scan_plus_one_0.90_WP_b0p91_e0p76.png 
+combine -d datacard_comb_w.txt -H AsymptoticLimits -M HybridNew --expectedFromGrid 0.975 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=0.2 --plot=limit_w_channel_scan_plus_two_0.90_WP_b0p91_e0p76.png 
+
+OBSERVED @90% CL
+combine -d datacard_comb_w.txt -H AsymptoticLimits --hintStatOnly -M HybridNew --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_w_channel_scan_observed_0.90_WP_b0p91_e0p76.png
+
+
+
+FIT DS CHANNEL
+
+EXPECTED @90% CL
+combine -d ShapeCard_multipdf.txt -M HybridNew --expectedFromGrid 0.025 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_ds_channel_scan_minus_two_0.90.png
+combine -d ShapeCard_multipdf.txt -M HybridNew --expectedFromGrid 0.160 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_ds_channel_scan_minus_one_0.90.png
+combine -d ShapeCard_multipdf.txt -M HybridNew --expectedFromGrid 0.500 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_ds_channel_scan_central_0.90.png  
+combine -d ShapeCard_multipdf.txt -M HybridNew --expectedFromGrid 0.840 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_ds_channel_scan_plus_one_0.90.png 
+combine -d ShapeCard_multipdf.txt -M HybridNew --expectedFromGrid 0.975 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_ds_channel_scan_plus_two_0.90.png 
+
+OBSERVED @90% CL
+combine -d ShapeCard_multipdf.txt -H AsymptoticLimits --hintStatOnly -M HybridNew --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_w_channel_scan_observed_0.90.png
+
+
+--fork 8
+--nCPU 8
+
+FIT DS channel wit Asymptotic
+
+
+FIT COMBINED
+
+EXPECTED @90% CL
+combine -d datacard_combined.txt -M HybridNew --expectedFromGrid 0.025 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_combined_scan_minus_two_0.90.png 
+combine -d datacard_combined.txt -M HybridNew --expectedFromGrid 0.160 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_combined_scan_minus_one_0.90.png 
+combine -d datacard_combined.txt -M HybridNew --expectedFromGrid 0.500 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_combined_scan_central_0.90.png   
+combine -d datacard_combined.txt -M HybridNew --expectedFromGrid 0.840 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_combined_scan_plus_one_0.90.png  
+combine -d datacard_combined.txt -M HybridNew --expectedFromGrid 0.975 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_combined_scan_plus_two_0.90.png  
+
+OBSERVED @90% CL
+combine -d datacard_combined.txt -H AsymptoticLimits --hintStatOnly -M HybridNew --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_w_channel_scan_observed_0.90.png
+
+
+
+
+
+
+
+
+
+
+
+
+https://indico.cern.ch/event/577649/contributions/2388727/attachments/1380321/2098157/HComb-Tutorial-Nov16-combineTool.pdf
+
+--expectedFromGrid [0.025,0.16,0.5,0.84,0.975]
+
+python $CMSSW_BASR/src/HiggsAnalysis/CombinedLimit/test/plotTestStatCLs.py -i grid.root  -o cls.root -p r -v all -m 120
+
+https://indico.cern.ch/event/577649/contributions/2388797/attachments/1380376/2098158/HComb-Tutorial-Nov16-Impacts.pdf
+
+
+
+
+combine -d datacard_barrel0.91_TEST.txt -M HybridNew --expectedFromGrid 0.5 --LHCmode=LHC-limits -T 1000 -C 0.90  -U --plot=limit_TEST.png  --rMax 0.8 --rMax 5 --saveHybridResult -v 0
+python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/plotTestStatCLs.py -i higgsCombineTest.HybridNew.mH120.quant0.500.root -o cls.root -p r -v all -m 120
+
+
+
+python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/plotTestStatCLs.py -i higgsCombineTest.HybridNew.mH120.quant0.500.root -o cls.root -p r -v all -q 0.5 -m 120
+python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/plotTestStatCLs.py -i higgsCombineTest.HybridNew.mH120.quant0.975.root -o cls.root -p r -v all -q 0.5 -m 120
+
+
+bound [0.,1.]
+
+ -- Hybrid New --
+Limit: r < 1.41076 +/- 0.0177003 @ 90% CL
+Done in 1.53 min (cpu), 1.54 min (real)
+
+
+bound [0.,100.]
+ -- Hybrid New --
+Limit: r < 1.40639 +/- 0.016892 @ 90% CL
+Done in 1.28 min (cpu), 1.28 min (real)
+
+
+
+
+
+
+
+
+
+
+
+
+combine -d datacard_combined.txt -M HybridNew --expectedFromGrid 0.500 --LHCmode=LHC-limits -T 10000 -C 0.90  -U --adaptiveToys=1 --plot=limit_combined_scan_central_0.90.png --rMin 0.5 --rMax 1.2 -v 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+combine -d datacard_combined.txt -M HybridNew --expectedFromGrid 0.975 --LHCmode=LHC-limits -T 10000 -C 0.90 -U --adaptiveToys=1 --plot=limit_exp_combined_scan_plus_two_0.90.png  --rMin 1.0 --rMax 2.0 --fork 8 --saveHybridResult | grep Limit > combined_exp_limit_0p975.txt
+combine -d datacard_combined.txt -M HybridNew --expectedFromGrid 0.840 --LHCmode=LHC-limits -T 10000 -C 0.90 -U --adaptiveToys=1 --plot=limit_exp_combined_scan_plus_one_0.90.png  --rMin 0.7 --rMax 1.4 --fork 8 --saveHybridResult | grep Limit > combined_exp_limit_0p840.txt
+combine -d datacard_combined.txt -M HybridNew --expectedFromGrid 0.500 --LHCmode=LHC-limits -T 10000 -C 0.90 -U --adaptiveToys=1 --plot=limit_exp_combined_scan_central_0.90.png   --rMin 0.5 --rMax 1.2 --fork 8 --saveHybridResult | grep Limit > combined_exp_limit_0p500.txt
+combine -d datacard_combined.txt -M HybridNew --expectedFromGrid 0.160 --LHCmode=LHC-limits -T 10000 -C 0.90 -U --adaptiveToys=1 --plot=limit_exp_combined_scan_minus_one_0.90.png --rMin 0.2 --rMax 0.8 --fork 8 --saveHybridResult | grep Limit > combined_exp_limit_0p160.txt
+combine -d datacard_combined.txt -M HybridNew --expectedFromGrid 0.025 --LHCmode=LHC-limits -T 10000 -C 0.90 -U --adaptiveToys=1 --plot=limit_exp_combined_scan_minus_two_0.90.png --rMin 0.  --rMax 0.6 --fork 8 --saveHybridResult | grep Limit > combined_exp_limit_0p025.txt
+
+combine -d datacard_combined.txt -M HybridNew --LHCmode=LHC-limits -T 10000 -C 0.90 -U --adaptiveToys=1 --plot=limit_obs_combined_scan_minus_two_0.90.png --rMin 0.  --rMax 3. --fork 8 --saveHybridResult | grep Limit > combined_obs_limit.txt
+
+ -- Hybrid New --
+Limit: r < 0.719335 +/- 0.00712033 @ 90% CL
+Done in 0.05 min (cpu), 10.48 min (real)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+combine -M FitDiagnostics --plots --robustFit 1 --saveShapes --cminDefaultMinimizerStrategy 0 --saveNormalizations --maxFailedSteps 20 --protectUnbinnedChannels --saveWithUncertainties --robustHesse 1 --ignoreCovWarning datacard_combined.txt
+
+combine -M FitDiagnostics --plots --robustFit 1 --saveShapes --cminDefaultMinimizerStrategy 0 --saveNormalizations --maxFailedSteps 20 --protectUnbinnedChannels --saveWithUncertainties --robustHesse 1 --rebinFactor 2.5 --ignoreCovWarning datacard_comb_w.txt
+
+
+
+
+combine -M FitDiagnostics --plots --robustFit 1 --saveShapes --cminDefaultMinimizerStrategy 0 --saveNormalizations --maxFailedSteps 20 --protectUnbinnedChannels --saveWithUncertainties --rebinFactor 2.5  -d datacard_combined.txt
+combine -M FitDiagnostics --plots --robustFit 1 --saveShapes --cminDefaultMinimizerStrategy 0 --saveNormalizations --maxFailedSteps 20 --protectUnbinnedChannels --saveWithUncertainties --rebinFactor 2.65 -d datacard_combined.txt
+
+
+
+
+# this is the only thing that fits
+# need to freeze the discrete pdf thingy
+
+combine -M FitDiagnostics  \
+    --plots  \
+    --saveShapes  \
+    --saveOverallShapes \
+    --saveNormalizations  \
+    --maxFailedSteps 100  \
+    --protectUnbinnedChannels  \
+    --saveWithUncertainties  \
+    --robustHesse 1  \
+    --minos all \
+    --stepSize 0.02 \
+    --freezeParameters 'var{pdf_index.*},var{p.*A1},var{p.*A2},var{p.*B1},var{p.*B2},var{p.*C1},var{p.*C2}' \
+    --rMin 0 \
+    --rMax 1 \
+    --rebinFactor 2.85 \
+    --cminPoiOnlyFit \
+    --cminDefaultMinimizerStrategy 2  \
+    datacard_combined.txt
+
+    datacard_comb_w.txt 
+
+    -v 3 \
+    --freezeParameters 'var{pdf_index.*}' \
+    --cminDefaultMinimizerStrategy 0  \
+
+
+combine -M FitDiagnostics  \
+    --plots  \
+    --saveShapes  \
+    --saveOverallShapes \
+    --cminDefaultMinimizerStrategy 0  \
+    --saveNormalizations  \
+    --maxFailedSteps 100  \
+    --protectUnbinnedChannels  \
+    --saveWithUncertainties  \
+    --robustHesse 1  \
+    --rMin 0. \
+    --rMax 2 \
+    --rebinFactor 2.65 \
+    datacard_combined.txt 
+
+
+
+
+ --- FitDiagnostics ---
+Best fit r: 0.0304593  -0.0304593/+1.96954  (68% CL)
+Done in 1.20 min (cpu), 1.21 min (real)
+
+
+
+
+
+combine -M FitDiagnostics  \
+    --plots  \
+    --saveShapes  \
+    --saveOverallShapes \
+    --cminDefaultMinimizerStrategy 0  \
+    --saveNormalizations  \
+    --maxFailedSteps 100  \
+    --protectUnbinnedChannels  \
+    --saveWithUncertainties  \
+    --rMin 0. \
+    --rMax 2 \
+    --rebinFactor 2.65 \
+    datacard_combined.txt 
+
+
+
+combine -M FitDiagnostics  \
+    --plots  \
+    --saveShapes  \
+    --saveOverallShapes \
+    --cminDefaultMinimizerStrategy 0  \
+    --saveNormalizations  \
+    --maxFailedSteps 100  \
+    --protectUnbinnedChannels  \
+    --saveWithUncertainties  \
+    --rMin 0. \
+    --rMax 2 \
+    --rebinFactor 2.65 \
+    datacard_comb_b0.91_e0.76.txt 
+
+
+# PULLS
+python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py --all -A -g pulls.pdf fitDiagnostics.root.combo
+
+# PRE-POSTFIT NORMALISATIONS
+python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/mlfitNormsToText.py -u fitDiagnostics.root.combo
+
+# CREATE A ROOT WORKSPACE FROM THE COMBINED DATACARD
+text2workspace.py datacard_combined.txt -o model_combined.root
+
+# PULLS, ALWAYS DISABLE ALTERNATE PDF
+# https://twiki.cern.ch/twiki/bin/viewauth/CMS/HiggsWG/SWGuideNonStandardCombineUses
+combineTool.py -M Impacts -d model_combined.root -m 120 --doInitialFit --robustFit 1 --freezeParameters 'var{pdf_index.*,p2A1.*,p2A2.*,p2B1.*,p3B1.*,p4B1.*,p2B2.*,p2C1.*,p2C2.*}'
+combineTool.py -M Impacts -d model_combined.root -m 120 --doInitialFit --robustFit 1 --freezeParameters 'var{pdf_index},var{p2A1},var{p2A2},var{p2B1},var{p2B2},var{p3B1},var{p4B1},var{p2C1},var{p2C2}'
+
+.*,p2A2.*,p2B1.*,p3B1.*,p4B1.*,p2B2.*,p2C1.*,p2C2.*}'
+
+combineTool.py -M Impacts -d model_combined.root -m 120 --doInitialFit --robustFit 1 --freezeNuisances pdf_index.*,p2A1,p2A2,p2B1,p3B1,p4B1,p2B2,p2C1,p2C2'
+
+
+
+combineTool.py -M Impacts -d datacard_comb_w.root -m 125 --doInitialFit --robustFit 1 --rMin 0 --rMax 3
+combineTool.py -M Impacts -d datacard_comb_w.root -m 125 --robustFit 1 --doFits --rMin 0 --rMax 3
+combineTool.py -M Impacts -d datacard_comb_w.root -m 125 -o impacts.json
+plotImpacts.py -i impacts.json -o impacts
+
+
+
+
+    --maxFailedSteps 100  \
+    --protectUnbinnedChannels  \
+
+
+combineTool.py -M Impacts -d model_combined.root -m 125 --maxFailedSteps 100 --cminDefaultMinimizerStrategy 0 --doInitialFit --robustFit 1 --protectUnbinnedChannels --robustHesse 1 --freezeParameters 'var{pdf_index},var{p2A1},var{p2A2},var{p2B1},var{p2B2},var{p3B1},var{p4B1},var{p2C1},var{p2C2}' --rMin -0.2 --rMax 0.2 
+combineTool.py -M Impacts -d model_combined.root -m 125 --cminDefaultMinimizerStrategy 0 --doFits       --robustFit 1 --protectUnbinnedChannels --robustHesse 1 --freezeParameters 'var{pdf_index},var{p2A1},var{p2A2},var{p2B1},var{p2B2},var{p3B1},var{p4B1},var{p2C1},var{p2C2}' --rMin 0 --rMax 2
+combineTool.py -M Impacts -d model_combined.root -m 125 -o impacts.json
+plotImpacts.py -i impacts.json -o impacts
+
+
+
+
+
+
+combineTool.py -M Impacts -d model_combined.root -m 125 --expectSignal 1 -t -1 --maxFailedSteps 100 --cminDefaultMinimizerStrategy 0 --doInitialFit --robustFit 1 --protectUnbinnedChannels --robustHesse 1 --freezeParameters 'var{pdf_index},var{p.*A1},var{p.*A2},var{p.*B1},var{p.*B2},var{p.*C1},var{p.*C2}' --rMin 0 --rMax 2
+combineTool.py -M Impacts -d model_combined.root -m 125 --expectSignal 1 -t -1 --maxFailedSteps 100 --cminDefaultMinimizerStrategy 0 --doFits       --robustFit 1 --protectUnbinnedChannels --robustHesse 1 --freezeParameters 'var{pdf_index},var{p.*A1},var{p.*A2},var{p.*B1},var{p.*B2},var{p.*C1},var{p.*C2}' --rMin 0 --rMax 2
+combineTool.py -M Impacts -d model_combined.root -m 125 -o impacts.json
+plotImpacts.py -i impacts.json -o impacts
+
+
+
+
+combineTool.py -M Impacts -d ShapeCard_multipdf.root -m 125 --expectSignal 1 --maxFailedSteps 100 --cminDefaultMinimizerStrategy 0 --doInitialFit --robustFit 1 --protectUnbinnedChannels --robustHesse 1 --freezeParameters 'var{pdf_index},var{p.*A1},var{p.*A2},var{p.*B1},var{p.*B2},var{p.*C1},var{p.*C2}' --rMin 0 --rMax 2
+combineTool.py -M Impacts -d ShapeCard_multipdf.root -m 125 --expectSignal 1 --maxFailedSteps 100 --cminDefaultMinimizerStrategy 0 --doFits       --robustFit 1 --protectUnbinnedChannels --robustHesse 1 --freezeParameters 'var{pdf_index},var{p.*A1},var{p.*A2},var{p.*B1},var{p.*B2},var{p.*C1},var{p.*C2}' --rMin 0 --rMax 2
+combineTool.py -M Impacts -d ShapeCard_multipdf.root -m 125 -o impacts.json
+plotImpacts.py -i impacts.json -o impacts
+
+
+
+
+Available methods:
+
+  EnhancedCombine      : combine pass-through with special treatment for some options [DEFAULT]
+  T2W                  : Run text2workspace.py on multiple cards or directories
+  PrintWorkspace       : Load a Workspace and call Print()
+  ModifyDataSet        : Change the name of a dataset in an existing workspace
+  Impacts              : Calculate nuisance parameter impacts
+  ImpactsFromScans     : Calculate nuisance parameter impacts
+  CollectLimits        : Aggregate limit output from combine
+  CollectGoodnessOfFit : Aggregate Goodness of Fit output from fit and toys
+  CovMatrix            : Build a fit covariance matrix from scan results
+  PrintFit             : Print the output of MultimDitFit
+  AsymptoticGrid       : Calculate asymptotic limits on parameter grids
+  HybridNewGrid        : Calculate toy-based limits on parameter grids
+  FastScan             : Calculate nuisance parameter impacts
+  TaylorExpand         : Calculate nuisance parameter impacts
+
+
+
+
+https://indico.cern.ch/event/577649/#b-229590-higgs-combine-tool-mi
+https://twiki.cern.ch/twiki/bin/viewauth/CMS/HiggsWG/SWGuideNonStandardCombineUses
+https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideHiggsAnalysisCombinedLimit#HybridNew
+https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit/wiki/nonstandard#fit-parameter-uncertainties
+https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit/wiki/runningthetool#generic-minimizer-options
+https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/part3/nonstandard/
+
+
+
+
+
+combine -d datacard_combined.txt -M AsymptoticLimits -C 0.90 --run_blind
+
+
+
+
+
+combine -M MultiDimFit \
+-d datacard_combined.txt \
+--protectUnbinnedChannels \
+--forceRecreateNLL \
+--algo grid \
+--setParameterRanges r=-3,3 \
+--cminDefaultMinimizerStrategy 0 \
+--saveNLL \
+-n Envelope \
+--X-rtd REMOVE_CONSTANT_ZERO_POINT=1 
+
+--setParameters myIndex=-1 \
+-m 125 \
+
+
+ python ../../../CombineHarvester/CombineTools/scripts/plot1DScan.py higgsCombineEnvelope.MultiDimFit.mH120.root
+
+
+
+
+
+combine -d ShapeCard_multipdf.txt -C 0.9 --freezeParameters pdf_index --setParameters pdf_index=0
+combine -d ShapeCard_multipdf.txt -C 0.9 --freezeParameters pdf_index --setParameters pdf_index=1
+combine -d ShapeCard_multipdf.txt -C 0.9 --freezeParameters pdf_index --setParameters pdf_index=2
+
+
+
+
+CHANNEL MASKING
+https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/part3/nonstandard/#channel-masking
+
+text2workspace.py ShapeCard_multipdf.txt --channel-masks
+
+
+combine -d ShapeCard_multipdf.root -C 0.9 --setParameters mask_a2=1,mask_b1=1,mask_b2=1,mask_c1=1,mask_c2=1 > asymptotic_A1.txt
+combine -d ShapeCard_multipdf.root -C 0.9 --setParameters mask_a1=1,mask_b1=1,mask_b2=1,mask_c1=1,mask_c2=1 > asymptotic_A2.txt
+combine -d ShapeCard_multipdf.root -C 0.9 --setParameters mask_a1=1,mask_a2=1,mask_b2=1,mask_c1=1,mask_c2=1 > asymptotic_B1.txt
+combine -d ShapeCard_multipdf.root -C 0.9 --setParameters mask_a1=1,mask_a2=1,mask_b1=1,mask_c1=1,mask_c2=1 > asymptotic_B2.txt
+combine -d ShapeCard_multipdf.root -C 0.9 --setParameters mask_a1=1,mask_a2=1,mask_b1=1,mask_b2=1,mask_c2=1 > asymptotic_C1.txt
+combine -d ShapeCard_multipdf.root -C 0.9 --setParameters mask_a1=1,mask_a2=1,mask_b1=1,mask_b2=1,mask_c1=1 > asymptotic_C2.txt
+
+
+
+
+combine -d ShapeCard_multipdf.root -H AsymptoticLimits -M HybridNew --expectedFromGrid 0.500 --LHCmode=LHC-limits -T 1000 -C 0.90  -U --adaptiveToys=0.2 --setParameters mask_a2=1,mask_b1=1,mask_b2=1,mask_c1=1,mask_c2=1 > toys_A1.txt
+combine -d ShapeCard_multipdf.root -H AsymptoticLimits -M HybridNew --expectedFromGrid 0.500 --LHCmode=LHC-limits -T 1000 -C 0.90  -U --adaptiveToys=0.2 --setParameters mask_a1=1,mask_b1=1,mask_b2=1,mask_c1=1,mask_c2=1 > toys_A2.txt
+combine -d ShapeCard_multipdf.root -H AsymptoticLimits -M HybridNew --expectedFromGrid 0.500 --LHCmode=LHC-limits -T 1000 -C 0.90  -U --adaptiveToys=0.2 --setParameters mask_a1=1,mask_a2=1,mask_b2=1,mask_c1=1,mask_c2=1 > toys_B1.txt
+combine -d ShapeCard_multipdf.root -H AsymptoticLimits -M HybridNew --expectedFromGrid 0.500 --LHCmode=LHC-limits -T 1000 -C 0.90  -U --adaptiveToys=0.2 --setParameters mask_a1=1,mask_a2=1,mask_b1=1,mask_c1=1,mask_c2=1 > toys_B2.txt
+combine -d ShapeCard_multipdf.root -H AsymptoticLimits -M HybridNew --expectedFromGrid 0.500 --LHCmode=LHC-limits -T 1000 -C 0.90  -U --adaptiveToys=0.2 --setParameters mask_a1=1,mask_a2=1,mask_b1=1,mask_b2=1,mask_c2=1 > toys_C1.txt
+combine -d ShapeCard_multipdf.root -H AsymptoticLimits -M HybridNew --expectedFromGrid 0.500 --LHCmode=LHC-limits -T 1000 -C 0.90  -U --adaptiveToys=0.2 --setParameters mask_a1=1,mask_a2=1,mask_b1=1,mask_b2=1,mask_c1=1 > toys_C2.txt
+
+
+
+
+
+LIKELIHOOD SCAN W CHANNEL
+
+combine -M MultiDimFit -d datacard_barrel0.91.txt --protectUnbinnedChannels --forceRecreateNLL --algo grid --setParameterRanges r=-3,3 --cminDefaultMinimizerStrategy 0 --saveNLL -n Barrel --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --points=200
+python ../../../../CombineHarvester/CombineTools/scripts/plot1DScan.py --output barrel_scan higgsCombineBarrel.MultiDimFit.mH120.root
+
+combine -M MultiDimFit -d datacard_endcap0.76.txt --protectUnbinnedChannels --forceRecreateNLL --algo grid --setParameterRanges r=-3,30 --cminDefaultMinimizerStrategy 0 --saveNLL -n Endcap --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --points=200
+python ../../../../CombineHarvester/CombineTools/scripts/plot1DScan.py --output endcap_scan higgsCombineEndcap.MultiDimFit.mH120.root
+
+combine -M MultiDimFit -d datacard_comb_b0.91_e0.76.txt --protectUnbinnedChannels --forceRecreateNLL --algo grid --setParameterRanges r=-3,10 --cminDefaultMinimizerStrategy 0 --saveNLL -n Combined --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --points=200
+python ../../../../CombineHarvester/CombineTools/scripts/plot1DScan.py --output combined_scan higgsCombineCombined.MultiDimFit.mH120.root
+
+LIKELIHOOD SCAN COMBINED, 
+
+combine -M MultiDimFit -d datacard_combined.txt --protectUnbinnedChannels --forceRecreateNLL --algo grid --setParameterRanges r=-1,3 --cminDefaultMinimizerStrategy 0 --saveNLL -n Envelope --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --points=200
+python ../../../CombineHarvester/CombineTools/scripts/plot1DScan.py --output envelope_scan higgsCombineEnvelope.MultiDimFit.mH120.root
+
+combine -M MultiDimFit -d datacard_combined.txt --protectUnbinnedChannels --forceRecreateNLL --algo grid --setParameterRanges r=-1,3 --cminDefaultMinimizerStrategy 0 --saveNLL -n Index0 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --points=200 --freezeParameters pdf_index --setParameters pdf_index=0
+python ../../../CombineHarvester/CombineTools/scripts/plot1DScan.py --output pdf_index_0_scan higgsCombineIndex0.MultiDimFit.mH120.root
+
+combine -M MultiDimFit -d datacard_combined.txt --protectUnbinnedChannels --forceRecreateNLL --algo grid --setParameterRanges r=-1,3 --cminDefaultMinimizerStrategy 0 --saveNLL -n Index1 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --points=200 --freezeParameters pdf_index --setParameters pdf_index=1
+python ../../../CombineHarvester/CombineTools/scripts/plot1DScan.py --output pdf_index_1_scan higgsCombineIndex1.MultiDimFit.mH120.root
+
+combine -M MultiDimFit -d datacard_combined.txt --protectUnbinnedChannels --forceRecreateNLL --algo grid --setParameterRanges r=-1,3 --cminDefaultMinimizerStrategy 0 --saveNLL -n Index2 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --points=200 --freezeParameters pdf_index --setParameters pdf_index=2
+python ../../../CombineHarvester/CombineTools/scripts/plot1DScan.py --output pdf_index_2_scan higgsCombineIndex2.MultiDimFit.mH120.root
+
+
+
+
+
+combine -M MultiDimFit -d datacard_combined.txt --protectUnbinnedChannels --algo grid --setParameterRanges r=-1,3 --cminDefaultMinimizerStrategy 0 --saveNLL -n Envelope_v2 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --points=200
+python ../../../CombineHarvester/CombineTools/scripts/plot1DScan.py --output envelope_scan higgsCombineEnvelope.MultiDimFit.mH120.root
+
+
+
+
+# PLUS 2 SIGMA BAND
+combine -d datacard_comb_b0.91_e0.76.txt -M HybridNew --expectedFromGrid 0.975 --LHCmode=LHC-limits -T 30000 -C 0.90  -U --adaptiveToys=1 --plot=limit_combined_scan_plus_two_0.90_inspection.png --saveHybridResult -v 1 --rMin 2. --rMax 6 
+python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/plotTestStatCLs.py -i higgsCombineTest.HybridNew.mH120.quant0.975.root  -o cls_plus_2_sigma_inspection.root -p r -v all -m 120
+
+
+
+combine -d datacard_barrel0.91.txt -M HybridNew --expectedFromGrid 0.975 --LHCmode=LHC-limits -T 30000 -C 0.90 -U --adaptiveToys=1 --plot=limit_combined_scan_plus_two_0.90_inspection.png --saveHybridResult -v 1
+python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/plotTestStatCLs.py -i higgsCombineTest.HybridNew.mH120.quant0.975.root  -o cls_plus_2_sigma_inspection_barrel.root -p r -v all -m 120
+
+
+
+
