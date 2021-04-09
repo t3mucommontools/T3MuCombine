@@ -8,12 +8,12 @@ shapes bkg C1 ../workspaces/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C1
 shapes signal C1 ../workspaces/CMS_T3MSignal_13TeV.root w_all:SignalModel_C1
 ---------------
 bin            C1  
-observation   4
+observation   3
 ------------------------------
 bin               C1        C1     
 process              signal     bkg     
 process                0          1      
-rate                 0.628523    4
+rate                 0.512937    3
 --------------------------------
 DsNorm_13TeV      lnN  1.034      - 
 BRDToTau_13TeV    lnN  1.03      - 
@@ -24,6 +24,6 @@ fUnc_13TeV        lnN  1.03      -
 DpmScaling_13TeV  lnN  1.03      - 
 BsScaling_13TeV   lnN  1.04      - 
 UncTrigger_13TeV  lnN  1.03      - 
-UncBDTCut_13TeV   lnN  1.10      - 
+UncBDTCut_13TeV   lnN  1.06      - 
 UncRatioAcc_13TeV lnN  1.01      - 
 UncMuonEff_13TeV  lnN  1.015     - 
