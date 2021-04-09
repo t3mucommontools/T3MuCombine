@@ -1,0 +1,24 @@
+ <<< Combine >>> 
+>>> including systematics
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 123456
+Set Default Value of Parameter mask_a1 To : 1
+Set Default Value of Parameter mask_b1 To : 1
+Set Default Value of Parameter mask_b2 To : 1
+Set Default Value of Parameter mask_c1 To : 1
+Set Default Value of Parameter mask_c2 To : 1
+Adding discrete pdf_index
+Computing results starting from observation (a-posteriori)
+Constraints of type SimpleGaussianConstraint: 15
+Constraints of type SimpleGaussianConstraint: 15
+Constraints of type SimpleGaussianConstraint: 15
+
+ -- AsymptoticLimits ( CLs ) --
+Observed Limit: r < 2.3405
+Expected  2.5%: r < 1.5503
+Expected 16.0%: r < 2.1408
+Expected 50.0%: r < 3.1250
+Expected 84.0%: r < 4.7429
+Expected 97.5%: r < 6.9626
+
+Done in 0.04 min (cpu), 0.04 min (real)
