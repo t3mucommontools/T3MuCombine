@@ -25,20 +25,20 @@ shapes signal    ch6       ../workspaces/CMS_T3MSignal_13TeV.root w_all:SignalMo
 bin          ch1    ch2    ch3    ch4    ch5    ch6  
 observation  10     28     93     307    75     677  
 ----------------------------------------------------------------------------------------------------------------------------------
-bin                                       ch1       ch1       ch2       ch2       ch3       ch3       ch4       ch4       ch5       ch5       ch6       ch6     
-process                                   signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg     
-process                                   0         1         0         1         0         1         0         1         0         1         0         1       
-rate                                      0.645862  10        0.618519  28        1.94562   93        1.60949   307       0.587234  75        0.79468   677     
+bin                                  ch1       ch1       ch2       ch2       ch3       ch3       ch4       ch4       ch5       ch5       ch6       ch6     
+process                              signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg     
+process                              0         1         0         1         0         1         0         1         0         1         0         1       
+rate                                 0.645862  10        0.618519  28        1.94562   93        1.60949   307       0.587234  75        0.79468   677     
 ----------------------------------------------------------------------------------------------------------------------------------
-BRBtoD_13TeV_2017       lnN               1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
-BRBtoTau_13TeV_2017     lnN               1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
-BRDToTau_13TeV_2017     lnN               1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
-BRDsPhiPi_13TeV_2017    lnN               1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -       
-BsScaling_13TeV_2017    lnN               1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -       
-DpmScaling_13TeV_2017   lnN               1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
-DsNorm_13TeV_2017       lnN               1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -       
-UncBDTCut_13TeV_2017    lnN               1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
-UncMuonEff_13TeV_2017   lnN               1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -       
-UncRatioAcc_13TeV_2017   lnN              1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -       
-UncTrigger_13TeV_2017   lnN               1.14      -         1.14      -         1.14      -         1.14      -         1.14      -         1.14      -       
-fUnc_13TeV_2017         lnN               1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+BRBtoD_13TeV            lnN          1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
+BRBtoTau_13TeV          lnN          1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+BRDToTau_13TeV          lnN          1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+BRDsPhiPi_13TeV         lnN          1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -       
+BsScaling_13TeV         lnN          1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -       
+DpmScaling_13TeV        lnN          1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+DsNorm_13TeV            lnN          1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.034     -       
+UncBDTCut_13TeV         lnN          1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -       
+UncMuonEff_13TeV        lnN          1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -       
+UncRatioAcc_13TeV       lnN          1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -       
+UncTrigger_13TeV        lnN          1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
+fUnc_13TeV              lnN          1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -       

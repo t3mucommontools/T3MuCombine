@@ -1,0 +1,71 @@
+Combination of CMS_T3MSignal_13TeV_Combined.txt  CMS_T3MSignal_13TeV_Combined.txt
+imax 15 number of bins
+jmax 1 number of processes minus 1
+kmax 12 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes bkg       ch1_ch1   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A1
+shapes data_obs  ch1_ch1   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A1
+shapes signal    ch1_ch1   ../workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A1
+shapes bkg       ch1_ch2   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A2
+shapes data_obs  ch1_ch2   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A2
+shapes signal    ch1_ch2   ../workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A2
+shapes bkg       ch1_ch3   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A3
+shapes data_obs  ch1_ch3   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A3
+shapes signal    ch1_ch3   ../workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A3
+shapes bkg       ch1_ch4   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B1
+shapes data_obs  ch1_ch4   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B1
+shapes signal    ch1_ch4   ../workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B1
+shapes bkg       ch1_ch5   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B2
+shapes data_obs  ch1_ch5   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B2
+shapes signal    ch1_ch5   ../workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B2
+shapes bkg       ch1_ch6   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B3
+shapes data_obs  ch1_ch6   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B3
+shapes signal    ch1_ch6   ../workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B3
+shapes bkg       ch1_ch7   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C1
+shapes data_obs  ch1_ch7   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C1
+shapes signal    ch1_ch7   ../workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C1
+shapes bkg       ch1_ch8   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C2
+shapes data_obs  ch1_ch8   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C2
+shapes signal    ch1_ch8   ../workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C2
+shapes bkg       ch1_ch9   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C3
+shapes data_obs  ch1_ch9   ../workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C3
+shapes signal    ch1_ch9   ../workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C3
+shapes bkg       ch2_ch1   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A1
+shapes data_obs  ch2_ch1   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A1
+shapes signal    ch2_ch1   ../workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A1
+shapes bkg       ch2_ch2   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A2
+shapes data_obs  ch2_ch2   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A2
+shapes signal    ch2_ch2   ../workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A2
+shapes bkg       ch2_ch3   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B1
+shapes data_obs  ch2_ch3   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B1
+shapes signal    ch2_ch3   ../workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B1
+shapes bkg       ch2_ch4   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B2
+shapes data_obs  ch2_ch4   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B2
+shapes signal    ch2_ch4   ../workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B2
+shapes bkg       ch2_ch5   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C1
+shapes data_obs  ch2_ch5   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C1
+shapes signal    ch2_ch5   ../workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C1
+shapes bkg       ch2_ch6   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C2
+shapes data_obs  ch2_ch6   ../workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C2
+shapes signal    ch2_ch6   ../workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C2
+----------------------------------------------------------------------------------------------------------------------------------
+bin          ch1_ch1  ch1_ch2  ch1_ch3  ch1_ch4  ch1_ch5  ch1_ch6  ch1_ch7  ch1_ch8  ch1_ch9  ch2_ch1  ch2_ch2  ch2_ch3  ch2_ch4  ch2_ch5  ch2_ch6
+observation  39       222      1529     32       486      3953     7        111      695      22       113      100      602      167      577    
+----------------------------------------------------------------------------------------------------------------------------------
+bin                                  ch1_ch1  ch1_ch1  ch1_ch2  ch1_ch2  ch1_ch3  ch1_ch3  ch1_ch4  ch1_ch4  ch1_ch5  ch1_ch5  ch1_ch6  ch1_ch6  ch1_ch7  ch1_ch7  ch1_ch8  ch1_ch8  ch1_ch9  ch1_ch9  ch2_ch1  ch2_ch1  ch2_ch2  ch2_ch2  ch2_ch3  ch2_ch3  ch2_ch4  ch2_ch4  ch2_ch5  ch2_ch5  ch2_ch6  ch2_ch6
+process                              signal   bkg      signal   bkg      signal   bkg      signal   bkg      signal   bkg      signal   bkg      signal   bkg      signal   bkg      signal   bkg      signal   bkg      signal   bkg      signal   bkg      signal   bkg      signal   bkg      signal   bkg    
+process                              0        1        0        1        0        1        0        1        0        1        0        1        0        1        0        1        0        1        0        1        0        1        0        1        0        1        0        1        0        1      
+rate                                 4.43179  39       8.0994   222      14.8703  1529     3.81673  32       16.7352  486      31.0343  3953     1.82011  7        6.85022  111      8.75612  695      1.08354  22       1.39586  113      3.34269  100      6.32512  602      2.85543  167      2.65482  577    
+----------------------------------------------------------------------------------------------------------------------------------
+BRBtoD_13TeV            lnN          1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -      
+BRBtoTau_13TeV          lnN          1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
+BRDToTau_13TeV          lnN          1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
+BRDsPhiPi_13TeV         lnN          1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -      
+BsScaling_13TeV         lnN          1.04     -        1.04     -        1.04     -        1.04     -        1.04     -        1.04     -        1.04     -        1.04     -        1.04     -        1.04     -        1.04     -        1.04     -        1.04     -        1.04     -        1.04     -      
+DpmScaling_13TeV        lnN          1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
+DsNorm_13TeV            lnN          1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
+UncBDTCut_13TeV         lnN          1.1      -        1.1      -        1.1      -        1.1      -        1.1      -        1.1      -        1.1      -        1.1      -        1.1      -        1.06     -        1.06     -        1.06     -        1.06     -        1.06     -        1.06     -      
+UncMuonEff_13TeV        lnN          1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -      
+UncRatioAcc_13TeV       lnN          1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -      
+UncTrigger_13TeV        lnN          1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
+fUnc_13TeV              lnN          1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.07     -        1.07     -        1.07     -        1.07     -        1.07     -        1.07     -      
