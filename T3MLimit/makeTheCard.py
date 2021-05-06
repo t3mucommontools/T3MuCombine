@@ -317,10 +317,10 @@ lumi              lnN                       1.025               -
 BRDToTau_13TeV    lnN                       1.03                -
 BRDsPhiPi_13TeV   lnN                       1.08                -
 BRBtoTau_13TeV    lnN                       1.11                -
-BRBtoD_13TeV      lnN                       1.16                -
+BRBtoD_13TeV      lnN                       1.05                -
 fUnc_13TeV        lnN                       1.11                -
 DpmScaling_13TeV  lnN                       1.03                -
-BsScaling_13TeV   lnN                       1.12                -
+BsScaling_13TeV   lnN                       1.04                -
 DsNorm_13TeV      lnN                       1.05                -
 UncTrigger_13TeV  lnN                       1.12                -
 UncRatioAcc_13TeV lnN                       1.01                -
