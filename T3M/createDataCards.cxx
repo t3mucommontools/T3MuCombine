@@ -458,18 +458,18 @@ void MakeDataCard(RooWorkspace* w, const char* fileBaseName, const char* fileBkg
     //outFile << "lumi_13TeV       lnN  1.027      - " << endl;
     //outFile << "lumi_13TeV        lnN  1.027     - " << endl;
     //outFile << "DsNorm_13TeV      lnN  1.033     - " << endl;
-    outFile << "DsNorm_13TeV      lnN  1.03      - " << endl; //2018 updated on 22 march
+    outFile << "DsNorm_13TeV      lnN  1.034     - " << endl; //1.034 for 2017, 1.03 for 2018
     outFile << "BRDToTau_13TeV    lnN  1.03      - " << endl;
     outFile << "BRDsPhiPi_13TeV   lnN  1.08      - " << endl;
     outFile << "BRBtoD_13TeV      lnN  1.05      - " << endl;
     outFile << "BRBtoTau_13TeV    lnN  1.03      - " << endl;    
-    outFile << "fUnc_13TeV        lnN  1.03      - " << endl;
+    outFile << "fUnc_13TeV        lnN  1.07      - " << endl;
     outFile << "DpmScaling_13TeV  lnN  1.03      - " << endl;
     outFile << "BsScaling_13TeV   lnN  1.04      - " << endl;
-    outFile << "UncTrigger_13TeV  lnN  1.05      - " << endl; //2018 updated on 22 march
-    outFile << "UncBDTCut_13TeV   lnN  1.05      - " << endl;
-    outFile << "UncRatioAcc_13TeV lnN  1.01      - " << endl;
-    outFile << "UncMuonEff_13TeV  lnN  1.015     - " << endl;
+    outFile << "UncTrigger_13TeV  lnN  1.02      - " << endl; //1.02 for 2017, 1.015 for 2018
+    outFile << "UncBDTCut_13TeV   lnN  1.06      - " << endl;
+    outFile << "UncRatioAcc_13TeV lnN  1.01      - " << endl; //taken from 2016 analysis
+    outFile << "UncMuonEff_13TeV  lnN  1.015     - " << endl; //1.015 for 2017, 1.016 for 2016
 //    outFile << "MuES_13TeV        lnN  1.007     - " << endl;
 //    outFile << "MuRes_13TeV       lnN  1.025     - " << endl;
 
