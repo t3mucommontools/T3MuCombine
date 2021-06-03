@@ -1,8 +1,8 @@
 m3m[1.62,2.0];
 sig_m0_A1[1.776, 1.775, 1.778];
 sig_sigma_A1[0.010, 0.00, 0.05];
-sig_alpha_A1[ 1, -5., 5.]; 
-sig_n_A1[1, 0.0, 5.0]; 
+sig_alpha_A1[ 1, -5., 5.];
+sig_n_A1[1, 0.0, 5.0];
 sig_gaus_sigma_A1[0.021,0.01,0.05];
 cb_fraction_A1[0.5,0,1];
 
@@ -12,8 +12,8 @@ t3m_sig_GSshape_A1_threeGlobal  = Gaussian(m3m,sig_m0_A1,sig_gaus_sigma_A1);
 
 sig_m0_B1[1.776, 1.775, 1.778];
 sig_sigma_B1[0.02, 0.00, 0.5];
-sig_alpha_B1[ 1, -20., 20.]; 
-sig_n_B1[2, 0.0, 5.0]; 
+sig_alpha_B1[ 1, -20., 20.];
+sig_n_B1[2, 0.0, 5.0];
 sig_gaus_sigma_B1[0.02,0.00,0.5];
 cb_fraction_B1[0.5,0,1];
 
@@ -23,8 +23,8 @@ t3m_sig_GSshape_B1_threeGlobal  = Gaussian(m3m,sig_m0_B1,sig_gaus_sigma_B1);
 
 sig_m0_C1[1.776, 1.775, 1.778];
 sig_sigma_C1[0.042, 0.01, 0.05];
-sig_alpha_C1[ 1, -20., 20.]; 
-sig_n_C1[2, 0.0, 5.0]; 
+sig_alpha_C1[ 1, -20., 20.];
+sig_n_C1[2, 0.0, 5.0];
 sig_gaus_sigma_C1[0.01,0.0,0.05];
 cb_fraction_C1[0.2,0,1];
 
@@ -34,8 +34,8 @@ t3m_sig_GSshape_C1_threeGlobal  = Gaussian(m3m,sig_m0_C1,sig_gaus_sigma_C1);
 
 sig_m0_A2[1.776, 1.775, 1.778];
 sig_sigma_A2[0.01, 0.0, 0.05];
-sig_alpha_A2[ 1, -20., 20.]; 
-sig_n_A2[2, 0.0, 5.0]; 
+sig_alpha_A2[ 1, -20., 20.];
+sig_n_A2[2, 0.0, 5.0];
 sig_gaus_sigma_A2[0.01,0.0,0.05];
 cb_fraction_A2[0.5,0,1];
 
@@ -45,8 +45,8 @@ t3m_sig_GSshape_A2_threeGlobal  = Gaussian(m3m,sig_m0_A2,sig_gaus_sigma_A2);
 
 sig_m0_B2[1.776, 1.775, 1.778];
 sig_sigma_B2[0.02, 0.0, 0.05];
-sig_alpha_B2[ 1, -20., 20.]; 
-sig_n_B2[2, 0.0, 5.0]; 
+sig_alpha_B2[ 1, -20., 20.];
+sig_n_B2[2, 0.0, 5.0];
 sig_gaus_sigma_B2[0.02,0.0,0.05];
 cb_fraction_B2[0.5,0,1];
 
@@ -56,8 +56,8 @@ t3m_sig_GSshape_B2_threeGlobal  = Gaussian(m3m,sig_m0_B2,sig_gaus_sigma_B2);
 
 sig_m0_C2[1.776, 1.775, 1.778];
 sig_sigma_C2[0.02, 0.0, 0.05];
-sig_alpha_C2[ 1, -20., 20.]; 
-sig_n_C2[2, 0.0, 5.0]; 
+sig_alpha_C2[ 1, -20., 20.];
+sig_n_C2[2, 0.0, 5.0];
 sig_gaus_sigma_C2[0.02,0.0,0.05];
 cb_fraction_C2[0.5,0,1];
 
@@ -66,8 +66,8 @@ t3m_sig_GSshape_C2_threeGlobal  = Gaussian(m3m,sig_m0_C2,sig_gaus_sigma_C2);
 
 sig_m0_A3[1.776, 1.775, 1.778];
 sig_sigma_A3[0.01, 0.0, 0.05];
-sig_alpha_A3[ 1, -20., 20.]; 
-sig_n_A3[2, 0.0, 5.0]; 
+sig_alpha_A3[ 1, -20., 20.];
+sig_n_A3[2, 0.0, 5.0];
 sig_gaus_sigma_A3[0.01,0.0,0.05];
 cb_fraction_A3[0.5,0,1];
 
@@ -77,8 +77,8 @@ t3m_sig_GSshape_A3_threeGlobal  = Gaussian(m3m,sig_m0_A3,sig_gaus_sigma_A3);
 
 sig_m0_B3[1.776, 1.775, 1.778];
 sig_sigma_B3[0.02, 0.0, 0.05];
-sig_alpha_B3[ 1, -20., 20.]; 
-sig_n_B3[2, 0.0, 5.0]; 
+sig_alpha_B3[ 1, -20., 20.];
+sig_n_B3[2, 0.0, 5.0];
 sig_gaus_sigma_B3[0.02,0.0,0.05];
 cb_fraction_B3[0.5,0,1];
 
@@ -88,8 +88,8 @@ t3m_sig_GSshape_B3_threeGlobal  = Gaussian(m3m,sig_m0_B3,sig_gaus_sigma_B3);
 
 sig_m0_C3[1.776, 1.775, 1.778];
 sig_sigma_C3[0.02, 0.0, 0.05];
-sig_alpha_C3[ 1, -20., 20.]; 
-sig_n_C3[2, 0.0, 5.0]; 
+sig_alpha_C3[ 1, -20., 20.];
+sig_n_C3[2, 0.0, 5.0];
 sig_gaus_sigma_C3[0.02,0.0,0.05];
 cb_fraction_C3[0.5,0,1];
 
