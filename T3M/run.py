@@ -21,7 +21,7 @@ if __name__ == "__main__":
     command = ""
     print(args.dimensions)
 
-    if (args.dimensions==1): 
+    if (args.dimensions==1):
         if args.version==1:
            command="root -b -q 'createDataCards.cxx(\"" + args.input_file+ "\", 0, false, \""+ args.card_file +"\",\""+args.type+"\",\""+args.run+"\")';"
            command +="cd datacards; combineCards.py CMS_T3MSignal_13TeV_A1.txt CMS_T3MSignal_13TeV_A2.txt CMS_T3MSignal_13TeV_B1.txt CMS_T3MSignal_13TeV_B2.txt"
@@ -30,7 +30,7 @@ if __name__ == "__main__":
            command="root -b -q 'createDataCards_v2.cxx(\"" + args.input_file+ "\", 0, false, \""+ args.card_file +"\",\""+args.type+"\",\""+args.run+"\")';"
            command +="cd datacards; combineCards.py CMS_T3MSignal_13TeV_A1.txt CMS_T3MSignal_13TeV_A2.txt CMS_T3MSignal_13TeV_B1.txt CMS_T3MSignal_13TeV_B2.txt"
            command +="  CMS_T3MSignal_13TeV_C1.txt CMS_T3MSignal_13TeV_C2.txt > CMS_T3MSignal_13TeV_Combined.txt;"
-        elif args.version==3:   
+        elif args.version==3:
            command="root -b -q 'createDataCards_v3.cxx(\"" + args.input_file+ "\", 0, false, \""+ args.card_file +"\",\""+args.type+"\",\""+args.run+"\")';"
            command +="cd datacards; combineCards.py CMS_T3MSignal_13TeV_A1.txt CMS_T3MSignal_13TeV_A2.txt CMS_T3MSignal_13TeV_A2.txt CMS_T3MSignal_13TeV_B1.txt CMS_T3MSignal_13TeV_B2.txt"
            command +=" CMS_T3MSignal_13TeV_B3.txt  CMS_T3MSignal_13TeV_C1.txt CMS_T3MSignal_13TeV_C2.txt CMS_T3MSignal_13TeV_C3.txt> CMS_T3MSignal_13TeV_Combined.txt;"
@@ -40,7 +40,7 @@ if __name__ == "__main__":
         command +="cd datacards; combineCards.py CMS_T3MSignal_13TeV_A11.txt CMS_T3MSignal_13TeV_A12.txt CMS_T3MSignal_13TeV_A21.txt CMS_T3MSignal_13TeV_A22.txt "
         command +="CMS_T3MSignal_13TeV_B11.txt CMS_T3MSignal_13TeV_B12.txt CMS_T3MSignal_13TeV_B21.txt CMS_T3MSignal_13TeV_B22.txt "
         command +="CMS_T3MSignal_13TeV_C11.txt CMS_T3MSignal_13TeV_C12.txt CMS_T3MSignal_13TeV_C21.txt CMS_T3MSignal_13TeV_C22.txt > CMS_T3MSignal_13TeV_Combined.txt;"
-    else: 
+    else:
         print("Invalid number of dimensions!")
 
 
