@@ -6,5 +6,5 @@ example call for 6 event categories:
 
 To get limits for 2017 and 2018 do:
 
-```bash getLimits_2017.sh\
-bash getLimits_2018.sh```
+```bash getLimits_2017.sh```  
+```bash getLimits_2018.sh```
