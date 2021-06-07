@@ -29,6 +29,7 @@ void MakePlotsSgn(RooWorkspace* w,   std::vector<string> cat_names);
 void SetConstantParams(const RooArgSet* params);
 
 
+
 void
 createDataCards_v3(TString inputfile, int signalsample = 0, Bool_t dobands = false, string modelCard="model_card.rs", TString type="threeGlobal", TString Run="2017")
 {
@@ -87,6 +88,7 @@ createDataCards_v3(TString inputfile, int signalsample = 0, Bool_t dobands = fal
 
 }
 
+
 void
 SigModelFit(RooWorkspace* w, std::vector<string> cat_names, TString type, TString Run) {
 
@@ -96,9 +98,9 @@ SigModelFit(RooWorkspace* w, std::vector<string> cat_names, TString type, TStrin
    RooAbsPdf* pdfSigGS[NCAT];
    RooAddPdf* SignalModel[NCAT];
 
-   Float_t minMassFit(MMIN),maxMassFit(MMAX);
+   Float_t minMassFit(MMIN),maxMassFit(MMAX); 
 
-   RooRealVar* m3m     = w->var("m3m");
+   RooRealVar* m3m     = w->var("m3m");  
 
    m3m->setUnit("GeV");
    m3m->setRange("SB1",1.62,1.75);
@@ -168,13 +170,14 @@ SigModelFit(RooWorkspace* w, std::vector<string> cat_names, TString type, TStrin
                alpha_cb, //*w->var("sig_alpha"+TString::Format("_%s",cat_names.at(category).c_str())),
                n_cb, //*w->var("sig_n"+TString::Format("_%s",cat_names.at(category).c_str()))));
                f_cb //*w->var("CBFraction"+TString::Format("_%s",cat_names.at(category).c_str()));
-               ));
+               )); 
       SetConstantParams(w->set(TString::Format("SigPdfParam_%s",cat_names.at(category).c_str())));
 
       //w->import(*SignalModel[category]);
       w->import(signal);
    }
 }
+
 
 void
 MakePlots(RooWorkspace* w,   std::vector<string> cat_names){
@@ -192,7 +195,8 @@ MakePlots(RooWorkspace* w,   std::vector<string> cat_names){
       bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("bkg_fit_1par_%s",cat_names.at(category).c_str()));
    }
 
-   RooRealVar* m3m     = w->var("m3m");
+   RooRealVar* m3m     = w->var("m3m");  
+
 
    m3m->setUnit("GeV");
 
@@ -237,7 +241,7 @@ MakePlots(RooWorkspace* w,   std::vector<string> cat_names){
 
 
       //bkgpdf[category]->paramOn( plot[category], Format("NELU", AutoPrecision(2)),ShowConstants(), Layout(0.4,0.99,0.9));
-      plot[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));
+      plot[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
       plot[category]->SetMinimum(0.01);
       plot[category]->SetMaximum(1.40*plot[category]->GetMaximum());
       plot[category]->GetXaxis()->SetTitle("m_{3mu} [GeV]");
@@ -260,7 +264,7 @@ MakePlots(RooWorkspace* w,   std::vector<string> cat_names){
       legmc->SetFillStyle(0);
       legmc->SetTextSize(0.029);
 
-      legmc->Draw();
+      legmc->Draw();  
       ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".png");
    }
 }
@@ -278,7 +282,7 @@ MakePlotsSgn(RooWorkspace* w,   std::vector<string> cat_names){
       sigpdf[category] =(RooAbsPdf*)w->pdf("SignalModel"+TString::Format("_%s",cat_names.at(category).c_str()));
    }
 
-   RooRealVar* m3m     = w->var("m3m");
+   RooRealVar* m3m     = w->var("m3m");  
 
    m3m->setUnit("GeV");
    m3m->setRange("SB1",1.62,1.75);
@@ -299,7 +303,7 @@ MakePlotsSgn(RooWorkspace* w,   std::vector<string> cat_names){
       sigpdf[category]->paramOn( plot_sgn[category], Format("NELU", AutoPrecision(4)), ShowConstants(), Layout(0.55,0.99,0.9));
 
 
-      plot_sgn[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));
+      plot_sgn[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
       plot_sgn[category]->SetMinimum(0.01);
       plot_sgn[category]->SetMaximum(1.40*plot_sgn[category]->GetMaximum());
       plot_sgn[category]->GetXaxis()->SetTitle("m_{3mu} [GeV]");
@@ -320,12 +324,12 @@ MakePlotsSgn(RooWorkspace* w,   std::vector<string> cat_names){
       legmc->SetFillStyle(0);
       legmc->SetTextSize(0.029);
 
-      legmc->Draw();
+      legmc->Draw();  
       ctmp_sig->SaveAs("plots/"+TString::Format("Signal_%s",cat_names.at(category).c_str())+".png");
    }
 }
 
-void
+void 
 AddSigData(TString file, RooWorkspace* w, std::vector<string> cat_names) {
 
    TFile *f = new TFile(file,"READ");
@@ -333,7 +337,6 @@ AddSigData(TString file, RooWorkspace* w, std::vector<string> cat_names) {
 
    for(unsigned int category=0; category< NCAT; category++){
       TString name = TString::Format("Sig_%s",cat_names.at(category).c_str());
-
       taumass[category] = (TH1F*)f->Get(TString::Format("signal%s",cat_names.at(category).c_str()));
       RooDataHist sighist("sighist","sighist",*w->var("m3m"),Import(*taumass[category]));
       w->import(sighist,Rename(name));
@@ -343,7 +346,7 @@ AddSigData(TString file, RooWorkspace* w, std::vector<string> cat_names) {
 }
 
 
-void
+void 
 AddBkgData(TString file,RooWorkspace* w, std::vector<string> cat_names) {
 
    Int_t ncat = NCAT;
@@ -353,7 +356,7 @@ AddBkgData(TString file,RooWorkspace* w, std::vector<string> cat_names) {
    for(unsigned int category=0; category< NCAT; category++)
    {
       TString name = TString::Format("Bkg_%s",cat_names.at(category).c_str());
-      taumass[category] = (TH1F*)f->Get(TString::Format("background%s",cat_names.at(category).c_str()));
+      taumass[category] = (TH1F*)f->Get(TString::Format("background%s",cat_names.at(category).c_str())); 
       RooDataHist bkghist("bkghist","bkghist",*w->var("m3m"),Import(*taumass[category]));
       w->import(bkghist,Rename(name));
    }
@@ -362,7 +365,7 @@ AddBkgData(TString file,RooWorkspace* w, std::vector<string> cat_names) {
 
 
 
-void
+void 
 BkgModelFit(RooWorkspace* w,  std::vector<string>, RooFitResult** fitresults, bool SideBands, std::vector<string> cat_names){
 
 
@@ -371,7 +374,7 @@ BkgModelFit(RooWorkspace* w,  std::vector<string>, RooFitResult** fitresults, bo
    RooPlot* plotbkg_fit[NCAT];
    RooAbsPdf* bkg_fitTmp_1par[NCAT];
 
-   RooRealVar* m3m     = w->var("m3m");
+   RooRealVar* m3m     = w->var("m3m");  
 
 
    m3m->setUnit("GeV");
@@ -393,8 +396,8 @@ BkgModelFit(RooWorkspace* w,  std::vector<string>, RooFitResult** fitresults, bo
    for(unsigned int category=0; category< NCAT; category++)
    {
       data[category]   = (RooDataSet*) w->data(TString::Format("Bkg_%s",cat_names.at(category).c_str()));
-      bkg_fitTmp_1par[category] = new RooGenericPdf(TString::Format("bkg_fit_1par_%s",cat_names.at(category).c_str()), "exp(@1*@0 + @2)",
-            RooArgList(*w->var("m3m"),
+      bkg_fitTmp_1par[category] = new RooGenericPdf(TString::Format("bkg_fit_1par_%s",cat_names.at(category).c_str()), "exp(@1*@0 + @2)", 
+            RooArgList(*w->var("m3m"), 
                *w->var(TString::Format("bkg_exp_slope_%s",cat_names.at(category).c_str())),
                *w->var(TString::Format("bkg_exp_offset_%s",cat_names.at(category).c_str()))));   // Generig BKG pdf for more careful description
       //fitresults[category]=bkg_fitTmp_1par[category]->fitTo(*data[category], Strategy(1), Minos(kFALSE), Range("SB1,SB2"),SumW2Error(kTRUE), Save(kTRUE),RooFit::PrintEvalErrors(-1));
@@ -407,7 +410,7 @@ BkgModelFit(RooWorkspace* w,  std::vector<string>, RooFitResult** fitresults, bo
 }
 
 
-void
+void 
 MakeSigWS(RooWorkspace* w, const char* fileBaseName,  std::vector<string> cat_names) {
 
    TString wsDir   = "workspaces/";
@@ -440,7 +443,7 @@ MakeSigWS(RooWorkspace* w, const char* fileBaseName,  std::vector<string> cat_na
 }
 
 
-void
+void 
 MakeBkgWS(RooWorkspace* w, const char* fileBaseName, std::vector<string> cat_names) {
    TString wsDir   = "workspaces/";
 
@@ -513,16 +516,16 @@ void MakeDataCard(RooWorkspace* w, const char* fileBaseName, const char* fileBkg
       //outFile << "lumi_13TeV       lnN  1.027      - " << endl;
       //outFile << "lumi_13TeV        lnN  1.027     - " << endl;
       //outFile << "DsNorm_13TeV      lnN  1.033     - " << endl;
-      if (Run.Contains("2018")){
+      if (Run.Contains("2018")){ 
          outFile << "DsNorm_13TeV      lnN  1.03      - " << endl; // updated on 13 April
          outFile << "BRDToTau_13TeV    lnN  1.03      - " << endl;
          outFile << "BRDsPhiPi_13TeV   lnN  1.08      - " << endl;
          outFile << "BRBtoD_13TeV      lnN  1.05      - " << endl;
-         outFile << "BRBtoTau_13TeV    lnN  1.03      - " << endl;
+         outFile << "BRBtoTau_13TeV    lnN  1.03      - " << endl;    
          outFile << "fUnc_13TeV        lnN  1.07      - " << endl; // updated on 13 April
          outFile << "DpmScaling_13TeV  lnN  1.03      - " << endl;
          outFile << "BsScaling_13TeV   lnN  1.04      - " << endl;
-         outFile << "UncTrigger_13TeV  lnN  1.03      - " << endl;
+         outFile << "UncTrigger_13TeV  lnN  1.03      - " << endl; 
          outFile << "UncBDTCut_13TeV   lnN  1.06      - " << endl;
          outFile << "UncRatioAcc_13TeV lnN  1.01      - " << endl;
          outFile << "UncMuonEff_13TeV  lnN  1.015     - " << endl;
@@ -556,13 +559,16 @@ void MakeDataCard(RooWorkspace* w, const char* fileBaseName, const char* fileBkg
 
 
 
+void 
+=======
 void
+>>>>>>> 984f755d128ea7bb1c8f3ced4748e97b82dc82b6
 SetConstantParams(const RooArgSet* params) {
 
    TIterator* iter(params->createIterator());
    for (TObject *a = iter->Next(); a != 0; a = iter->Next()) {
       RooRealVar *rrv = dynamic_cast<RooRealVar *>(a);
       if (rrv) { rrv->setConstant(true); std::cout << " " << rrv->GetName(); }
-   }
+   }  
 
 }
