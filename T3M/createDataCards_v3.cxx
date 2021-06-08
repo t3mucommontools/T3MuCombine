@@ -560,9 +560,6 @@ void MakeDataCard(RooWorkspace* w, const char* fileBaseName, const char* fileBkg
 
 
 void 
-=======
-void
->>>>>>> 984f755d128ea7bb1c8f3ced4748e97b82dc82b6
 SetConstantParams(const RooArgSet* params) {
 
    TIterator* iter(params->createIterator());
