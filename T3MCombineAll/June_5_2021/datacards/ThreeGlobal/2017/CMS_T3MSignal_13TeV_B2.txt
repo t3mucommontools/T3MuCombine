@@ -13,7 +13,7 @@ observation   193
 bin               B2        B2     
 process              signal     bkg     
 process                0          1      
-rate                 6.53226    193
+rate                 6.66724    193
 --------------------------------
 DsNorm_13TeV      lnN  1.034      - 
 BRDToTau_13TeV    lnN  1.03      - 
@@ -27,3 +27,4 @@ UncTrigger_13TeV  lnN  1.05      -
 UncBDTCut_13TeV   lnN  1.06      - 
 UncRatioAcc_13TeV lnN  1.01      - 
 UncMuonEff_13TeV  lnN  1.015     - 
+WNorm_13TeV      lnN  1.03      - 
