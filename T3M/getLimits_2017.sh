@@ -9,6 +9,8 @@ for card in BPH_vars_twoGlobalTracker; do
    cd datacards; ./runLimit.py; cd ..;
    mkdir workspaces/2017_2glbTrk_$card;
    cp workspaces/*.root workspaces/2017_2glbTrk_$card
+   rm datacards/*txt
+   rm workspaces/*root
 done
 
 for card in BPH_vars_threeGlobal; do
@@ -22,4 +24,6 @@ for card in BPH_vars_threeGlobal; do
    cd datacards; ./runLimit.py; cd ..;
    mkdir workspaces/2017_3glb_$card;
    cp workspaces/*.root workspaces/2017_3glb_$card
+   rm datacards/*txt
+   rm workspaces/*root
 done
