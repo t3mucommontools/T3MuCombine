@@ -13,7 +13,7 @@ observation   194
 bin               C3        C3     
 process              signal     bkg     
 process                0          1      
-rate                 3.63358    194
+rate                 3.71027    194
 --------------------------------
 DsNorm_13TeV      lnN  1.034      - 
 BRDToTau_13TeV    lnN  1.03      - 
@@ -27,3 +27,4 @@ UncTrigger_13TeV  lnN  1.05      -
 UncBDTCut_13TeV   lnN  1.06      - 
 UncRatioAcc_13TeV lnN  1.01      - 
 UncMuonEff_13TeV  lnN  1.015     - 
+WNorm_13TeV      lnN  1.03      - 
