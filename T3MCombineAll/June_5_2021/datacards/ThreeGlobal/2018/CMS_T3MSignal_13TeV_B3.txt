@@ -8,14 +8,15 @@ shapes bkg B3 ../workspaces/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B3
 shapes signal B3 ../workspaces/CMS_T3MSignal_13TeV.root w_all:SignalModel_B3
 ---------------
 bin            B3  
-observation   2314
+observation   2313
 ------------------------------
 bin               B3        B3     
 process              signal     bkg     
 process                0          1      
-rate                 29.5706    2314
+rate                 30.8714    2313
 --------------------------------
 DsNorm_13TeV      lnN  1.03      - 
+WNorm_13TeV       lnN  1.05      - 
 BRDToTau_13TeV    lnN  1.03      - 
 BRDsPhiPi_13TeV   lnN  1.08      - 
 BRBtoD_13TeV      lnN  1.05      - 

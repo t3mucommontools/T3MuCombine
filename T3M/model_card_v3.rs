@@ -118,6 +118,19 @@ bkg_exp_offset_C2[0.0,-20.0,20.0];
 bkg_exp_offset_C3[0.0,-20.0,20.0];
 
 
+bkg_powerlaw_slope_A1[-1.0,-5.0,1.0];
+bkg_powerlaw_slope_A2[-1.0,-5.0,1.0];
+bkg_powerlaw_slope_A3[-1.0,-5.0,1.0];
+
+bkg_powerlaw_slope_B1[-1.0,-5.0,1.0];
+bkg_powerlaw_slope_B2[-1.0,-5.0,1.0];
+bkg_powerlaw_slope_B3[-1.0,-5.0,1.0];
+
+bkg_powerlaw_slope_C1[-1.0,-5.0,1.0];
+bkg_powerlaw_slope_C2[-1.0,-5.0,1.0];
+bkg_powerlaw_slope_C3[-1.0,-5.0,1.0];
+
+
 bkg_exp_shape_A1 = RooExponential(m3m,bkg_exp_slope_A1, bkg_exp_offset_A1);
 bkg_exp_shape_A2 = RooExponential(m3m,bkg_exp_slope_A2, bkg_exp_offset_A2);
 bkg_exp_shape_A3 = RooExponential(m3m,bkg_exp_slope_A3, bkg_exp_offset_A3);
