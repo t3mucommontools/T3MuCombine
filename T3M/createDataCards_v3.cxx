@@ -576,9 +576,6 @@ void MakeDataCard(RooWorkspace* w, const char* fileBaseName, const char* fileBkg
 }
 
 
-
-
-
 void
 SetConstantParams(const RooArgSet* params) {
 
@@ -587,5 +584,4 @@ SetConstantParams(const RooArgSet* params) {
       RooRealVar *rrv = dynamic_cast<RooRealVar *>(a);
       if (rrv) { rrv->setConstant(true); std::cout << " " << rrv->GetName(); }
    }  
-
 }
