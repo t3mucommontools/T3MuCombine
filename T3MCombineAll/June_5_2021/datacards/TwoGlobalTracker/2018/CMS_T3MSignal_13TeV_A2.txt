@@ -8,12 +8,12 @@ shapes bkg A2 ../workspaces/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A2
 shapes signal A2 ../workspaces/CMS_T3MSignal_13TeV.root w_all:SignalModel_A2
 ---------------
 bin            A2  
-observation   113
+observation   325
 ------------------------------
 bin               A2        A2     
 process              signal     bkg     
 process                0          1      
-rate                 1.34844    113
+rate                 2.16727    325
 --------------------------------
 DsNorm_13TeV      lnN  1.03      - 
 BRDToTau_13TeV    lnN  1.03      - 
