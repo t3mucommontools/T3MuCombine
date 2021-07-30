@@ -8,6 +8,7 @@
 The script setupCombine.pl will clone and compile HiggsAnalysisTools and CombineHarvester. 
 Run ./setupCombine.pl  for an instruction
 
+Please find information on latest releases here: https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/
 
 ```sh 
 ./setupCombine.pl --help
@@ -23,15 +24,15 @@ This will produce text file that you need to source to setup everything (just pa
 
 The following settings will be used by default:
 
-    SCRAM_ARCH=slc6_amd64_gcc530	
-    CMSSW_8_1_0	
+    SCRAM_ARCH=slc7_amd64_gcc700
+    CMSSW_10_2_13
 
 
 After compilation:
 ```
-cd /MyWorkDir/CMSSW_8_1_0/src/CombineHarvester/
+cd /MyWorkDir/CMSSW_10_2_13/src/CombineHarvester/
 ```
-And choose your working area; The place for combining all categories is /MyWorkDir/CMSSW_8_1_0/src/CombineHarvester/T3MCombineAll
+And choose your working area; The place for combining all categories is /MyWorkDir/CMSSW_10_2_13/src/CombineHarvester/T3MCombineAll
 
 
 
