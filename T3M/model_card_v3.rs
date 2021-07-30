@@ -1,9 +1,9 @@
 m3m[1.62,2.0];
 sig_m0_A1[1.776, 1.775, 1.778];
-sig_sigma_A1[0.010, 0.00, 0.05];
+sig_sigma_A1[0.010, 0.00, 0.5];
 sig_alpha_A1[ 1, -5., 5.];
 sig_n_A1[1, 0.0, 5.0];
-sig_gaus_sigma_A1[0.01,0.00,0.05];
+sig_gaus_sigma_A1[0.01,0.00,0.5];
 cb_fraction_A1[0.5,0,1];
 
 t3m_sig_CBshape_A1_threeGlobal  = CBShape(m3m, sig_m0_A1, sig_sigma_A1, sig_alpha_A1, sig_n_A1);
