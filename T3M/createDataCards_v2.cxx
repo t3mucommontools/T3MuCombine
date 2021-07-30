@@ -134,7 +134,7 @@ SigModelFit(RooWorkspace* w, std::vector<string> cat_names, RooFitResult** signa
       TString name_sigma_gaus = TString::Format("sigma_gaus_fixed_%s",cat_names.at(category).c_str());
       TString name_alpha_cb = TString::Format("alpha_cb_fixed_%s",cat_names.at(category).c_str());
       TString name_n_cb = TString::Format("n_cb_fixed_%s",cat_names.at(category).c_str());
-      TString name_f_cb = TString::Format("name_f_cb_%s",cat_names.at(category).c_str());
+      TString name_f_cb = TString::Format("f_cb_%s",cat_names.at(category).c_str());
 
       RooRealVar mean    (name_mean,"mean", sig_m0->getVal(), sig_m0->getVal(), sig_m0->getVal() );
       RooRealVar sigma_cb (name_sigma_cb,"sigma_cb", sig_sigma->getVal(), sig_sigma->getVal(), sig_sigma->getVal() );
@@ -142,6 +142,13 @@ SigModelFit(RooWorkspace* w, std::vector<string> cat_names, RooFitResult** signa
       RooRealVar alpha_cb (name_alpha_cb,"alpha_cb",sig_alpha->getVal(), sig_alpha->getVal(), sig_alpha->getVal());
       RooRealVar n_cb (name_n_cb,"n_cb",sig_n->getVal(), sig_n->getVal(), sig_n->getVal());
       RooRealVar f_cb (name_f_cb,"f_cb",CBFraction->getVal(), CBFraction->getVal(), CBFraction->getVal());
+
+      mean.setError(sig_m0->getError());
+      sigma.setError(sig_sigma->getError());
+      sigma_gaus.setError(sig_gaus_sigma->getError());
+      alpha_cb.setError(sig_alpha->getError());
+      n_cb.setError(sig_n->getError());
+      f_cb.setError(CBFraction->getError());
 
       //RooCBShape CB_final(TString::Format("CB_final_%s",cat_names.at(category).c_str())+"_"+type+"_"+Run,"CB PDF",*m3m,mean,sigma_cb,*sig_alpha,*sig_n) ;
       //RooGaussian GS_final(TString::Format("GS_final_%s",cat_names.at(category).c_str())+"_"+type+"_"+Run,"GS PDF",*m3m,mean,*sig_gaus_sigma) ;
@@ -221,7 +228,9 @@ MakePlots(RooWorkspace* w,   std::vector<string> cat_names){
 
       Double_t Nratio(0.);
       Double_t Nentries(static_cast<Double_t>(dataAll[category]->sumEntries()));
-      Nratio=(static_cast<Double_t>((dataAll[category]->reduce(sidebands)->sumEntries())))/(static_cast<Double_t>(Nentries));
+      if ( category%3==0 ) Nratio=(static_cast<Double_t>((dataAll[category]->reduce("(m3m < 1.753 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.801)")->sumEntries())))/(static_cast<Double_t>(Nentries));
+      if ( category%3==1 ) Nratio=(static_cast<Double_t>((dataAll[category]->reduce("(m3m < 1.739 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.815)")->sumEntries())))/(static_cast<Double_t>(Nentries));
+      if ( category%3==2 ) Nratio=(static_cast<Double_t>((dataAll[category]->reduce("(m3m < 1.727 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.827)")->sumEntries())))/(static_cast<Double_t>(Nentries));
 
       //ataAll[category]->plotOn(plot[category],CutRange("SB1,SB2"),RooFit::MarkerColor(kGray+3),RooFit::MarkerStyle(21),RooFit::MarkerSize(0.75));
       if ( category==0 || category==3 ) dataAll[category]->plotOn(plot[category],CutRange("SB1_A,SB2_A"),RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),
