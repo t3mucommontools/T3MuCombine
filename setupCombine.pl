@@ -9,8 +9,8 @@ $ARGV[$argnum];
 
 $UserID= POSIX::cuserid();
 
-$CMSSWRel="8_1_0";
-$ARCH="slc6_amd64_gcc530";
+$CMSSWRel="10_2_13";
+$ARCH="slc7_amd64_gcc700";
 $time= strftime("%h_%d_%Y",localtime);
 
 if($ARGV[0] eq "--help" || $ARGV[0] eq ""){
@@ -55,7 +55,7 @@ if( $ARGV[0] eq "--Combine"){
     system(sprintf("echo \"cd HiggsAnalysis/CombinedLimit \" >> Install_Combine_$time"));
 
     system(sprintf("echo \"git fetch origin  \" >> Install_Combine_$time"));
-    system(sprintf("echo \"git checkout v7.0.12  \" >> Install_Combine_$time"));
+    system(sprintf("echo \"git checkout v8.2.0  \" >> Install_Combine_$time"));
     system(sprintf("echo \"scram b clean; scram b -j 4  \" >> Install_Combine_$time"));
 
     system(sprintf("echo \"cd ../../ \" >> Install_Combine_$time"));
