@@ -3,17 +3,17 @@ imax 1
 jmax 1
 kmax *
 ---------------
-shapes data_obs  C2 ../workspaces/CMS_T3MBkg_13TeV.root w_all:data_obs_C2
-shapes bkg C2 ../workspaces/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C2
-shapes signal C2 ../workspaces/CMS_T3MSignal_13TeV.root w_all:SignalModel_C2
+shapes data_obs  B2 ../workspaces/CMS_T3MBkg_13TeV.root w_all:data_obs_B2
+shapes bkg B2 ../workspaces/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B2
+shapes signal B2 ../workspaces/CMS_T3MSignal_13TeV.root w_all:SignalModel_B2
 ---------------
-bin            C2  
-observation   1944
+bin            B2  
+observation   2320
 ------------------------------
-bin               C2        C2     
+bin               B2        B2     
 process              signal     bkg     
 process                0          1      
-rate                 3.5169    1944
+rate                 8.58258    2320
 --------------------------------
 DsNorm_13TeV      lnN  1.03      - 
 BRDToTau_13TeV    lnN  1.03      - 
