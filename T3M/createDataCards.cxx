@@ -203,7 +203,7 @@ MakePlots(RooWorkspace* w,   std::vector<string> cat_names){
     plot[category]->SetMaximum(1.40*plot[category]->GetMaximum());
     plot[category]->GetXaxis()->SetTitle("m_{3mu} [GeV]");
     
-    TCanvas* ctmp_sig = new TCanvas(TString::Format("Category %s",cat_names.at(category).c_str()),"Categories",0,0,700,500);
+    TCanvas* ctmp_sig = new TCanvas(TString::Format("Category %s",cat_names.at(category).c_str()),"Categories",0,0,66,66);
     ctmp_sig->SetFrameLineWidth(3);
     ctmp_sig->SetTickx();
     ctmp_sig->SetTicky();
