@@ -27,10 +27,17 @@ Third line: comma separated list of bdt values which define the categories (same
 
 model_card.rs can be customised based on number of categories and/or channel (threeGlobal, twoGlobalTracker)
 
+example input TTree can be found at:
+```
+scp -r /afs/cern.ch/user/f/fsimone/public/Tau3mu/inputdata .
+``` 
+
 --run argument (2017 or 2018) will affect the systematic uncertainties in the datacards
 
 example call for 9 event categories, threeGlobal channel:
-```./run.py -i inputfile_9categories.root -c model_card_v3.rs --run 2018 --type threeGlobal -v 3 -s config_v3.txt```
+```./run.py -i inputdata/dataset_UL2017_ThreeGlobal_outputTree.root -c model_card_v3.rs --run 2017 --type threeGlobal -v 3 -s config_ThreeGlobal_2017.txt```
+
+```./run.py -i inputdata/dataset_UL2018_ThreeGlobal_outputTree.root -c model_card_v3.rs --run 2018 --type threeGlobal -v 3 -s config_ThreeGlobal_2018.txt```
 
 example call for 6 event categories, twoGlobalTracker:  
 ```./run.py -i inputfile_6categories.root -c model_card_v2.rs --run 2018 --type twoGlobalTracker -v 2 -s config_v2.txt```
