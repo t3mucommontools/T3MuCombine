@@ -256,24 +256,36 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
    RooPlot* plot[NCAT];
    for(unsigned int category=0; category< NCAT; category++){
       plot[category] = m3m->frame();
-      signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kCyan+2),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.0), Binning(42, 1.600000, 2.020000));
+      signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kCyan+2),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.0), Binning(38, 1.620000, 2.00000));
       sigpdf[category]->plotOn(plot[category], RooFit::LineColor(kRed),RooFit::LineWidth(3));
   
       //plot data 
-      if (category%3==0) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(42, 1.600000, 2.020000));
-      if (category%3==1) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(42, 1.600000, 2.020000));
-      if (category%3==2) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(42, 1.600000, 2.020000));
-      //plot pdf
-      if ( category%3==0 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_A,SB2_A"), RooFit::NormRange("SB1_A,SB2_A"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
-      if ( category%3==1 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_B,SB2_B"), RooFit::NormRange("SB1_B,SB2_B"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
-      if ( category%3==2 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_C,SB2_C"), RooFit::NormRange("SB1_C,SB2_C"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+      if (category%3==0) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000));
+      if (category%3==1) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000));
+      if (category%3==2) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000));
+      if(blind){
+          //plot pdf in sidebands
+          if ( category%3==0 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_A,SB2_A"), RooFit::NormRange("SB1_A,SB2_A"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+          if ( category%3==1 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_B,SB2_B"), RooFit::NormRange("SB1_B,SB2_B"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+          if ( category%3==2 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_C,SB2_C"), RooFit::NormRange("SB1_C,SB2_C"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
 
-      if(MultiPdf){
-	if ( category%3==0 ) bkgpdf2[category]->plotOn(plot[category], Range("SB1_A,SB2_A"),RooFit::NormRange("SB1_A,SB2_A"), RooFit::LineColor(kBlue),RooFit::LineWidth(3));
-	if ( category%3==1 ) bkgpdf2[category]->plotOn(plot[category], Range("SB1_B,SB2_B"),RooFit::NormRange("SB1_B,SB2_B"), RooFit::LineColor(kBlue),RooFit::LineWidth(3));
-	if ( category%3==2 ) bkgpdf2[category]->plotOn(plot[category], Range("SB1_C,SB2_C"),RooFit::NormRange("SB1_B,SB2_B"), RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+          if(MultiPdf){
+            if ( category%3==0 ) bkgpdf2[category]->plotOn(plot[category], Range("SB1_A,SB2_A"),RooFit::NormRange("SB1_A,SB2_A"), RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+            if ( category%3==1 ) bkgpdf2[category]->plotOn(plot[category], Range("SB1_B,SB2_B"),RooFit::NormRange("SB1_B,SB2_B"), RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+            if ( category%3==2 ) bkgpdf2[category]->plotOn(plot[category], Range("SB1_C,SB2_C"),RooFit::NormRange("SB1_B,SB2_B"), RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+          }
+      }else{
+          //plot pdf in full range
+          if ( category%3==0 ) bkgpdf[category]->plotOn(plot[category], RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+          if ( category%3==1 ) bkgpdf[category]->plotOn(plot[category], RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+          if ( category%3==2 ) bkgpdf[category]->plotOn(plot[category], RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+
+          if(MultiPdf){
+            if ( category%3==0 ) bkgpdf2[category]->plotOn(plot[category], RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+            if ( category%3==1 ) bkgpdf2[category]->plotOn(plot[category], RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+            if ( category%3==2 ) bkgpdf2[category]->plotOn(plot[category], RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+          }
       }
-
       //bkgpdf[category]->paramOn( plot[category], Format("NELU", AutoPrecision(2)),ShowConstants(), Layout(0.4,0.99,0.9));
       plot[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
       plot[category]->SetMinimum(0.01);
@@ -397,7 +409,7 @@ AddData(TString file, RooWorkspace* w, const Int_t NCAT, std::vector<string> bra
    TFile *f = new TFile(file,"READ");
    TTree *tree = (TTree *) f->Get(tree_name);
 
-   RooRealVar m3m(m3m_name, m3m_name, 1.60, 2.02);
+   RooRealVar m3m(m3m_name, m3m_name, 1.62, 2.0);
    RooRealVar bdt(bdt_name, bdt_name, -2, 2);
    RooRealVar categ(categ_name, categ_name, 0, 2);//mass resolution category 0=A, 1=B, 2=C
    RooRealVar isMC(MClable_name, MClable_name, 0, 4); //0=data, 1=Ds, 2=B0, 3=Bp, 4=W
