@@ -434,7 +434,6 @@ AddData(TString file, RooWorkspace* w, const Int_t NCAT, std::vector<string> bra
               category_cut = categ_name+"=="+std::to_string(i);
       }
       RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+" && "+category_cut+" && "+bdtcut+")"), WeightVar(weight_name));
-      sigds.Print();
       w->import(sigds,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
    }
    for(unsigned int category=0; category< NCAT; category++){
