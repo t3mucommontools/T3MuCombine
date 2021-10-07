@@ -410,6 +410,7 @@ AddData(TString file, RooWorkspace* w, const Int_t NCAT, std::vector<string> bra
    TTree *tree = (TTree *) f->Get(tree_name);
 
    RooRealVar m3m(m3m_name, m3m_name, 1.62, 2.0);
+
    RooRealVar bdt(bdt_name, bdt_name, -2, 2);
    RooRealVar categ(categ_name, categ_name, 0, 2);//mass resolution category 0=A, 1=B, 2=C
    RooRealVar isMC(MClable_name, MClable_name, 0, 4); //0=data, 1=Ds, 2=B0, 3=Bp, 4=W
@@ -433,7 +434,7 @@ AddData(TString file, RooWorkspace* w, const Int_t NCAT, std::vector<string> bra
           if(category%3==i) 
               category_cut = categ_name+"=="+std::to_string(i);
       }
-      RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+")"), WeightVar("weight"));
+      RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+" && "+category_cut+" && "+bdtcut+")"), WeightVar(weight_name));
       sigds.Print();
       w->import(sigds,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
    }
