@@ -223,9 +223,9 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
    m3m->setUnit("GeV");
 
    for(unsigned int category=0; category< NCAT; category++){
-      if (category%3==0)      sidebands = TCut("(m3m < 1.753 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.801)");
-      else if (category%3==1) sidebands = TCut("(m3m < 1.739 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.815)");
-      else if (category%3==2) sidebands = TCut("(m3m < 1.727 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.827)");
+      if (category%3==0)      sidebands = TCut("(m3m < 1.75 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.80)");
+      else if (category%3==1) sidebands = TCut("(m3m < 1.74 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.82)");
+      else if (category%3==2) sidebands = TCut("(m3m < 1.73 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.83)");
 
       signalAll[category]=  (RooDataSet*) w->data(TString::Format("Sig_%s",cat_names.at(category).c_str()));
       dataAll[category]=    (RooDataSet*) w->data(TString::Format("Bkg_%s",cat_names.at(category).c_str()));
