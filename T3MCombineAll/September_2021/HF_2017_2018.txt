@@ -1,0 +1,117 @@
+Combination of datacards/TwoGlobalTracker/2017/CMS_T3MSignal_13TeV_Combined.txt  datacards/ThreeGlobal/2017/CMS_T3MSignal_13TeV_Combined.txt  datacards/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV_Combined.txt  datacards/ThreeGlobal/2018/CMS_T3MSignal_13TeV_Combined.txt
+imax 30 number of bins
+jmax 1 number of processes minus 1
+kmax 13 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes bkg       ch1_ch1   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A1
+shapes data_obs  ch1_ch1   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_A1
+shapes signal    ch1_ch1   workspaces/TwoGlobalTracker/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_A1
+shapes bkg       ch1_ch2   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A2
+shapes data_obs  ch1_ch2   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_A2
+shapes signal    ch1_ch2   workspaces/TwoGlobalTracker/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_A2
+shapes bkg       ch1_ch3   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B1
+shapes data_obs  ch1_ch3   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_B1
+shapes signal    ch1_ch3   workspaces/TwoGlobalTracker/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_B1
+shapes bkg       ch1_ch4   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B2
+shapes data_obs  ch1_ch4   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_B2
+shapes signal    ch1_ch4   workspaces/TwoGlobalTracker/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_B2
+shapes bkg       ch1_ch5   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C1
+shapes data_obs  ch1_ch5   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_C1
+shapes signal    ch1_ch5   workspaces/TwoGlobalTracker/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_C1
+shapes bkg       ch1_ch6   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C2
+shapes data_obs  ch1_ch6   workspaces/TwoGlobalTracker/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_C2
+shapes signal    ch1_ch6   workspaces/TwoGlobalTracker/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_C2
+shapes bkg       ch2_ch1   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A1
+shapes data_obs  ch2_ch1   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_A1
+shapes signal    ch2_ch1   workspaces/ThreeGlobal/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_A1
+shapes bkg       ch2_ch2   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A2
+shapes data_obs  ch2_ch2   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_A2
+shapes signal    ch2_ch2   workspaces/ThreeGlobal/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_A2
+shapes bkg       ch2_ch3   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A3
+shapes data_obs  ch2_ch3   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_A3
+shapes signal    ch2_ch3   workspaces/ThreeGlobal/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_A3
+shapes bkg       ch2_ch4   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B1
+shapes data_obs  ch2_ch4   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_B1
+shapes signal    ch2_ch4   workspaces/ThreeGlobal/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_B1
+shapes bkg       ch2_ch5   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B2
+shapes data_obs  ch2_ch5   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_B2
+shapes signal    ch2_ch5   workspaces/ThreeGlobal/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_B2
+shapes bkg       ch2_ch6   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B3
+shapes data_obs  ch2_ch6   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_B3
+shapes signal    ch2_ch6   workspaces/ThreeGlobal/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_B3
+shapes bkg       ch2_ch7   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C1
+shapes data_obs  ch2_ch7   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_C1
+shapes signal    ch2_ch7   workspaces/ThreeGlobal/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_C1
+shapes bkg       ch2_ch8   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C2
+shapes data_obs  ch2_ch8   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_C2
+shapes signal    ch2_ch8   workspaces/ThreeGlobal/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_C2
+shapes bkg       ch2_ch9   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C3
+shapes data_obs  ch2_ch9   workspaces/ThreeGlobal/2017/CMS_T3MBkg_13TeV.root w_all:data_obs_C3
+shapes signal    ch2_ch9   workspaces/ThreeGlobal/2017/CMS_T3MSignal_13TeV.root w_all:SignalModel_C3
+shapes bkg       ch3_ch1   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A1
+shapes data_obs  ch3_ch1   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A1
+shapes signal    ch3_ch1   workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A1
+shapes bkg       ch3_ch2   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A2
+shapes data_obs  ch3_ch2   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A2
+shapes signal    ch3_ch2   workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A2
+shapes bkg       ch3_ch3   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B1
+shapes data_obs  ch3_ch3   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B1
+shapes signal    ch3_ch3   workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B1
+shapes bkg       ch3_ch4   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B2
+shapes data_obs  ch3_ch4   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B2
+shapes signal    ch3_ch4   workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B2
+shapes bkg       ch3_ch5   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C1
+shapes data_obs  ch3_ch5   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C1
+shapes signal    ch3_ch5   workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C1
+shapes bkg       ch3_ch6   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C2
+shapes data_obs  ch3_ch6   workspaces/TwoGlobalTracker/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C2
+shapes signal    ch3_ch6   workspaces/TwoGlobalTracker/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C2
+shapes bkg       ch4_ch1   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A1
+shapes data_obs  ch4_ch1   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A1
+shapes signal    ch4_ch1   workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A1
+shapes bkg       ch4_ch2   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A2
+shapes data_obs  ch4_ch2   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A2
+shapes signal    ch4_ch2   workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A2
+shapes bkg       ch4_ch3   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_A3
+shapes data_obs  ch4_ch3   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_A3
+shapes signal    ch4_ch3   workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_A3
+shapes bkg       ch4_ch4   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B1
+shapes data_obs  ch4_ch4   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B1
+shapes signal    ch4_ch4   workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B1
+shapes bkg       ch4_ch5   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B2
+shapes data_obs  ch4_ch5   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B2
+shapes signal    ch4_ch5   workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B2
+shapes bkg       ch4_ch6   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_B3
+shapes data_obs  ch4_ch6   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_B3
+shapes signal    ch4_ch6   workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_B3
+shapes bkg       ch4_ch7   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C1
+shapes data_obs  ch4_ch7   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C1
+shapes signal    ch4_ch7   workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C1
+shapes bkg       ch4_ch8   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C2
+shapes data_obs  ch4_ch8   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C2
+shapes signal    ch4_ch8   workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C2
+shapes bkg       ch4_ch9   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:bkg_fit_1par_C3
+shapes data_obs  ch4_ch9   workspaces/ThreeGlobal/2018/CMS_T3MBkg_13TeV.root w_all:data_obs_C3
+shapes signal    ch4_ch9   workspaces/ThreeGlobal/2018/CMS_T3MSignal_13TeV.root w_all:SignalModel_C3
+----------------------------------------------------------------------------------------------------------------------------------
+bin          ch1_ch1  ch1_ch2  ch1_ch3  ch1_ch4  ch1_ch5  ch1_ch6  ch2_ch1  ch2_ch2  ch2_ch3  ch2_ch4  ch2_ch5  ch2_ch6  ch2_ch7  ch2_ch8  ch2_ch9  ch3_ch1  ch3_ch2  ch3_ch3  ch3_ch4  ch3_ch5  ch3_ch6  ch4_ch1  ch4_ch2  ch4_ch3  ch4_ch4  ch4_ch5  ch4_ch6  ch4_ch7  ch4_ch8  ch4_ch9
+observation  -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1       -1     
+----------------------------------------------------------------------------------------------------------------------------------
+bin                                  ch1_ch1   ch1_ch1   ch1_ch2   ch1_ch2   ch1_ch3   ch1_ch3   ch1_ch4   ch1_ch4   ch1_ch5   ch1_ch5   ch1_ch6   ch1_ch6   ch2_ch1   ch2_ch1   ch2_ch2   ch2_ch2   ch2_ch3   ch2_ch3   ch2_ch4   ch2_ch4   ch2_ch5   ch2_ch5   ch2_ch6   ch2_ch6   ch2_ch7   ch2_ch7   ch2_ch8   ch2_ch8   ch2_ch9   ch2_ch9   ch3_ch1   ch3_ch1   ch3_ch2   ch3_ch2   ch3_ch3   ch3_ch3   ch3_ch4   ch3_ch4   ch3_ch5   ch3_ch5   ch3_ch6   ch3_ch6   ch4_ch1   ch4_ch1   ch4_ch2   ch4_ch2   ch4_ch3   ch4_ch3   ch4_ch4   ch4_ch4   ch4_ch5   ch4_ch5   ch4_ch6   ch4_ch6   ch4_ch7   ch4_ch7   ch4_ch8   ch4_ch8   ch4_ch9   ch4_ch9 
+process                              signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg       signal    bkg     
+process                              0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1         0         1       
+rate                                 0.976716  21        0.874305  73        1.91328   103       2.79093   757       0.623303  44        0.859547  591       1.77843   28        8.78353   519       8.45016   2113      2.9427    54        9.79408   591       14.4724   3563      0.722394  9         1.99783   58        3.45944   299       1.15161   20        2.29767   252       3.52229   92        6.33075   650       3.09122   154       5.22291   1324      4.97854   55        13.9471   513       16.6885   2353      11.4794   169       19.1178   851       35.528    5958      3.0469    20        5.07436   89        11.7581   777     
+----------------------------------------------------------------------------------------------------------------------------------
+BRBtoD_13TeV            lnN          1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
+BRBtoTau_13TeV          lnN          1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+BRDToTau_13TeV          lnN          1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+BRDsPhiPi_13TeV         lnN          1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -       
+BsScaling_13TeV         lnN          1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -       
+DpmScaling_13TeV        lnN          1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+DsNorm_13TeV            lnN          1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.034     -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+UncBDTCut_13TeV         lnN          1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -         1.06      -       
+UncMVAshape_13TeV       lnN          1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -         1.1       -       
+UncMuonEff_13TeV        lnN          1.16      -         1.16      -         1.16      -         1.16      -         1.16      -         1.16      -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.32      -         1.32      -         1.32      -         1.32      -         1.32      -         1.32      -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -         1.015     -       
+UncRatioAcc_13TeV       lnN          1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -       
+UncTrigger_13TeV        lnN          1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+fUnc_13TeV              lnN          1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -       
