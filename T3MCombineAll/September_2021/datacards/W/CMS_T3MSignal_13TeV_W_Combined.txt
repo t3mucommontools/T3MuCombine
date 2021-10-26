@@ -1,0 +1,69 @@
+Combination of A17=./7Oct2021/cental/datacards/CMS_T3MSignal_13TeV_W_A17bdt0.991.txt  B17=./7Oct2021/cental/datacards/CMS_T3MSignal_13TeV_W_B17bdt0.994.txt  C17=./7Oct2021/cental/datacards/CMS_T3MSignal_13TeV_W_C17bdt0.992.txt  A18=./7Oct2021/cental/datacards/CMS_T3MSignal_13TeV_W_A18bdt0.995.txt  B18=./7Oct2021/cental/datacards/CMS_T3MSignal_13TeV_W_B18bdt0.998.txt  C18=./7Oct2021/cental/datacards/CMS_T3MSignal_13TeV_W_C18bdt0.994.txt
+imax 6 number of bins
+jmax 1 number of processes minus 1
+kmax 31 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes background  A17         ../../workspaces/W/2017/CMS_T3M_13TeV_W_A17bdt0.991.root t3m_shapes:bkg
+shapes data_obs    A17         ../../workspaces/W/2017/CMS_T3M_13TeV_W_A17bdt0.991.root t3m_shapes:data_obs
+shapes signal      A17         ../../workspaces/W/2017/CMS_T3M_13TeV_W_A17bdt0.991.root t3m_shapes:sig
+shapes background  A18         ../../workspaces/W/2018/CMS_T3M_13TeV_W_A18bdt0.995.root t3m_shapes:bkg
+shapes data_obs    A18         ../../workspaces/W/2018/CMS_T3M_13TeV_W_A18bdt0.995.root t3m_shapes:data_obs
+shapes signal      A18         ../../workspaces/W/2018/CMS_T3M_13TeV_W_A18bdt0.995.root t3m_shapes:sig
+shapes background  B17         ../../workspaces/W/2017/CMS_T3M_13TeV_W_B17bdt0.994.root t3m_shapes:bkg
+shapes data_obs    B17         ../../workspaces/W/2017/CMS_T3M_13TeV_W_B17bdt0.994.root t3m_shapes:data_obs
+shapes signal      B17         ../../workspaces/W/2017/CMS_T3M_13TeV_W_B17bdt0.994.root t3m_shapes:sig
+shapes background  B18         ../../workspaces/W/2018/CMS_T3M_13TeV_W_B18bdt0.998.root t3m_shapes:bkg
+shapes data_obs    B18         ../../workspaces/W/2018/CMS_T3M_13TeV_W_B18bdt0.998.root t3m_shapes:data_obs
+shapes signal      B18         ../../workspaces/W/2018/CMS_T3M_13TeV_W_B18bdt0.998.root t3m_shapes:sig
+shapes background  C17         ../../workspaces/W/2017/CMS_T3M_13TeV_W_C17bdt0.992.root t3m_shapes:bkg
+shapes data_obs    C17         ../../workspaces/W/2017/CMS_T3M_13TeV_W_C17bdt0.992.root t3m_shapes:data_obs
+shapes signal      C17         ../../workspaces/W/2017/CMS_T3M_13TeV_W_C17bdt0.992.root t3m_shapes:sig
+shapes background  C18         ../../workspaces/W/2018/CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:bkg
+shapes data_obs    C18         ../../workspaces/W/2018/CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:data_obs
+shapes signal      C18         ../../workspaces/W/2018/CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:sig
+----------------------------------------------------------------------------------------------------------------------------------
+bin          A17     B17     C17     A18     B18     C18   
+observation  -1      -1      -1      -1      -1      -1    
+----------------------------------------------------------------------------------------------------------------------------------
+bin                                    A17         A17         B17         B17         C17         C17         A18         A18         B18         B18         C18         C18       
+process                                signal      background  signal      background  signal      background  signal      background  signal      background  signal      background
+process                                0           1           0           1           0           1           0           1           0           1           0           1         
+rate                                   1.4266      12.4247     1.7059      24.6076     0.5794      8.4926      3.1612      17.0496     2.1152      10.3242     1.6623      18.4953   
+----------------------------------------------------------------------------------------------------------------------------------
+HLT_Mu_A17              lnN            1.007       -           -           -           -           -           -           -           -           -           -           -         
+HLT_Mu_A18              lnN            -           -           -           -           -           -           1.008       -           -           -           -           -         
+HLT_Mu_B17              lnN            -           -           1.008       -           -           -           -           -           -           -           -           -         
+HLT_Mu_B18              lnN            -           -           -           -           -           -           -           -           1.011       -           -           -         
+HLT_Mu_C17              lnN            -           -           -           -           1.019       -           -           -           -           -           -           -         
+HLT_Mu_C18              lnN            -           -           -           -           -           -           -           -           -           -           1.019       -         
+HLT_iso17               lnN            1.12        -           1.12        -           1.12        -           -           -           -           -           -           -         
+HLT_iso18               lnN            -           -           -           -           -           -           1.07        -           1.07        -           1.07        -         
+Lumi                    lnN            1.017       -           1.017       -           1.017       -           1.017       -           1.017       -           1.017       -         
+WNLO                    lnN            1.04        -           1.04        -           1.04        -           1.04        -           1.04        -           1.04        -         
+br_Wmunu                lnN            1.0015      -           1.0015      -           1.0015      -           1.0015      -           1.0015      -           1.0015      -         
+br_Wtaunu               lnN            1.0021      -           1.0021      -           1.0021      -           1.0021      -           1.0021      -           1.0021      -         
+mc_stat_A17bdt0.991     lnN            1.0096      -           -           -           -           -           -           -           -           -           -           -         
+mc_stat_A18bdt0.995     lnN            -           -           -           -           -           -           1.0091      -           -           -           -           -         
+mc_stat_B17bdt0.994     lnN            -           -           1.0087      -           -           -           -           -           -           -           -           -         
+mc_stat_B18bdt0.998     lnN            -           -           -           -           -           -           -           -           1.0111      -           -           -         
+mc_stat_C17bdt0.992     lnN            -           -           -           -           1.015       -           -           -           -           -           -           -         
+mc_stat_C18bdt0.994     lnN            -           -           -           -           -           -           -           -           -           -           1.0125      -         
+muonID_A17              lnN            1.014       -           -           -           -           -           -           -           -           -           -           -         
+muonID_A18              lnN            -           -           -           -           -           -           1.014       -           -           -           -           -         
+muonID_B17              lnN            -           -           1.021       -           -           -           -           -           -           -           -           -         
+muonID_B18              lnN            -           -           -           -           -           -           -           -           1.021       -           -           -         
+muonID_C17              lnN            -           -           -           -           1.046       -           -           -           -           -           -           -         
+muonID_C18              lnN            -           -           -           -           -           -           -           -           -           -           1.045       -         
+xs_W                    lnN            1.037       -           1.037       -           1.037       -           1.037       -           1.037       -           1.037       -         
+a0_A17bdt0.991  param  0.9389 2.4990
+a0_B17bdt0.994  param  1.9080 1.8094
+a0_C17bdt0.992  param  -6.5258 3.6085
+a0_A18bdt0.995  param  2.9598 2.2446
+a0_B18bdt0.998  param  9.6815 7.5171
+a0_C18bdt0.994  param  1.8129 2.0833
+bkgNorm_B17bdt0.994  rateParam B17 background 1.  
+bkgNorm_C18bdt0.994  rateParam C18 background 1.  
+bkgNorm_B18bdt0.998  rateParam B18 background 1.  
+bkgNorm_A18bdt0.995  rateParam A18 background 1.  
+bkgNorm_A17bdt0.991  rateParam A17 background 1.  
+bkgNorm_C17bdt0.992  rateParam C17 background 1.  
