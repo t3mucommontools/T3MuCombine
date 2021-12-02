@@ -644,7 +644,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
          outFile << "UncTrigger_13TeV  lnN  1.03      - " << endl; 
          outFile << "UncBDTCut_13TeV   lnN  1.06      - " << endl;
          outFile << "UncRatioAcc_13TeV lnN  1.01      - " << endl;
-         outFile << "UncMuonEff_13TeV  lnN  1.015     - " << endl;
+         outFile << "UncMuonEff_13TeV  lnN  1.32    - " << endl;
          outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
       }
 
@@ -662,7 +662,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
          outFile << "UncTrigger_13TeV  lnN  1.05      - " <<endl;
          outFile << "UncBDTCut_13TeV   lnN  1.06      - " <<endl;
          outFile << "UncRatioAcc_13TeV lnN  1.01      - " <<endl;
-         outFile << "UncMuonEff_13TeV  lnN  1.015     - " <<endl;
+         outFile << "UncMuonEff_13TeV  lnN  1.16     - " <<endl;
          outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
       }
 
