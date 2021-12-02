@@ -16,8 +16,9 @@ void SigModelFit(RooWorkspace*, const Int_t NCAT, std::vector<string>, RooFitRes
 void BkgModelFit(RooWorkspace*, const Int_t NCAT, std::vector<string>, RooFitResult** bkg_fitresults, bool blind, std::vector<string> cat_names);
 void MakeSigWS(RooWorkspace* w, const Int_t NCAT, const char* filename,  std::vector<string>);
 void MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* filename,  std::vector<string>);
-void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, const char* fileBkgName,  std::vector<string> cat_names, TString Run, bool blind);
+void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, const char* fileBkgName,  std::vector<string> cat_names, TString type, TString Run, bool blind);
 void MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind);
+void MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind);
 void MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names);
 
 void SetConstantParams(const RooArgSet* params);
@@ -31,6 +32,7 @@ createDataCards(TString inputfile, int signalsample = 0, bool blind = true, stri
    min.SetPrintLevel(0);
    gErrorIgnoreLevel = 1001;
 
+   cout<< "Blind option "<<blind<<endl;
    vector<string> branch_names; // reserved to handle names for relevant branches
    vector<string> cat_names; // reserved to handle categories
    vector<string> bdt_val; // reserved to handle bdt cuts
@@ -86,6 +88,7 @@ createDataCards(TString inputfile, int signalsample = 0, bool blind = true, stri
    TString filename("temp_workspace.root");
    w->writeToFile(filename);
    MakePlots(w,NCAT,cat_names,MultiPdf, blind);
+   //MakePlotsSplusB(w,NCAT,cat_names,MultiPdf, blind);
    MakePlotsSgn(w,NCAT,cat_names);
 
    w->Print();
@@ -207,9 +210,8 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
    }
 }
 
-
 void
-MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind){
+MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind){
 
    RooDataSet* signalAll[NCAT];
    RooDataSet* dataAll[NCAT];
@@ -236,16 +238,16 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       dataToPlot[category]->Print();
 
       sigpdf[category] =(RooAbsPdf*)w->pdf("SignalModel"+TString::Format("_%s",cat_names.at(category).c_str()));
-      bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("bkg_fit_1par_%s",cat_names.at(category).c_str()));
+      bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("t3m_bkg_expo_%s",cat_names.at(category).c_str()));
       bkgpdf2[category] =(RooAbsPdf*)w->pdf(TString::Format("bkg_powerlawpdf_%s",cat_names.at(category).c_str()));
    }
 
-   m3m->setRange("SB1_A",1.62,1.753);
-   m3m->setRange("SB2_A",1.801,2.0);
-   m3m->setRange("SB1_B",1.62,1.739);
-   m3m->setRange("SB2_B",1.815,2.0);
-   m3m->setRange("SB1_C",1.62,1.727);
-   m3m->setRange("SB2_C",1.827,2.0);
+   m3m->setRange("SB1_A",1.62,1.75);
+   m3m->setRange("SB2_A",1.80,2.0);
+   m3m->setRange("SB1_B",1.62,1.74);
+   m3m->setRange("SB2_B",1.82,2.0);
+   m3m->setRange("SB1_C",1.62,1.73);
+   m3m->setRange("SB2_C",1.83,2.0);
    m3m->setRange("fullRange",1.62,2.0);
 
    TLatex *text = new TLatex();
@@ -286,6 +288,162 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
             if ( category%3==2 ) bkgpdf2[category]->plotOn(plot[category], RooFit::LineColor(kBlue),RooFit::LineWidth(3));
           }
       }
+
+      //plot signal+bkg
+      RooRealVar bkgfrac("bkgfrac", "fraction of background", 0.9, 0., 1.);
+      RooAddPdf model("model", "s+b", RooArgList(*bkgpdf[category], *sigpdf[category]), bkgfrac);
+      model.fitTo(*dataToPlot[category], RooFit::Extended());
+      model.plotOn(plot[category], RooFit::LineColor(kGreen), RooFit::LineWidth(3));
+
+      //bkgpdf[category]->paramOn( plot[category], Format("NELU", AutoPrecision(2)),ShowConstants(), Layout(0.4,0.99,0.9));
+      plot[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
+      plot[category]->SetMinimum(0.01);
+      plot[category]->SetMaximum(1.40*plot[category]->GetMaximum());
+      plot[category]->GetXaxis()->SetTitle("m_{3mu} [GeV]");
+
+      cout<<"chi2 bkg category: "<<cat_names.at(category).c_str()<<" "<<plot[category]->chiSquare()<<endl;
+
+      TCanvas* ctmp_sig = new TCanvas(TString::Format("Category %s",cat_names.at(category).c_str()),"Categories",0,0,660,660);
+      ctmp_sig->SetFrameLineWidth(3);
+      ctmp_sig->SetTickx();
+      ctmp_sig->SetTicky();
+      plot[category]->Draw();
+      plot[category]->Print();
+      plot[category]->Draw("SAME");
+
+      TLegend *legmc = new TLegend(0.50,0.70,0.86,0.86);
+      legmc->AddEntry(plot[category]->getObject(0),"MC Signal (B=10^{-7})","LPE");
+      legmc->AddEntry(plot[category]->getObject(1),"Signal Model","L");
+      legmc->AddEntry(plot[category]->getObject(2),"Data","LPE");
+      legmc->AddEntry(plot[category]->getObject(3),"EXP","L");
+      if(MultiPdf) legmc->AddEntry(plot[category]->getObject(5),"PowerLaw","L");
+
+      legmc->SetBorderSize(0);
+      legmc->SetFillStyle(0);
+      legmc->SetTextSize(0.029);
+
+      legmc->Draw();  
+      ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s_SplusB",cat_names.at(category).c_str())+".png");
+   }
+}
+
+
+
+void
+MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind){
+
+   RooDataSet* signalAll[NCAT];
+   RooDataSet* dataAll[NCAT];
+   RooDataSet* dataToPlot[NCAT];
+   RooAbsPdf* sigpdf[NCAT];
+   RooAbsPdf* bkgpdf[NCAT]; // exp
+   RooAbsPdf* bkgpdf2[NCAT];  // power law
+
+   TCut sidebands;
+   RooRealVar* m3m     = w->var("m3m");  
+   m3m->setUnit("GeV");
+
+   for(unsigned int category=0; category< NCAT; category++){
+      if (category%3==0)      sidebands = TCut("(m3m < 1.75 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.80)");
+      else if (category%3==1) sidebands = TCut("(m3m < 1.74 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.82)");
+      else if (category%3==2) sidebands = TCut("(m3m < 1.73 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.83)");
+
+      signalAll[category]=  (RooDataSet*) w->data(TString::Format("Sig_%s",cat_names.at(category).c_str()));
+      dataAll[category]=    (RooDataSet*) w->data(TString::Format("Bkg_%s",cat_names.at(category).c_str()));
+
+      //blind data
+      if(blind) dataToPlot[category] = (RooDataSet*)dataAll[category]->reduce(sidebands);
+      else dataToPlot[category] = (RooDataSet*)dataAll[category]->reduce("m3m > 1.62 && m3m < 2.0");
+      dataToPlot[category]->Print();
+
+      sigpdf[category] =(RooAbsPdf*)w->pdf("SignalModel"+TString::Format("_%s",cat_names.at(category).c_str()));
+      bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("t3m_bkg_expo_%s",cat_names.at(category).c_str()));
+      bkgpdf2[category] =(RooAbsPdf*)w->pdf(TString::Format("bkg_powerlawpdf_%s",cat_names.at(category).c_str()));
+   }
+
+   m3m->setRange("SB1_A",1.62,1.75);
+   m3m->setRange("SB2_A",1.80,2.0);
+   m3m->setRange("SB1_B",1.62,1.74);
+   m3m->setRange("SB2_B",1.82,2.0);
+   m3m->setRange("SB1_C",1.62,1.73);
+   m3m->setRange("SB2_C",1.83,2.0);
+
+   m3m->setRange("SIG_A",1.75,1.80); //12MeV sigma
+   m3m->setRange("SIG_B",1.74,1.82); //19MeV sigma
+   m3m->setRange("SIG_C",1.73,1.83); //23MeV sigma
+   m3m->setRange("fullRange",1.62,2.0);
+
+   TLatex *text = new TLatex();
+   text->SetNDC();
+   text->SetTextSize(0.04);
+      
+   TString filename("yields.txt");
+   ofstream outFile(filename);
+   outFile << "cat\tsig\tbkg\n" << endl;
+
+   RooPlot* plot[NCAT];
+   for(unsigned int category=0; category< NCAT; category++){
+      plot[category] = m3m->frame();
+      signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kCyan+2),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.0), Binning(38, 1.620000, 2.00000));
+      sigpdf[category]->plotOn(plot[category], RooFit::LineColor(kRed),RooFit::LineWidth(3));
+
+      //signal integral
+      RooAbsReal* i_sig;
+      if ( category%3==0 ) 
+          i_sig = sigpdf[category]->createIntegral(RooArgSet(*m3m), RooArgSet(*m3m), "SIG_A");  
+      if ( category%3==1 ) 
+          i_sig = sigpdf[category]->createIntegral(RooArgSet(*m3m), RooArgSet(*m3m), "SIG_B");  
+      if ( category%3==2 ) 
+          i_sig = sigpdf[category]->createIntegral(RooArgSet(*m3m), RooArgSet(*m3m), "SIG_C");  
+      //plot data 
+      if (category%3==0) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000));
+      if (category%3==1) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000));
+      if (category%3==2) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000));
+      if(blind){
+          //plot pdf in sidebands
+          if ( category%3==0 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_A,SB2_A"), RooFit::NormRange("SB1_A,SB2_A"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+          if ( category%3==1 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_B,SB2_B"), RooFit::NormRange("SB1_B,SB2_B"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+          if ( category%3==2 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_C,SB2_C"), RooFit::NormRange("SB1_C,SB2_C"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+
+          if(MultiPdf){
+            if ( category%3==0 ) bkgpdf2[category]->plotOn(plot[category], Range("SB1_A,SB2_A"),RooFit::NormRange("SB1_A,SB2_A"), RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+            if ( category%3==1 ) bkgpdf2[category]->plotOn(plot[category], Range("SB1_B,SB2_B"),RooFit::NormRange("SB1_B,SB2_B"), RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+            if ( category%3==2 ) bkgpdf2[category]->plotOn(plot[category], Range("SB1_C,SB2_C"),RooFit::NormRange("SB1_B,SB2_B"), RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+          }
+      }else{
+          //plot pdf in full range
+          if ( category%3==0 ) bkgpdf[category]->plotOn(plot[category], RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+          if ( category%3==1 ) bkgpdf[category]->plotOn(plot[category], RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+          if ( category%3==2 ) bkgpdf[category]->plotOn(plot[category], RooFit::LineColor(kBlue), RooFit::LineWidth(3));
+
+          if(MultiPdf){
+            if ( category%3==0 ) bkgpdf2[category]->plotOn(plot[category], RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+            if ( category%3==1 ) bkgpdf2[category]->plotOn(plot[category], RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+            if ( category%3==2 ) bkgpdf2[category]->plotOn(plot[category], RooFit::LineColor(kBlue),RooFit::LineWidth(3));
+          }
+      }
+      //background integral
+      RooAbsReal* i_bkg;
+      RooAbsReal* i_bkg_sb;
+      if ( category%3==0 ) {
+          i_bkg = bkgpdf[category]->createIntegral(RooArgSet(*m3m), RooArgSet(*m3m), "SIG_A");  
+          i_bkg_sb = bkgpdf[category]->createIntegral(RooArgSet(*m3m), RooArgSet(*m3m), "SB1_A,SB2_A");  
+      }
+      if ( category%3==1 ) {
+          i_bkg = bkgpdf[category]->createIntegral(RooArgSet(*m3m), RooArgSet(*m3m), "SIG_B");  
+          i_bkg_sb = bkgpdf[category]->createIntegral(RooArgSet(*m3m), RooArgSet(*m3m), "SB1_B,SB2_B");  
+      }
+      if ( category%3==2 ) {
+          i_bkg = bkgpdf[category]->createIntegral(RooArgSet(*m3m), RooArgSet(*m3m), "SIG_C");  
+          i_bkg_sb = bkgpdf[category]->createIntegral(RooArgSet(*m3m), RooArgSet(*m3m), "SB1_B,SB2_B");  
+      }
+      cout<<category<<" Expected signal yield "<<i_sig->getVal()*signalAll[category]->sumEntries()<<endl;
+      cout<<category<<" i_bkg->getVal() "<<i_bkg->getVal()<<endl;
+      cout<<category<<" i_bkg_sb->getVal() "<<i_bkg_sb->getVal()<<endl;
+      cout<<category<<" dataAll[category]->sumEntries() "<<dataAll[category]->sumEntries()<<endl;
+      cout<<category<<" Expected bkg yield based on SB"<<i_bkg->getVal()*dataAll[category]->sumEntries() / i_bkg_sb->getVal()<<endl;
+      outFile << TString::Format("%s",cat_names.at(category).c_str())<<"\t"<<i_sig->getVal()*signalAll[category]->sumEntries()<<"\t"<<i_bkg->getVal()*dataAll[category]->sumEntries() / i_bkg_sb->getVal()<<endl;
+
       //bkgpdf[category]->paramOn( plot[category], Format("NELU", AutoPrecision(2)),ShowConstants(), Layout(0.4,0.99,0.9));
       plot[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
       plot[category]->SetMinimum(0.01);
@@ -316,6 +474,7 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       legmc->Draw();  
       ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".png");
    }
+   outFile.close();
 }
 
 
@@ -324,7 +483,7 @@ MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names){
 
    RooDataSet* signalAll[NCAT];
    RooAbsPdf* sigpdf[NCAT];
-
+   TFile f("signal_shapes.root","recreate");
    for(unsigned int category=0; category< NCAT; category++){
       signalAll[category] = (RooDataSet*) w->data(TString::Format("Sig_%s",cat_names.at(category).c_str()));
       sigpdf[category] = (RooAbsPdf*)w->pdf("SignalModel"+TString::Format("_%s",cat_names.at(category).c_str()));
@@ -383,7 +542,9 @@ MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names){
 
       legmc->Draw();  
       ctmp_sig->SaveAs("plots/"+TString::Format("Signal_%s",cat_names.at(category).c_str())+".png");
+      ctmp_sig->Write();
    }
+   f.Close();
 }
 
 void 
@@ -410,7 +571,6 @@ AddData(TString file, RooWorkspace* w, const Int_t NCAT, std::vector<string> bra
    TTree *tree = (TTree *) f->Get(tree_name);
 
    RooRealVar m3m(m3m_name, m3m_name, 1.62, 2.0);
-
    RooRealVar bdt(bdt_name, bdt_name, -2, 2);
    RooRealVar categ(categ_name, categ_name, 0, 2);//mass resolution category 0=A, 1=B, 2=C
    RooRealVar isMC(MClable_name, MClable_name, 0, 4); //0=data, 1=Ds, 2=B0, 3=Bp, 4=W
@@ -434,7 +594,7 @@ AddData(TString file, RooWorkspace* w, const Int_t NCAT, std::vector<string> bra
           if(category%3==i) 
               category_cut = categ_name+"=="+std::to_string(i);
       }
-      RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+" && "+category_cut+" && "+bdtcut+")"), WeightVar(weight_name));
+      RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+")"), WeightVar(weight_name));
       sigds.Print();
       w->import(sigds,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
    }
@@ -460,55 +620,61 @@ BkgModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string>, RooFitResult
 
    RooDataSet* dataAll[NCAT];
    RooDataSet* dataToFit[NCAT];
-   RooPlot* plotbkg_fit[NCAT];
-   RooAbsPdf* bkg_fitTmp_1par[NCAT];
+   RooAbsPdf* pdfBkgExp[NCAT];
+   RooAbsPdf* BkgModel[NCAT];
    RooAbsPdf* bkg_powerlawpdf[NCAT];
+
+   RooRealVar* exp_offset[NCAT];
 
    RooRealVar* m3m     = w->var("m3m");  
    TCut sidebands;
 
    m3m->setUnit("GeV");
-   m3m->setRange("SB1_A",1.62,1.753);
-   m3m->setRange("SB2_A",1.801,2.0);
-   m3m->setRange("SB1_B",1.62,1.739);
-   m3m->setRange("SB2_B",1.815,2.0);
-   m3m->setRange("SB1_C",1.62,1.727);
-   m3m->setRange("SB2_C",1.827,2.0);
+   m3m->setRange("SB1_A",1.62,1.75);
+   m3m->setRange("SB2_A",1.80,2.0);
+   m3m->setRange("SB1_B",1.62,1.74);
+   m3m->setRange("SB2_B",1.82,2.0);
+   m3m->setRange("SB1_C",1.62,1.73);
+   m3m->setRange("SB2_C",1.83,2.0);
    m3m->setRange("fullRange",1.62,2.0);
-
 
    for(unsigned int category=0; category< NCAT; category++)
    {
       dataAll[category]   = (RooDataSet*) w->data(TString::Format("Bkg_%s",cat_names.at(category).c_str()));
-      if (category%3==0)      sidebands = TCut("(m3m < 1.753 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.801)");
-      else if (category%3==1) sidebands = TCut("(m3m < 1.739 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.815)");
-      else if (category%3==2) sidebands = TCut("(m3m < 1.727 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.827)");
+      if (category%3==0)      sidebands = TCut("(m3m < 1.75 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.80)");
+      else if (category%3==1) sidebands = TCut("(m3m < 1.74 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.82)");
+      else if (category%3==2) sidebands = TCut("(m3m < 1.73 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.83)");
 
       //blind data
       if(blind) dataToFit[category] = (RooDataSet*)dataAll[category]->reduce(sidebands);
       else dataToFit[category] = (RooDataSet*)dataAll[category]->reduce("m3m > 1.62 && m3m < 2.0");
       dataToFit[category]->Print();
 
-      bkg_fitTmp_1par[category] = new RooGenericPdf(TString::Format("bkg_fit_1par_%s",cat_names.at(category).c_str()), "exp(@1*@0 + @2)", 
-            RooArgList(*w->var("m3m"), 
-               *w->var(TString::Format("bkg_exp_slope_%s",cat_names.at(category).c_str())),
-               *w->var(TString::Format("bkg_exp_offset_%s",cat_names.at(category).c_str()))));   // Generig BKG pdf for more careful description
+      pdfBkgExp[category]   =  (RooAbsPdf*)  w->pdf("t3m_bkg_expo"+TString::Format("_%s",cat_names.at(category).c_str()));
 
-      if ( category%3==0 ) bkg_fitresults[category]=bkg_fitTmp_1par[category]->fitTo(*dataToFit[category], Strategy(1), Minos(kFALSE), SumW2Error(kTRUE), Save(kTRUE),RooFit::PrintEvalErrors(-1));
-      if ( category%3==1 ) bkg_fitresults[category]=bkg_fitTmp_1par[category]->fitTo(*dataToFit[category], Strategy(1), Minos(kFALSE), SumW2Error(kTRUE), Save(kTRUE),RooFit::PrintEvalErrors(-1));
-      if ( category%3==2 ) bkg_fitresults[category]=bkg_fitTmp_1par[category]->fitTo(*dataToFit[category], Strategy(1), Minos(kFALSE), SumW2Error(kTRUE), Save(kTRUE),RooFit::PrintEvalErrors(-1));
+      //parameters before fitting
+      exp_offset[category] = w->var(TString::Format("bkg_exp_offset_%s",cat_names.at(category).c_str())) ;
 
-
+      BkgModel[category] = new RooAddPdf(TString::Format("BkgModel_fit_%s",cat_names.at(category).c_str()),"expo",RooArgList(*pdfBkgExp[category]), RooArgList(*exp_offset[category]));
+      //fit SB1, SB2, combined
+      if(blind){
+          if ( category%3==0 )
+              bkg_fitresults[category] = BkgModel[category]->fitTo(*dataToFit[category], Range("SB1_A,SB2_A"), Save()) ;
+          if ( category%3==1 )
+              bkg_fitresults[category] = BkgModel[category]->fitTo(*dataToFit[category], Range("SB1_B,SB2_B"), Save()) ;
+          if ( category%3==2 )
+              bkg_fitresults[category] = BkgModel[category]->fitTo(*dataToFit[category], Range("SB1_C,SB2_C"), Save()) ;
+          }
+      else bkg_fitresults[category]=BkgModel[category]->fitTo(*dataToFit[category],  Range("fullRange"), Save());
 
       bkg_powerlawpdf[category] = new RooGenericPdf(TString::Format("bkg_powerlawpdf_%s",cat_names.at(category).c_str()), "pow(@0, @1)", 
 						    RooArgList(*w->var("m3m"), 
 							       *w->var(TString::Format("bkg_powerlaw_slope_%s",cat_names.at(category).c_str()))));  
 
-      if ( category%3==0 ) bkg_fitresults[category]=bkg_powerlawpdf[category]->fitTo(*dataToFit[category], Strategy(1), Minos(kFALSE), SumW2Error(kTRUE), Save(kTRUE),RooFit::PrintEvalErrors(-1));
-      if ( category%3==1 ) bkg_fitresults[category]=bkg_powerlawpdf[category]->fitTo(*dataToFit[category], Strategy(1), Minos(kFALSE), SumW2Error(kTRUE), Save(kTRUE),RooFit::PrintEvalErrors(-1));
-      if ( category%3==2 ) bkg_fitresults[category]=bkg_powerlawpdf[category]->fitTo(*dataToFit[category], Strategy(1), Minos(kFALSE), SumW2Error(kTRUE), Save(kTRUE),RooFit::PrintEvalErrors(-1));
+      bkg_fitresults[category]=bkg_powerlawpdf[category]->fitTo(*dataToFit[category], Strategy(2), Minos(kFALSE), SumW2Error(kTRUE), Save(kTRUE),RooFit::PrintEvalErrors(-1));
 
-      w->import(*bkg_fitTmp_1par[category]);
+      w->import(*BkgModel[category]);
+      w->import(*pdfBkgExp[category]);
       w->import(*bkg_powerlawpdf[category]);
    }
 }
@@ -561,9 +727,9 @@ MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, std::vect
 
    for(unsigned int category=0; category < NCAT; category++){
 
-      if (category%3==0)      sidebands = TCut("(m3m < 1.753 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.801)");
-      else if (category%3==1) sidebands = TCut("(m3m < 1.739 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.815)");
-      else if (category%3==2) sidebands = TCut("(m3m < 1.727 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.827)");
+      if (category%3==0)      sidebands = TCut("(m3m < 1.75 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.80)");
+      else if (category%3==1) sidebands = TCut("(m3m < 1.74 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.82)");
+      else if (category%3==2) sidebands = TCut("(m3m < 1.73 && m3m > 1.62) || (m3m < 2.0 && m3m > 1.83)");
 
       dataAll[category] = (RooDataSet*) w->data(TString::Format("Bkg_%s",cat_names.at(category).c_str()));
       //blind data
@@ -571,7 +737,7 @@ MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, std::vect
       else dataToWp[category] = (RooDataSet*)dataAll[category]->reduce("m3m > 1.62 && m3m < 2.0");
 
       wAll->import(*dataToWp[category],Rename(TString::Format("data_obs_%s",cat_names.at(category).c_str())));
-      wAll->import(*w->pdf(TString::Format("bkg_fit_1par_%s",cat_names.at(category).c_str())));
+      wAll->import(*w->pdf(TString::Format("t3m_bkg_expo_%s",cat_names.at(category).c_str())));
       wAll->import(*w->pdf(TString::Format("bkg_powerlawpdf_%s",cat_names.at(category).c_str())));
       //wAll->import(*w->data(TString::Format("Bkg_%s",cat_names.at(category).c_str())));
    }
@@ -585,7 +751,7 @@ MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, std::vect
 
 
 
-void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, const char* fileBkgName, std::vector<string> cat_names, TString Run, bool blind){
+void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, const char* fileBkgName, std::vector<string> cat_names, TString type, TString Run, bool blind){
 
    TString cardDir = "datacards/";
    TString wsDir   = "../workspaces/";
@@ -613,7 +779,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
 
 
       outFile << Form("shapes data_obs  %s ",cat_names.at(c).c_str())  << wsDir+TString(fileBkgName)+".root " << Form("w_all:data_obs_%s",cat_names.at(c).c_str()) << endl;
-      outFile << Form("shapes bkg %s ", cat_names.at(c).c_str())   << wsDir+TString(fileBkgName)+".root " << Form("w_all:bkg_fit_1par_%s",cat_names.at(c).c_str()) << endl;
+      outFile << Form("shapes bkg %s ", cat_names.at(c).c_str())   << wsDir+TString(fileBkgName)+".root " << Form("w_all:t3m_bkg_expo_%s",cat_names.at(c).c_str()) << endl;
       outFile << Form("shapes signal %s ", cat_names.at(c).c_str()) << wsDir+TString(fileBaseName)+".root " << Form("w_all:SignalModel_%s",cat_names.at(c).c_str()) << endl;
 
       outFile << "---------------" << endl;
@@ -641,17 +807,22 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
          outFile << "fUnc_13TeV        lnN  1.07      - " << endl; // updated on 13 April
          outFile << "DpmScaling_13TeV  lnN  1.03      - " << endl;
          outFile << "BsScaling_13TeV   lnN  1.04      - " << endl;
-         outFile << "UncTrigger_13TeV  lnN  1.03      - " << endl; 
-         outFile << "UncBDTCut_13TeV   lnN  1.06      - " << endl;
+         outFile << "UncTrigger_13TeV  lnN  1.08      - " << endl; 
+         outFile << "UncBDTCut_13TeV   lnN  1.05      - " << endl;
          outFile << "UncRatioAcc_13TeV lnN  1.01      - " << endl;
-         outFile << "UncMuonEff_13TeV  lnN  1.32    - " << endl;
-         outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+         if(type=="threeGlobal"){
+             outFile << "UncMuonEff_13TeV  lnN  1.016     - " << endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+         }else{
+             outFile << "UncMuonEff_13TeV  lnN  1.08     - " << endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+         }
       }
 
       if (Run.Contains("2017")){
          //    outFile << "MuES_13TeV        lnN  1.007     - " << endl;
          //    outFile << "MuRes_13TeV       lnN  1.025     - " << endl;
-         outFile << "DsNorm_13TeV      lnN  1.034      - " <<endl;
+         outFile << "DsNorm_13TeV      lnN  1.062      - " <<endl;
          outFile << "BRDToTau_13TeV    lnN  1.03      - " <<endl;
          outFile << "BRDsPhiPi_13TeV   lnN  1.08      - " <<endl;
          outFile << "BRBtoD_13TeV      lnN  1.05      - " <<endl;
@@ -659,11 +830,16 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
          outFile << "fUnc_13TeV        lnN  1.07      - " <<endl; // updated on 13 April
          outFile << "DpmScaling_13TeV  lnN  1.03      - " <<endl;
          outFile << "BsScaling_13TeV   lnN  1.04      - " <<endl;
-         outFile << "UncTrigger_13TeV  lnN  1.05      - " <<endl;
-         outFile << "UncBDTCut_13TeV   lnN  1.06      - " <<endl;
+         outFile << "UncTrigger_13TeV  lnN  1.11      - " <<endl;
+         outFile << "UncBDTCut_13TeV   lnN  1.05      - " <<endl;
          outFile << "UncRatioAcc_13TeV lnN  1.01      - " <<endl;
-         outFile << "UncMuonEff_13TeV  lnN  1.16     - " <<endl;
-         outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+         if(type=="threeGlobal"){
+             outFile << "UncMuonEff_13TeV  lnN  1.015     - " << endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+         }else{
+             outFile << "UncMuonEff_13TeV  lnN  1.04     - " << endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+         }
       }
 
       outFile.close();

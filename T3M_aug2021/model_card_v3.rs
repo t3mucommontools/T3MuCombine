@@ -96,39 +96,48 @@ cb_fraction_C3[0.5,0,1];
 t3m_sig_CBshape_C3_threeGlobal  = CBShape(m3m, sig_m0_C3, sig_sigma_C3, sig_alpha_C3, sig_n_C3);
 t3m_sig_GSshape_C3_threeGlobal  = Gaussian(m3m,sig_m0_C3,sig_gaus_sigma_C3);
 
-bkg_exp_slope_A1[-1.0,-10.0,0.0];
-bkg_exp_slope_A2[-1.0,-10.0,0.0];
-bkg_exp_slope_A3[-1.0,-10.0,0.0];
-bkg_exp_slope_B1[-1.0,-10.0,0.0];
-bkg_exp_slope_B2[-1.0,-10.0,0.0];
-bkg_exp_slope_B3[-1.0,-10.0,0.0];
-bkg_exp_slope_C1[-1.0,-10.0,0.0];
-bkg_exp_slope_C2[-1.0,-10.0,0.0];
-bkg_exp_slope_C3[-1.0,-10.0,0.0];
+bkg_exp_slope_A1[-1.0,-1000.0,100.0];
+bkg_exp_slope_A2[-1.0,-1000.0,100.0];
+bkg_exp_slope_A3[-1.0,-1000.0,100.0];
+bkg_exp_slope_B1[-1.0,-1000.0,100.0];
+bkg_exp_slope_B2[-1.0,-1000.0,100.0];
+bkg_exp_slope_B3[-1.0,-1000.0,100.0];
+bkg_exp_slope_C1[-1.0,-1000.0,100.0];
+bkg_exp_slope_C2[-1.0,-1000.0,100.0];
+bkg_exp_slope_C3[-1.0,-1000.0,100.0];
 
 
-bkg_exp_offset_A1[0.0,-30.0,30.0];
-bkg_exp_offset_A2[0.0,-30.0,30.0];
-bkg_exp_offset_A3[0.0,-30.0,30.0];
-bkg_exp_offset_B1[0.0,-30.0,30.0];
-bkg_exp_offset_B2[0.0,-30.0,30.0];
-bkg_exp_offset_B3[0.0,-30.0,30.0];
-bkg_exp_offset_C1[0.0,-30.0,30.0];
-bkg_exp_offset_C2[0.0,-30.0,30.0];
-bkg_exp_offset_C3[0.0,-30.0,30.0];
+bkg_exp_offset_A1[0.0,0.0,10000.0];
+bkg_exp_offset_A2[0.0,0.0,10000.0];
+bkg_exp_offset_A3[0.0,0.0,10000.0];
+bkg_exp_offset_B1[0.0,0.0,10000.0];
+bkg_exp_offset_B2[0.0,0.0,10000.0];
+bkg_exp_offset_B3[0.0,0.0,10000.0];
+bkg_exp_offset_C1[0.0,0.0,10000.0];
+bkg_exp_offset_C2[0.0,0.0,10000.0];
+bkg_exp_offset_C3[0.0,0.0,10000.0];
 
+t3m_bkg_expo_A1  = Exponential(m3m, bkg_exp_slope_A1);
+t3m_bkg_expo_A2  = Exponential(m3m, bkg_exp_slope_A2);
+t3m_bkg_expo_A3  = Exponential(m3m, bkg_exp_slope_A3);
+t3m_bkg_expo_B1  = Exponential(m3m, bkg_exp_slope_B1);
+t3m_bkg_expo_B2  = Exponential(m3m, bkg_exp_slope_B2);
+t3m_bkg_expo_B3  = Exponential(m3m, bkg_exp_slope_B3);
+t3m_bkg_expo_C1  = Exponential(m3m, bkg_exp_slope_C1);
+t3m_bkg_expo_C2  = Exponential(m3m, bkg_exp_slope_C2);
+t3m_bkg_expo_C3  = Exponential(m3m, bkg_exp_slope_C3);
 
-bkg_powerlaw_slope_A1[-1.0,-5.0,1.0];
-bkg_powerlaw_slope_A2[-1.0,-5.0,1.0];
-bkg_powerlaw_slope_A3[-1.0,-5.0,1.0];
+bkg_powerlaw_slope_A1[-1.0,-10.0,1.0];
+bkg_powerlaw_slope_A2[-1.0,-10.0,1.0];
+bkg_powerlaw_slope_A3[-1.0,-10.0,1.0];
 
-bkg_powerlaw_slope_B1[-1.0,-5.0,1.0];
-bkg_powerlaw_slope_B2[-1.0,-5.0,1.0];
-bkg_powerlaw_slope_B3[-1.0,-5.0,1.0];
+bkg_powerlaw_slope_B1[-1.0,-10.0,1.0];
+bkg_powerlaw_slope_B2[-1.0,-10.0,1.0];
+bkg_powerlaw_slope_B3[-1.0,-10.0,1.0];
 
-bkg_powerlaw_slope_C1[-1.0,-5.0,1.0];
-bkg_powerlaw_slope_C2[-1.0,-5.0,1.0];
-bkg_powerlaw_slope_C3[-1.0,-5.0,1.0];
+bkg_powerlaw_slope_C1[-1.0,-10.0,1.0];
+bkg_powerlaw_slope_C2[-1.0,-10.0,1.0];
+bkg_powerlaw_slope_C3[-1.0,-10.0,1.0];
 
 
 sqrtS[13000., 13000., 13000.]
