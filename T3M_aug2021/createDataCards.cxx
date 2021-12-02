@@ -83,7 +83,7 @@ createDataCards(TString inputfile, int signalsample = 0, bool blind = true, stri
    BkgModelFit(w, NCAT, cat_names, bkg_fitresults, blind, cat_names);
    MakeBkgWS(w, NCAT, fileBkgName, cat_names);
 
-   MakeDataCard(w, NCAT, fileBaseName, fileBkgName, cat_names, Run, blind);
+   MakeDataCard(w, NCAT, fileBaseName, fileBkgName, cat_names, type, Run, blind);
 
    TString filename("temp_workspace.root");
    w->writeToFile(filename);
@@ -814,7 +814,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
              outFile << "UncMuonEff_13TeV  lnN  1.016     - " << endl;
              outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
          }else{
-             outFile << "UncMuonEff_13TeV  lnN  1.32     - " << endl;
+             outFile << "UncMuonEff_13TeV  lnN  1.08     - " << endl; //TrackerNotGlobal SF
              outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
          }
       }
@@ -837,7 +837,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
              outFile << "UncMuonEff_13TeV  lnN  1.015     - " << endl;
              outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
          }else{
-             outFile << "UncMuonEff_13TeV  lnN  1.16     - " << endl;
+             outFile << "UncMuonEff_13TeV  lnN  1.04     - " << endl; //TrackerNotGlobal SF
              outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
          }
       }

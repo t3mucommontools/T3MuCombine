@@ -32,6 +32,12 @@ example input TTree can be found at:
 scp -r /afs/cern.ch/user/f/fsimone/public/Tau3mu/inputdata .
 ``` 
 
+input files for TwoGlobalTracker category can be found at:
+```
+/afs/cern.ch/user/b/bjoshi/public/forFsimone/T3MMiniTree_2glbTrk_BPH_preapproval_iteration_2_twoGlobalTracker_weights_corrected_2017.root
+
+/afs/cern.ch/user/b/bjoshi/public/forFsimone/T3MMiniTree_2glbTrk_BPH_preapproval_iteration_2_twoGlobalTracker_weights_corrected_2018.root
+```
 --run argument (2017 or 2018) will affect the systematic uncertainties in the datacards
 
 example call for 9 event categories, threeGlobal channel:
