@@ -16,10 +16,12 @@ parser.add_argument('-r', '--rmin'    , default='0'             , help='lower bo
 parser.add_argument('-R', '--rmax'    , default='10'            , help='higher boundary for r')
 parser.add_argument('-t', '--toys'    , default='10000'         , help='toys to use to compute the significance')
 parser.add_argument('-U', '--unblind' , action='store_true'     , help='run unblinded tests')
-parser.add_argument('-L', '--log'     , action='store_true'     , help='store stdout and stderr in log files instead of printing them')
+parser.add_argument(      '--log'     , action='store_true'     , help='store stdout and stderr in log files instead of printing them')
 parser.add_argument('-I', '--impacts' , action='store_true'     , help='run the impacts computation')
 parser.add_argument('-A', '--sig-asym', action='store_true'     , help='run the significance computation using asymptotic formulae')
 parser.add_argument('-T', '--sig-toys', action='store_true'     , help='run the significance computation using toys')
+parser.add_argument('-L', '--lhscan'  , action='store_true'     , help='run the likelihood scan')
+parser.add_argument(      '--lhparams', default='r'             , help='parameters to run the likelihood scan in the form "par1 par2 par3"')
 
 args = parser.parse_args()
 
@@ -69,13 +71,14 @@ class Command:
 
 DATACARD   = os.path.abspath(args.datacard)
 WORKSPACE  = os.path.basename(args.datacard).replace('.txt', '.root')
-PARAMETERS = '--setParameterRanges '+args.pranges if args.pranges!='' else ''
+PARAMETERS = '--setParameterRanges "{}"'.format(args.pranges) if args.pranges!='' else ''
 BLINDER    = '-t -1 --expectSignal {EXP}'.format(EXP=args.expected) if not args.unblind else ''
 
 OUTPUT = os.path.abspath('_'.join([args.label, 'rMin'+args.rmin, 'rMax'+args.rmax]+['unblinded' if args.unblind else 'rAsimov'+args.expected]))
 OUTPUT_IMPACTS  = OUTPUT+'/impacts'
 OUTPUT_SIG_TOYS = OUTPUT+'/significance_toys'
 OUTPUT_SIG_ASYM = OUTPUT+'/significance_asymptitic'
+OUTPUT_LHSCAN   = OUTPUT+'/lh_scan'
 
 CMD_IMPACTS = '\n'.join([
   'combine -M FitDiagnostics -d {DAT} {B} --plots --rMin "{r}" --rMax "{R}" --minos all {PAR}',
@@ -96,7 +99,7 @@ CMD_IMPACTS = '\n'.join([
   B  =BLINDER       ,
 ).split('\n')
 
-CMD_SIGNIFICANCE_TOYS = ' && '.join([
+CMD_SIGNIFICANCE_TOYS = '\n'.join([
   'combine -M HybridNew -d {DAT} --LHCmode LHC-significance --saveToys --fullBToys --saveHybridResult  -T {T} {PAR}',
 ]).format(
   T  =args.toys ,
@@ -104,12 +107,29 @@ CMD_SIGNIFICANCE_TOYS = ' && '.join([
   PAR=PARAMETERS,
 ).split('\n')
 
-CMD_SIGNIFICANCE_ASYM = ' && '.join([
+CMD_SIGNIFICANCE_ASYM = '\n'.join([
   'combine -M Significance -d {DAT}',
 ]).format(
   DAT=DATACARD
 ).split('\n')
 
+CMD_LHSCAN = '\n'.join([
+  'text2workspace.py {DAT} -m 1.777 -o {WSP}',
+  'for nui in {NUI}; do \
+    echo scanning $nui;\
+    combine {WSP} -M MultiDimFit --algo grid --points 20 {PAR} -m 1.777 --rMin "{r}" --rMax "{R}" -P $nui -n scan_$nui;\
+    plot1DScan.py higgsCombinescan_$nui.MultiDimFit.mH1.777.root --POI  \"$nui\" --output plot_$nui;\
+  done'
+]).format(
+  DAT=DATACARD  ,
+  WSP=WORKSPACE ,
+  PAR=PARAMETERS,
+  r  =args.rmin ,
+  R  =args.rmax ,
+  NUI=args.lhparams,
+).split('\n')
+
 impacts_cmd  = Command('Impacts'                , CMD_IMPACTS           , OUTPUT_IMPACTS ).run(args.impacts )
 sig_asym_cmd = Command('Asymptotic significance', CMD_SIGNIFICANCE_ASYM , OUTPUT_SIG_ASYM).run(args.sig_asym)
 sig_toys_cmd = Command('Toys significance'      , CMD_SIGNIFICANCE_TOYS , OUTPUT_SIG_TOYS).run(args.sig_toys)
+lhscan_cmd   = Command('LHScan'                 , CMD_LHSCAN            , OUTPUT_LHSCAN  ).run(args.lhscan  )
