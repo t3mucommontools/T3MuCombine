@@ -14,7 +14,7 @@ parser.add_argument('-e', '--expected', default='0'             , help='expected
 parser.add_argument('-l', '--label'   , default='combine_checks', help='used to label the output directory')
 parser.add_argument('-r', '--rmin'    , default='0'             , help='lower boundary for r')
 parser.add_argument('-R', '--rmax'    , default='10'            , help='higher boundary for r')
-parser.add_argument('-t', '--toys'    , default='1000'          , help='toys to use to compute the significance')
+parser.add_argument('-t', '--toys'    , default='10000'         , help='toys to use to compute the significance')
 parser.add_argument('-U', '--unblind' , action='store_true'     , help='run unblinded tests')
 parser.add_argument('-L', '--log'     , action='store_true'     , help='store stdout and stderr in log files instead of printing them')
 parser.add_argument('-I', '--impacts' , action='store_true'     , help='run the impacts computation')
