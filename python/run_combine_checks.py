@@ -14,6 +14,7 @@ parser.add_argument('-e', '--expected', default='0'             , help='expected
 parser.add_argument('-l', '--label'   , default='combine_checks', help='used to label the output directory')
 parser.add_argument('-r', '--rmin'    , default='0'             , help='lower boundary for r')
 parser.add_argument('-R', '--rmax'    , default='10'            , help='higher boundary for r')
+parser.add_argument('-t', '--toys'    , default='1000'          , help='toys to use to compute the significance')
 parser.add_argument('-U', '--unblind' , action='store_true'     , help='run unblinded tests')
 parser.add_argument('-L', '--log'     , action='store_true'     , help='store stdout and stderr in log files instead of printing them')
 parser.add_argument('-I', '--impacts' , action='store_true'     , help='run the impacts computation')
@@ -96,8 +97,9 @@ CMD_IMPACTS = '\n'.join([
 ).split('\n')
 
 CMD_SIGNIFICANCE_TOYS = ' && '.join([
-  'combine -M HybridNew -d {DAT} --LHCmode LHC-significance --saveToys --fullBToys --saveHybridResult  -T 1000 {PAR}',
+  'combine -M HybridNew -d {DAT} --LHCmode LHC-significance --saveToys --fullBToys --saveHybridResult  -T {T} {PAR}',
 ]).format(
+  T  =args.toys ,
   DAT=DATACARD  ,
   PAR=PARAMETERS,
 ).split('\n')
