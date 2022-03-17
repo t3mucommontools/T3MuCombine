@@ -55,7 +55,7 @@ class Command:
         print(self.o+'/LOGFILE.txt')
 
       if args.log:
-        os.system('echo >> %s\n' %cmd)
+        os.system('echo \>\> %s\n' %cmd)
       ret = os.system(cmd)
       if ret:
         self.ERROR("an error was encountered when running the last command")
