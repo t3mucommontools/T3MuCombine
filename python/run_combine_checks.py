@@ -82,14 +82,14 @@ BLINDER    = '-t -1 --expectSignal {EXP}'.format(EXP=args.expected) if not args.
 OUTPUT = os.path.abspath('_'.join([args.label, 'rMin'+args.rmin, 'rMax'+args.rmax]+['unblinded' if args.unblind else 'rAsimov'+args.expected]))
 OUTPUT_IMPACTS  = OUTPUT+'/impacts'
 OUTPUT_SIG_TOYS = OUTPUT+'/significance_toys'
-OUTPUT_SIG_ASYM = OUTPUT+'/significance_asymptitic'
+OUTPUT_SIG_ASYM = OUTPUT+'/significance_asymptotic'
 OUTPUT_LHSCAN   = OUTPUT+'/lh_scan'
 OUTPUT_LIMIT    = '_'.join([OUTPUT+'/limit', 'CL'+args.cl, 'grid'+args.grid.replace('.','p')])
 
 CMD_IMPACTS = '\n'.join([
   'combine -M FitDiagnostics -d {DAT} {B} --plots --rMin "{r}" --rMax "{R}" --minos all {PAR}',
   'python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py -a fitDiagnostics.root -g plots.root',
-  'text2workspace.py {DAT} -m 1.777 -o {WSP}',
+  'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
   'combineTool.py -M Impacts -d {WSP} -m 1.777 {B} --doInitialFit --robustFit=1 --rMin "{r}" --rMax "{R}"',
   'combineTool.py -M Impacts -d {WSP} -m 1.777 {B} --doFits --parallel 5 --rMin "{r}" --rMax "{R}"',
   'combineTool.py -M Impacts -d {WSP} -m 1.777 {B} --rMin "{r}" --rMax "{R}" -o impacts.json',
@@ -120,7 +120,7 @@ CMD_SIGNIFICANCE_ASYM = '\n'.join([
 ).split('\n')
 
 CMD_LHSCAN = '\n'.join([
-  'text2workspace.py {DAT} -m 1.777 -o {WSP}',
+  'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
   'for nui in {NUI}; do \
     echo scanning $nui;\
     combine {WSP} -M MultiDimFit --algo grid --points 20 {PAR} -m 1.777 --rMin "{r}" --rMax "{R}" -P $nui -n scan_$nui;\
