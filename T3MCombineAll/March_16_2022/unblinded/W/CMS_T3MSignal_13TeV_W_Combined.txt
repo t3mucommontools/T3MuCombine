@@ -1,0 +1,42 @@
+Combination of C17=./16Mar2022/unblindedC/datacards/CMS_T3MSignal_13TeV_W_C17bdt0.992.txt  C18=./16Mar2022/unblindedC/datacards/CMS_T3MSignal_13TeV_W_C18bdt0.994.txt
+imax 2 number of bins
+jmax 1 number of processes minus 1
+kmax 18 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes background  C17         ./CMS_T3M_13TeV_W_C17bdt0.992.root t3m_shapes:bkg
+shapes data_obs    C17         ./CMS_T3M_13TeV_W_C17bdt0.992.root t3m_shapes:data_obs
+shapes signal      C17         ./CMS_T3M_13TeV_W_C17bdt0.992.root t3m_shapes:sig
+shapes background  C18         ./CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:bkg
+shapes data_obs    C18         ./CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:data_obs
+shapes signal      C18         ./CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:sig
+----------------------------------------------------------------------------------------------------------------------------------
+bin          C17     C18   
+observation  11      18    
+----------------------------------------------------------------------------------------------------------------------------------
+bin                                    C17         C17         C18         C18       
+process                                signal      background  signal      background
+process                                0           1           0           1         
+rate                                   0.6949      8.4926      1.2136      18.4953   
+----------------------------------------------------------------------------------------------------------------------------------
+HLT_Mu_C17              lnN            1.022       -           -           -         
+HLT_Mu_C18              lnN            -           -           1.01        -         
+HLT_TkMu_C17            lnN            1.15        -           -           -         
+HLT_TkMu_C18            lnN            -           -           1.09        -         
+HLT_iso17               lnN            1.12        -           -           -         
+HLT_iso18               lnN            -           -           1.07        -         
+Lumi17                  lnN            1.023       -           -           -         
+Lumi18                  lnN            -           -           1.025       -         
+WNLO                    lnN            1.04        -           1.04        -         
+br_Wmunu                lnN            1.014       -           1.014       -         
+br_Wtaunu               lnN            1.018       -           1.018       -         
+mc_stat_C17bdt0.992     lnN            0.9232      -           -           -         
+mc_stat_C18bdt0.994     lnN            -           -           0.9663      -         
+muonID_C17              lnN            1.015       -           -           -         
+muonID_C18              lnN            -           -           1.052       -         
+xs_W                    lnN            1.037       -           1.037       -         
+sigma_C17bdt0.992  param  0.0273 0.0005
+sigma_C18bdt0.994  param  0.0265 0.0005
+a0_C18bdt0.994  flatParam
+a0_C17bdt0.992  flatParam
+bkgNorm_C17bdt0.992  rateParam C17 background 1.  
+bkgNorm_C18bdt0.994  rateParam C18 background 1.  
