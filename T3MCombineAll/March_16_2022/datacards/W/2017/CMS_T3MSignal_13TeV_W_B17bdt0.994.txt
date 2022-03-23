@@ -16,12 +16,12 @@ process                                 0                   1
 rate                                    2.0864        24.6076
 --------------------------------------------------------------------------------
 xs_W          lnN                       1.037               -
-br_Wtaunu          lnN                       1.0021               -
-br_Wmunu          lnN                       1.0015               -
+br_Wtaunu          lnN                       1.018               -
+br_Wmunu          lnN                       1.014               -
 WNLO          lnN                       1.04               -
 Lumi17          lnN                       1.023               -
-muonID_B17          lnN                       1.021               -
-HLT_Mu_B17          lnN                       1.030               -
+muonID_B17          lnN                       1.014               -
+HLT_Mu_B17          lnN                       1.021               -
 HLT_iso17          lnN                       1.12               -
 HLT_TkMu_B17          lnN                       1.1               -
 mc_stat_B17bdt0.994 lnN                       0.9227        -   

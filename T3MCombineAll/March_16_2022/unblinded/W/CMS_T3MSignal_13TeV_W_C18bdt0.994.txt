@@ -3,12 +3,12 @@ imax 1 number of bins
 jmax * number of processes minus 1
 kmax * number of nuisance parameters
 --------------------------------------------------------------------------------
-shapes background    Wtau3mu_C18bdt0.994       ../../../workspaces/W/2018/CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:bkg
-shapes signal        Wtau3mu_C18bdt0.994       ../../../workspaces/W/2018/CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:sig
-shapes data_obs      Wtau3mu_C18bdt0.994       ../../../workspaces/W/2018/CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:data_obs
+shapes background    Wtau3mu_C18bdt0.994       ./CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:bkg
+shapes signal        Wtau3mu_C18bdt0.994       ./CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:sig
+shapes data_obs      Wtau3mu_C18bdt0.994       ./CMS_T3M_13TeV_W_C18bdt0.994.root t3m_shapes:data_obs
 --------------------------------------------------------------------------------
 bin               Wtau3mu_C18bdt0.994
-observation       -1
+observation       18
 --------------------------------------------------------------------------------
 bin                                     Wtau3mu_C18bdt0.994       Wtau3mu_C18bdt0.994
 process                                 signal              background
