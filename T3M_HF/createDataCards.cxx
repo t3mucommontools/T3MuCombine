@@ -16,10 +16,10 @@ void SigModelFit(RooWorkspace*, const Int_t NCAT, std::vector<string>, RooFitRes
 void BkgModelFit(RooWorkspace*, const Int_t NCAT, std::vector<string>, RooFitResult** bkg_fitresults, bool blind, std::vector<string> cat_names);
 void MakeSigWS(RooWorkspace* w, const Int_t NCAT, const char* filename,  std::vector<string>);
 void MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* filename,  std::vector<string>);
-void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, const char* fileBkgName,  std::vector<string> cat_names, TString type, TString Run, bool blind);
-void MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind);
-void MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind);
-void MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names);
+void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, const char* fileBkgName, string configFile,  std::vector<string> cat_names, TString type, TString Run, bool blind);
+void MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind, string configs);
+void MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind, string configs);
+void MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, string configs);
 
 void SetConstantParams(const RooArgSet* params);
 void tokenize(std::string const &str, const char delim, std::vector<std::string> &out);
@@ -62,9 +62,10 @@ createDataCards(TString inputfile, int signalsample = 0, bool blind = true, stri
    TString signalname("T3MSignal");
    TString bkgname("T3MBkg");
 
+   string configFile_prefix =  configFile.erase(configFile.size() - 4);
 
-   TString fileBaseName("CMS_"+signalname+"_13TeV");
-   TString fileBkgName("CMS_"+bkgname+"_13TeV");
+   TString fileBaseName("CMS_"+signalname + configFile_prefix + "_13TeV");
+   TString fileBkgName("CMS_"+bkgname + configFile_prefix + "_13TeV");
 
    TString card_name(modelCard);
    HLFactory hlf("HLFactory", card_name, false);
@@ -83,13 +84,13 @@ createDataCards(TString inputfile, int signalsample = 0, bool blind = true, stri
    BkgModelFit(w, NCAT, cat_names, bkg_fitresults, blind, cat_names);
    MakeBkgWS(w, NCAT, fileBkgName, cat_names);
 
-   MakeDataCard(w, NCAT, fileBaseName, fileBkgName, cat_names, type, Run, blind);
+   MakeDataCard(w, NCAT, fileBaseName, fileBkgName, configFile_prefix, cat_names, type, Run, blind);
 
    TString filename("temp_workspace.root");
    w->writeToFile(filename);
-   MakePlots(w,NCAT,cat_names,MultiPdf, blind);
-   //MakePlotsSplusB(w,NCAT,cat_names,MultiPdf, blind);
-   MakePlotsSgn(w,NCAT,cat_names);
+   MakePlots(w,NCAT,cat_names,MultiPdf, blind, configFile_prefix);
+   //MakePlotsSplusB(w,NCAT,cat_names,MultiPdf, blind,configFile_prefix);
+   MakePlotsSgn(w,NCAT,cat_names,configFile_prefix);
 
    w->Print();
 
@@ -211,7 +212,7 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
 }
 
 void
-MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind){
+MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind, string configs){
 
    RooDataSet* signalAll[NCAT];
    RooDataSet* dataAll[NCAT];
@@ -323,14 +324,14 @@ MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names
       legmc->SetTextSize(0.029);
 
       legmc->Draw();  
-      ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s_SplusB",cat_names.at(category).c_str())+".png");
+      ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s_SplusB",cat_names.at(category).c_str())+configs+".png");
    }
 }
 
 
 
 void
-MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind){
+MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool MultiPdf, bool blind, string configs){
 
    RooDataSet* signalAll[NCAT];
    RooDataSet* dataAll[NCAT];
@@ -472,14 +473,14 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       legmc->SetTextSize(0.029);
 
       legmc->Draw();  
-      ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".png");
+      ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+configs+".png");
    }
    outFile.close();
 }
 
 
 void
-MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names){
+MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, string configs){
 
    RooDataSet* signalAll[NCAT];
    RooAbsPdf* sigpdf[NCAT];
@@ -541,7 +542,7 @@ MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names){
       legmc->SetTextSize(0.029);
 
       legmc->Draw();  
-      ctmp_sig->SaveAs("plots/"+TString::Format("Signal_%s",cat_names.at(category).c_str())+".png");
+      ctmp_sig->SaveAs("plots/"+TString::Format("Signal_%s",cat_names.at(category).c_str())+configs+".png");
       ctmp_sig->Write();
    }
    f.Close();
@@ -594,6 +595,7 @@ AddData(TString file, RooWorkspace* w, const Int_t NCAT, std::vector<string> bra
           if(category%3==i) 
               category_cut = categ_name+"=="+std::to_string(i);
       }
+      std::cout<<"-------------------------- "<< category_cut <<  "---------- "<< bdtcut<< std::endl;
       RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+")"), WeightVar(weight_name));
       sigds.Print();
       w->import(sigds,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
@@ -751,7 +753,7 @@ MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, std::vect
 
 
 
-void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, const char* fileBkgName, std::vector<string> cat_names, TString type, TString Run, bool blind){
+void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, const char* fileBkgName, string configFile,  std::vector<string> cat_names, TString type, TString Run, bool blind){
 
    TString cardDir = "datacards/";
    TString wsDir   = "../workspaces/";
