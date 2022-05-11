@@ -75,6 +75,7 @@ if( $ARGV[0] eq "--Combine"){
     system(sprintf("echo \"cp  ../../../T3MLimit/CMS_lumi.py  CombineHarvester/T3MLimit/datacards \" >> Install_Combine_$time"));
     system(sprintf("echo \"cp  ../../../T3MLimit/readLimit.py  CombineHarvester/T3MLimit/datacards \" >> Install_Combine_$time"));
     system(sprintf("echo \"cp  ../../../T3MLimit/tdrstyle.py  CombineHarvester/T3MLimit/datacards \" >> Install_Combine_$time"));
+    system(sprintf("echo \"cp -r ../../../T3M_HF  CombineHarvester \" >> Install_Combine_$time"));
 
 
     printf("\n\nInstructions:");
