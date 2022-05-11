@@ -27,8 +27,8 @@ if __name__ == "__main__":
            command +="  CMS_T3MSignal_13TeV_C1.txt CMS_T3MSignal_13TeV_C2.txt > CMS_T3MSignal_13TeV_Combined.txt;"
     elif args.version==3:
            command="root -b -q 'createDataCards.cxx(\"" + args.input_file+ "\", 0, " + args.blind+ ", \""+ args.card_file +"\",\""+ args.settings_file +"\",\""+args.type+"\",\""+args.run+"\")';"
-           command +="cd datacards; combineCards.py CMS_T3MSignal_13TeV_A1.txt CMS_T3MSignal_13TeV_A2.txt CMS_T3MSignal_13TeV_A3.txt CMS_T3MSignal_13TeV_B1.txt CMS_T3MSignal_13TeV_B2.txt"
-           command +=" CMS_T3MSignal_13TeV_B3.txt  CMS_T3MSignal_13TeV_C1.txt CMS_T3MSignal_13TeV_C2.txt CMS_T3MSignal_13TeV_C3.txt> CMS_T3MSignal_13TeV_Combined.txt;"
+#           command +="cd datacards; combineCards.py CMS_T3MSignal_13TeV_A1.txt CMS_T3MSignal_13TeV_A2.txt CMS_T3MSignal_13TeV_A3.txt CMS_T3MSignal_13TeV_B1.txt CMS_T3MSignal_13TeV_B2.txt"
+#           command +=" CMS_T3MSignal_13TeV_B3.txt  CMS_T3MSignal_13TeV_C1.txt CMS_T3MSignal_13TeV_C2.txt CMS_T3MSignal_13TeV_C3.txt> CMS_T3MSignal_13TeV_Combined.txt;"
     else:
         print("Invalid version")
 
