@@ -88,14 +88,27 @@ A1,B1,C1,A2,B2,C2,A3,B3,C3
 
 for sch in schedule: 
     print '>>', sch
-    process = subprocess.Popen(sch, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE) if not args.verbose else subprocess.Popen(sch, shell = True)
-    stdout, stderr = process.communicate() 
-    print stdout, '\n', stderr if args.verbose else stderr
+#    process = subprocess.Popen(sch, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE) if not args.verbose else subprocess.Popen(sch, shell = True)
+#    stdout, stderr = process.communicate() 
+#    print stdout, '\n', stderr if args.verbose else stderr
 
 
-run_combined_datacards(DataCardsToCombine)
+#run_combined_datacards(DataCardsToCombine)
 os.system('rm scan_config_cat*')
 
 print '[INFO] all processes ended'
 
+results = os.listdir(args.outdir)
+listof=[]
+rdict = {}
+for res in os.listdir(args.outdir): 
+    if 'limit_combined_asymptotic' in res:
+        limfile = open(args.outdir+'/'+res, 'r')
+        line = limfile.readlines()
+        line[0].strip()
+        rdict[res] = float(line[0].split("<")[1][:-2])
+        print  line[0].split("<")[1][:-2]
+
+sorteddict =  sorted(rdict.items(), key=lambda x: x[1]) 
+print sorteddict
 
