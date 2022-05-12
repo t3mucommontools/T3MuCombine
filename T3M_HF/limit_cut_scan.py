@@ -24,7 +24,7 @@ RUN_COMBINE_ASYMPTOTIC_CMD = 'combineTool.py -M AsymptoticLimits  --run blind  -
 CMD = './run.py -i inputdata/dataset_UL2018_ThreeGlobal_outputTree.root -c model_card_v3.rs --run 2018 --type threeGlobal -v 3 -s {CONFIG}'
 
 task_queue = []
-#schedule =   []
+
 DataCardsToCombine = []
 args = parser.parse_args()
 os.system('mkdir %s' %args.outdir)
@@ -88,12 +88,12 @@ A1,B1,C1,A2,B2,C2,A3,B3,C3
 
 for sch in schedule: 
     print '>>', sch
-#    process = subprocess.Popen(sch, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE) if not args.verbose else subprocess.Popen(sch, shell = True)
-#    stdout, stderr = process.communicate() 
-#    print stdout, '\n', stderr if args.verbose else stderr
+    process = subprocess.Popen(sch, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE) if not args.verbose else subprocess.Popen(sch, shell = True)
+    stdout, stderr = process.communicate() 
+    print stdout, '\n', stderr if args.verbose else stderr
 
 
-#run_combined_datacards(DataCardsToCombine)
+run_combined_datacards(DataCardsToCombine)
 os.system('rm scan_config_cat*')
 
 print '[INFO] all processes ended'
