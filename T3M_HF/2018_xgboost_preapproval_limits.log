@@ -1,0 +1,162 @@
+===================================
+         Printing Limits
+===================================
+-----------------------------------
+            Combined
+-----------------------------------
+combineTool.py -M T2W -o workspace.root -i CMS_T3MSignal_13TeV_Combined.txt;combineTool.py -M AsymptoticLimits --run blind  -d workspace.root --cl 0.90 -m 1.777 --noFitAsimov;
+>> pushd .; text2workspace.py -o workspace.root CMS_T3MSignal_13TeV_Combined.txt; popd
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards /afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+>> combine --run blind --cl 0.90 --noFitAsimov -M AsymptoticLimits -m 1.777 -d workspace.root -n .Test
+ <<< Combine >>>
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 123456
+Warning! -- You haven't picked default values for the Parameters of Interest (either with --expectSignal or --setParameters) for generating toys. Combine will use the 'B-only' ModelConfig to generate, which may lead to undesired behaviour if not using the default Physics Model
+SimNLL created with 6 channels, 0 generic constraints, 13 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints,
+
+ -- AsymptoticLimits ( CLs ) --
+Expected  2.5%: r < 0.6774
+Expected 16.0%: r < 0.9365
+Expected 50.0%: r < 1.3984
+Expected 84.0%: r < 2.1756
+Expected 97.5%: r < 3.3132
+
+Done in 0.00 min (cpu), 0.00 min (real)
+-----------------------------------
+               A1
+-----------------------------------
+combineTool.py -M T2W -o workspace.root -i CMS_T3MSignal_13TeV_A1.txt;combineTool.py -M AsymptoticLimits --run blind  -d workspace.root --cl 0.90 -m 1.777 --noFitAsimov;
+>> pushd .; text2workspace.py -o workspace.root CMS_T3MSignal_13TeV_A1.txt; popd
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards /afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+>> combine --run blind --cl 0.90 --noFitAsimov -M AsymptoticLimits -m 1.777 -d workspace.root -n .Test
+ <<< Combine >>>
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 123456
+Warning! -- You haven't picked default values for the Parameters of Interest (either with --expectSignal or --setParameters) for generating toys. Combine will use the 'B-only' ModelConfig to generate, which may lead to undesired behaviour if not using the default Physics Model
+SimNLL created with 1 channels, 0 generic constraints, 13 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints,
+
+ -- AsymptoticLimits ( CLs ) --
+Expected  2.5%: r < 1.6490
+Expected 16.0%: r < 2.3551
+Expected 50.0%: r < 3.7031
+Expected 84.0%: r < 6.1479
+Expected 97.5%: r < 10.0433
+
+Done in 0.00 min (cpu), 0.00 min (real)
+-----------------------------------
+               A2
+-----------------------------------
+combineTool.py -M T2W -o workspace.root -i CMS_T3MSignal_13TeV_A2.txt;combineTool.py -M AsymptoticLimits --run blind  -d workspace.root --cl 0.90 -m 1.777 --noFitAsimov;
+>> pushd .; text2workspace.py -o workspace.root CMS_T3MSignal_13TeV_A2.txt; popd
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards /afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+>> combine --run blind --cl 0.90 --noFitAsimov -M AsymptoticLimits -m 1.777 -d workspace.root -n .Test
+ <<< Combine >>>
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 123456
+Warning! -- You haven't picked default values for the Parameters of Interest (either with --expectSignal or --setParameters) for generating toys. Combine will use the 'B-only' ModelConfig to generate, which may lead to undesired behaviour if not using the default Physics Model
+SimNLL created with 1 channels, 0 generic constraints, 13 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints,
+
+ -- AsymptoticLimits ( CLs ) --
+Expected  2.5%: r < 2.5764
+Expected 16.0%: r < 3.5934
+Expected 50.0%: r < 5.4062
+Expected 84.0%: r < 8.5133
+Expected 97.5%: r < 13.1411
+
+Done in 0.00 min (cpu), 0.00 min (real)
+-----------------------------------
+               B1
+-----------------------------------
+combineTool.py -M T2W -o workspace.root -i CMS_T3MSignal_13TeV_B1.txt;combineTool.py -M AsymptoticLimits --run blind  -d workspace.root --cl 0.90 -m 1.777 --noFitAsimov;
+>> pushd .; text2workspace.py -o workspace.root CMS_T3MSignal_13TeV_B1.txt; popd
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards /afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+>> combine --run blind --cl 0.90 --noFitAsimov -M AsymptoticLimits -m 1.777 -d workspace.root -n .Test
+ <<< Combine >>>
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 123456
+Warning! -- You haven't picked default values for the Parameters of Interest (either with --expectSignal or --setParameters) for generating toys. Combine will use the 'B-only' ModelConfig to generate, which may lead to undesired behaviour if not using the default Physics Model
+SimNLL created with 1 channels, 0 generic constraints, 13 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints,
+
+ -- AsymptoticLimits ( CLs ) --
+Expected  2.5%: r < 1.2817
+Expected 16.0%: r < 1.7924
+Expected 50.0%: r < 2.7344
+Expected 84.0%: r < 4.3838
+Expected 97.5%: r < 6.8838
+
+Done in 0.00 min (cpu), 0.00 min (real)
+-----------------------------------
+               B2
+-----------------------------------
+combineTool.py -M T2W -o workspace.root -i CMS_T3MSignal_13TeV_B2.txt;combineTool.py -M AsymptoticLimits --run blind  -d workspace.root --cl 0.90 -m 1.777 --noFitAsimov;
+>> pushd .; text2workspace.py -o workspace.root CMS_T3MSignal_13TeV_B2.txt; popd
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards /afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+>> combine --run blind --cl 0.90 --noFitAsimov -M AsymptoticLimits -m 1.777 -d workspace.root -n .Test
+ <<< Combine >>>
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 123456
+Warning! -- You haven't picked default values for the Parameters of Interest (either with --expectSignal or --setParameters) for generating toys. Combine will use the 'B-only' ModelConfig to generate, which may lead to undesired behaviour
+ if not using the default Physics Model
+SimNLL created with 1 channels, 0 generic constraints, 13 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints,
+ -- AsymptoticLimits ( CLs ) --
+Expected  2.5%: r < 1.4607
+Expected 16.0%: r < 2.0195
+Expected 50.0%: r < 3.0156
+Expected 84.0%: r < 4.6771
+Expected 97.5%: r < 7.0921
+
+Done in 0.00 min (cpu), 0.00 min (real)
+-----------------------------------
+               C1
+-----------------------------------
+combineTool.py -M T2W -o workspace.root -i CMS_T3MSignal_13TeV_C1.txt;combineTool.py -M AsymptoticLimits --run blind  -d workspace.root --cl 0.90 -m 1.777 --noFitAsimov;
+>> pushd .; text2workspace.py -o workspace.root CMS_T3MSignal_13TeV_C1.txt; popd
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards /afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+>> combine --run blind --cl 0.90 --noFitAsimov -M AsymptoticLimits -m 1.777 -d workspace.root -n .Test
+ <<< Combine >>>
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 123456
+Warning! -- You haven't picked default values for the Parameters of Interest (either with --expectSignal or --setParameters) for generating toys. Combine will use the 'B-only' ModelConfig to generate, which may lead to undesired behaviour if not using the default Physics Model
+SimNLL created with 1 channels, 0 generic constraints, 13 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints,
+
+ -- AsymptoticLimits ( CLs ) --
+Expected  2.5%: r < 1.8311
+Expected 16.0%: r < 2.5768
+Expected 50.0%: r < 3.9062
+Expected 84.0%: r < 6.2254
+Expected 97.5%: r < 9.7314
+
+Done in 0.00 min (cpu), 0.00 min (real)
+-----------------------------------
+               C2
+-----------------------------------
+combineTool.py -M T2W -o workspace.root -i CMS_T3MSignal_13TeV_C2.txt;combineTool.py -M AsymptoticLimits --run blind  -d workspace.root --cl 0.90 -m 1.777 --noFitAsimov;
+>> pushd .; text2workspace.py -o workspace.root CMS_T3MSignal_13TeV_C2.txt; popd
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards /afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+/afs/cern.ch/work/b/bjoshi/Analysis/HFCombine/T3MCombine/T3M_HF/datacards
+>> combine --run blind --cl 0.90 --noFitAsimov -M AsymptoticLimits -m 1.777 -d workspace.root -n .Test
+ <<< Combine >>>
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 123456
+Warning! -- You haven't picked default values for the Parameters of Interest (either with --expectSignal or --setParameters) for generating toys. Combine will use the 'B-only' ModelConfig to generate, which may lead to undesired behaviour if not using the default Physics Model
+SimNLL created with 1 channels, 0 generic constraints, 13 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints,
+
+ -- AsymptoticLimits ( CLs ) --
+Expected  2.5%: r < 2.7397
+Expected 16.0%: r < 3.8106
+Expected 50.0%: r < 5.6562
+Expected 84.0%: r < 8.7458
+Expected 97.5%: r < 13.2453
