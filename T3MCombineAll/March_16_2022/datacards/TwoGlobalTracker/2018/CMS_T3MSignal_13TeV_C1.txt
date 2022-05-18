@@ -13,9 +13,9 @@ observation   -1
 bin               C1        C1     
 process              signal     bkg     
 process                0          1      
-rate                 1.37908    12
+rate                 2.40035    100
 --------------------------------
-DsNorm_13TeV      lnN  1.062      - 
+DsNorm_13TeV      lnN  1.03      - 
 BRDToTau_13TeV    lnN  1.03      - 
 BRDsPhiPi_13TeV   lnN  1.08      - 
 BRBtoD_13TeV      lnN  1.05      - 
@@ -23,8 +23,8 @@ BRBtoTau_13TeV    lnN  1.03      -
 fUnc_13TeV        lnN  1.07      - 
 DpmScaling_13TeV  lnN  1.03      - 
 BsScaling_13TeV   lnN  1.04      - 
-UncTrigger_13TeV  lnN  1.11      - 
+UncTrigger_13TeV  lnN  1.08      - 
 UncBDTCut_13TeV   lnN  1.05      - 
 UncRatioAcc_13TeV lnN  1.01      - 
-UncMuonEff_13TeV  lnN  1.04     - 
+UncMuonEff_13TeV  lnN  1.08     - 
 UncMVAshape_13TeV  lnN  1.10     - 

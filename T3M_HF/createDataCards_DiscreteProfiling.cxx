@@ -822,8 +822,8 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
             outFile << "UncMuonEff_13TeV  lnN  1.016     - " << endl;
             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
          }else{
-            outFile << "UncMuonEff_13TeV  lnN  1.08     - " << endl; //TrackerNotGlobal SF
-            outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+             outFile << "UncMuonEff_13TeV  lnN  1.08     - " << endl; //TrackerNotGlobal SF
+             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
          }
       }
 
@@ -845,8 +845,8 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
             outFile << "UncMuonEff_13TeV  lnN  1.015     - " << endl;
             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
          }else{
-            outFile << "UncMuonEff_13TeV  lnN  1.04     - " << endl; //TrackerNotGlobal SF
-            outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+             outFile << "UncMuonEff_13TeV  lnN  1.04     - " << endl; //TrackerNotGlobal SF
+             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
          }
       }
 
