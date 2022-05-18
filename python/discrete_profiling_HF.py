@@ -158,7 +158,7 @@ for j, fam in enumerate(families):
 
     if gof_prob > 0.01 and fis_prob < 0.1:
       if gof_prob > gofmax:
-        gofmax = mnll
+        gofmax = gof_prob
         bestfit = pdf.GetName()
       envelope.add(pdf)
       print(">>>"+pdf.GetName()+" added to envelope")
@@ -181,6 +181,7 @@ multipdf = ROOT.RooMultiPdf("multipdf", "", cat, envelope)
 cat.setIndex([envelope.at(i).GetName() for i in range(envelope.getSize())].index(bestfit))
 outerspace = ROOT.RooWorkspace('ospace')
 getattr(outerspace, 'import')(envelope)
+getattr(outerspace, 'import')(multipdf)
 
 if not os.path.exists('MultiPdfWorkspaces'):
   os.makedirs("MultiPdfWorkspaces")
