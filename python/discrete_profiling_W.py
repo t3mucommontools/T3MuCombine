@@ -106,13 +106,13 @@ frame.Draw()
 leg.Draw("SAME")
 can.Update()
 can.Modified()
-
 cat = ROOT.RooCategory("roomultipdf_cat", "")
 
 multipdf = ROOT.RooMultiPdf("multipdf", "", cat, envelope)
 cat.setIndex([envelope.at(i).GetName() for i in range(envelope.getSize())].index(bestfit))
 outerspace = ROOT.RooWorkspace('ospace')
 getattr(outerspace, 'import')(envelope)
+getattr(outerspace, 'import')(multipdf)
 
 if not os.path.exists('MultiPdfWorkspaces'):
   os.makedirs("MultiPdfWorkspaces")
