@@ -103,6 +103,9 @@ for j, fam in enumerate(families):
         gofmax = gof_prob
         bestfit = pdf.GetName()
       envelope.add(pdf)
+      if "Exponential" in pdf.GetName():
+        pdf.plotOn(frame, ROOT.RooFit.LineColor(envelope.getSize()), ROOT.RooFit.Name(pdf.GetName()), ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'), ROOT.RooFit.VisualizeError(results,2), ROOT.RooFit.FillColor(ROOT.kYellow), ROOT.RooFit.FillStyle(3001))
+        pdf.plotOn(frame, ROOT.RooFit.LineColor(envelope.getSize()), ROOT.RooFit.Name(pdf.GetName()), ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'), ROOT.RooFit.VisualizeError(results,1), ROOT.RooFit.FillColor(ROOT.kGreen ), ROOT.RooFit.FillStyle(3001))
       pdf.plotOn(frame, ROOT.RooFit.LineColor(envelope.getSize()), ROOT.RooFit.Name(pdf.GetName()), ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'))
     del chi2 # RooChi2Var makes the code crash at the end of the execution. This line makes it crash faster.
 for pdf in [envelope.at(i) for i in range(envelope.getSize())]:
