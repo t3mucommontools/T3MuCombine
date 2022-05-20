@@ -85,22 +85,22 @@ for j, fam in enumerate(families):
   pdf_list = [p for p in allpdfs_list if p.GetName().startswith(fam)]
   mnlls    = []
   for i, pdf in enumerate(pdf_list):
-    norm = ROOT.RooRealVar("nev", "", 0, 1e+3)
-    ext_pdf = ROOT.RooAddPdf(pdf.GetName()+"_ext", "", ROOT.RooArgList(pdf), ROOT.RooArgList(norm))
-    results = ext_pdf.fitTo(data,  ROOT.RooFit.Save(True), ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'), ROOT.RooFit.Extended(True))
-    chi2 = ROOT.RooChi2Var("chi2"+pdf.GetName(), "", pdf, hist)
+    norm = ROOT.RooRealVar("nbkg", "", 0, 1e+3)
+    ext_pdf = ROOT.RooAddPdf(pdf.GetName()+"_ext", "", ROOT.RooArgList(pdf), ROOT.RooArgList(norm)) if not 'Bernstein' in pdf.GetName() else pdf
+    results = ext_pdf.fitTo(data,  ROOT.RooFit.Save(True), ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'), ROOT.RooFit.Extended(not 'Bernstein' in pdf.GetName()))
+    chi2 = ROOT.RooChi2Var("chi2"+pdf.GetName(), "", ext_pdf, hist, ROOT.RooFit.DataError(ROOT.RooAbsData.Expected))
     mnll = results.minNll()+(i+1)
-
     gof_prob = ROOT.TMath.Prob(chi2.getVal(), hist.numEntries()-pdf.getParameters(data).selectByAttrib("Constant", False).getSize())
+
     fis_prob = ROOT.TMath.Prob(2.*(mnlls[-1]-mnll), 1) if len(mnlls) else 0
     
     mnlls.append(mnll)
 
     print(">>>", pdf.GetName(), gof_prob, fis_prob)
 
-    if gof_prob > 0.01 and fis_prob < 0.1:
+    if gof_prob > 0.01 and fis_prob < 0.1 and results.covQual()==3:
       if gof_prob > gofmax:
-        gofmax = mnll
+        gofmax = gof_prob
         bestfit = pdf.GetName()
       envelope.add(pdf)
       pdf.plotOn(frame, ROOT.RooFit.LineColor(envelope.getSize()), ROOT.RooFit.Name(pdf.GetName()), ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'))
