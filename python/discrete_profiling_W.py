@@ -10,13 +10,17 @@ NOTE: input files must contain a branch called 'mass' and possibly be already sk
 NOTE: the code will probably crash on exit. This is somehow related to the RooChi2Var object.
 '''
 )
-parser.add_argument('-b', '--binning'   , nargs=3  , type=float, default=[40, 1.6, 2.0], help='mass binning as nbins low hig (GeV)')
-parser.add_argument('-c', '--category'  ,            type=str  , default='W_C17'       , help='category to fit'                    )
-parser.add_argument('-m', '--mass'      ,            type=str  , default='mass'        , help='name of the 3mu mass variable'      )
-parser.add_argument('-t', '--tree'      ,            type=str  , default='tree'        , help='name of the input tree'             )
-parser.add_argument('-M', '--max-order' ,            type=int  , default=6             , help='max pdf order to consider'          )
-parser.add_argument('-U', '--unblind'   , action='store_true'                          , help='don\'t use blinded ranges'          )
+parser.add_argument('-b', '--binning'   , nargs=3  , type=float, default=[40, 1.6, 2.0]       , help='mass binning as nbins low hig (GeV)')
+parser.add_argument('-c', '--category'  ,            type=str  , default='W_C17'              , help='category to fit'                    )
+parser.add_argument('-m', '--mass'      ,            type=str  , default='cand_refit_tau_mass', help='name of the 3mu mass variable'      )
+parser.add_argument('-t', '--tree'      ,            type=str  , default='tree'               , help='name of the input tree'             )
+parser.add_argument('-M', '--max-order' ,            type=int  , default=6                    , help='max pdf order to consider'          )
+parser.add_argument('-U', '--unblind'   , action='store_true'                                 , help='don\'t use blinded ranges'          )
 args = parser.parse_args()
+
+ROOT.gROOT.SetBatch(True)
+if not os.path.exists('MultiPdfWorkspaces'):
+  os.makedirs("MultiPdfWorkspaces")
 
 files   = {
   'W_A17': '/gwpool/users/lguzzi/Tau3Mu/2017_2018/combine_test/T3MuCombine/python/W_snapshots/data/A17.root',
@@ -37,7 +41,7 @@ getattr(pdfs, 'import')(mass)
 
 file = ROOT.TFile(files[args.category], 'READ')
 tree = file.Get(args.tree)
-args.max_order = min(args.max_order, tree.GetEntries()-2)
+args.max_order = max(min(args.max_order, tree.GetEntries()-3), 1)
 
 c_powerlaw = ROOT.RooRealVar("c_PowerLaw", "", 1, 0, 10)
 powerlaw = ROOT.RooGenericPdf("PowerLaw", "TMath::Power(@0, @1)", ROOT.RooArgList(mass, c_powerlaw))
@@ -61,7 +65,7 @@ data = ROOT.RooDataSet('data', '', tree, ROOT.RooArgSet(wspace.var(args.mass)))#
 hist = data.binnedClone('histo')
 getattr(wspace, 'import')(data)
 
-frame = wspace.var('mass').frame()
+frame = wspace.var(args.mass).frame()
 wspace.data('data').plotOn(frame)
 
 envelope = ROOT.RooArgList("envelope")
@@ -114,9 +118,7 @@ outerspace = ROOT.RooWorkspace('ospace')
 getattr(outerspace, 'import')(envelope)
 getattr(outerspace, 'import')(multipdf)
 
-if not os.path.exists('MultiPdfWorkspaces'):
-  os.makedirs("MultiPdfWorkspaces")
+can.SaveAs("MultiPdfWorkspaces/"+args.category+"_plot.pdf", "pdf")
 outerspace.writeToFile("MultiPdfWorkspaces/"+args.category+".root")
 
 print("\nExecution is complete. I may crash in peace\n")
-import pdb; pdb.set_trace()
