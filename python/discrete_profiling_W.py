@@ -76,7 +76,8 @@ leg = ROOT.TLegend(0.7, 0.6, 0.9, 0.9)
 
 gofmax  = 0
 bestfit = None
-families = ['Bernstein', 'Chebychev', 'Exponential', 'PowerLaw']
+#families = ['Bernstein', 'Chebychev', 'Exponential', 'PowerLaw']
+families = ['Bernstein', 'Exponential', 'PowerLaw']
 allpdfs_list = ROOT.RooArgList(pdfs.allPdfs())
 allpdfs_list = [allpdfs_list.at(j) for j in range(allpdfs_list.getSize())]
 
