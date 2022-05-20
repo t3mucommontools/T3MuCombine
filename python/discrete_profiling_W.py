@@ -43,19 +43,20 @@ file = ROOT.TFile(files[args.category], 'READ')
 tree = file.Get(args.tree)
 args.max_order = max(min(args.max_order, tree.GetEntries()-3), 1)
 
-c_powerlaw = ROOT.RooRealVar("c_PowerLaw", "", 1, 0, 10)
+c_powerlaw = ROOT.RooRealVar("c_PowerLaw_{}".format(args.category), "", 1, -10, 10)
 powerlaw = ROOT.RooGenericPdf("PowerLaw", "TMath::Power(@0, @1)", ROOT.RooArgList(mass, c_powerlaw))
 
-pdfs.factory("Exponential::Exponential(mass, slope[0, -10, 10])")
-pdfs.factory("Exponential::Exponential(mass, slope[0, -10, 10])")
+pdfs.factory("Exponential::Exponential({}, slope_{}[0, -10, 10])".format(args.mass, args.category))
 getattr(pdfs, 'import')(powerlaw)
 
-## Bernstein polynomials
-for i in range(1, args.max_order+1):
-  c_bernstein = '{'+','.join(['c_Bernstein{}[0.01, -10,10]'.format(j) for j in range(1,i+1)])+'}'
-  c_chebychev = '{'+','.join(['c_Chebychev{}[0.01, -10,10]'.format(j) for j in range(1,i+1)])+'}'
-  pdfs.factory('Bernstein::Bernstein{}(mass, {})'.format(i, c_bernstein))
-  pdfs.factory('Chebychev::Chebychev{}(mass, {})'.format(i, c_chebychev))
+# Bernstein: oder n has n+1 coefficients (starts from constant)
+# Chebychev: order n has n coefficients (starts from linear)
+for i in range(0, args.max_order+1):
+  c_bernstein = '{'+','.join(['c_Bernstein{}{}_{}[.1, 0, 1]'   .format(i, j, args.category) for j in range(i+1)])+'}'
+  pdfs.factory('Bernstein::Bernstein{}({}, {})'.format(i, args.mass, c_bernstein))
+for i in range(args.max_order):
+  c_chebychev = '{'+','.join(['c_Chebychev{}{}_{}[.1, 0, 1]'.format(i+1, j, args.category) for j in range(i+1)])+'}'
+  pdfs.factory('Chebychev::Chebychev{}({}, {})'.format(i+1, args.mass, c_chebychev))
 
 wspace = ROOT.RooWorkspace('wspace')
 getattr(wspace, 'import')(mass)
@@ -110,7 +111,7 @@ frame.Draw()
 leg.Draw("SAME")
 can.Update()
 can.Modified()
-cat = ROOT.RooCategory("roomultipdf_cat", "")
+cat = ROOT.RooCategory("roomultipdf_cat_{}".format(args.category), "")
 
 multipdf = ROOT.RooMultiPdf("multipdf", "", cat, envelope)
 cat.setIndex([envelope.at(i).GetName() for i in range(envelope.getSize())].index(bestfit))
