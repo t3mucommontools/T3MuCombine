@@ -41,22 +41,22 @@ getattr(pdfs, 'import')(mass)
 
 file = ROOT.TFile(files[args.category], 'READ')
 tree = file.Get(args.tree)
-args.max_order = max(min(args.max_order, tree.GetEntries()-3), 1)
+args.max_order = max(min(args.max_order, tree.GetEntries()-2), 1)
 
-c_powerlaw = ROOT.RooRealVar("c_PowerLaw_{}".format(args.category), "", 1, -10, 10)
-powerlaw = ROOT.RooGenericPdf("PowerLaw", "TMath::Power(@0, @1)", ROOT.RooArgList(mass, c_powerlaw))
+c_powerlaw = ROOT.RooRealVar("c_PowerLaw_{}".format(args.category), "", 1, -100, 100)
+powerlaw = ROOT.RooGenericPdf("PowerLaw_{}".format(args.category), "TMath::Power(@0, @1)", ROOT.RooArgList(mass, c_powerlaw))
 
-pdfs.factory("Exponential::Exponential({}, slope_{}[0, -10, 10])".format(args.mass, args.category))
+pdfs.factory("Exponential::Exponential_{C}({M}, slope_{C}[0, -10, 10])".format(M=args.mass, C=args.category))
 getattr(pdfs, 'import')(powerlaw)
 
 # Bernstein: oder n has n+1 coefficients (starts from constant)
 # Chebychev: order n has n coefficients (starts from linear)
 for i in range(0, args.max_order+1):
   c_bernstein = '{'+','.join(['c_Bernstein{}{}_{}[.1, 0, 1]'   .format(i, j, args.category) for j in range(i+1)])+'}'
-  pdfs.factory('Bernstein::Bernstein{}({}, {})'.format(i, args.mass, c_bernstein))
-for i in range(args.max_order):
-  c_chebychev = '{'+','.join(['c_Chebychev{}{}_{}[.1, 0, 1]'.format(i+1, j, args.category) for j in range(i+1)])+'}'
-  pdfs.factory('Chebychev::Chebychev{}({}, {})'.format(i+1, args.mass, c_chebychev))
+  pdfs.factory('Bernstein::Bernstein{}_{}({}, {})'.format(i, args.category, args.mass, c_bernstein))
+#for i in range(args.max_order):
+#  c_chebychev = '{'+','.join(['c_Chebychev{}{}_{}[.1, 0, 1]'.format(i+1, j, args.category) for j in range(i+1)])+'}'
+#  pdfs.factory('Chebychev::Chebychev{}({}, {})'.format(i+1, args.mass, c_chebychev))
 
 wspace = ROOT.RooWorkspace('wspace')
 getattr(wspace, 'import')(mass)
