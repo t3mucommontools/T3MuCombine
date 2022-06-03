@@ -123,12 +123,12 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
 
     pdfs.factory("Exponential::Exponential_{C}({M}, slope_{C}[0, -10, 10])".format(M=m3m_name, C=cat))
    
-    # Chebychev: order n has n coefficients (starts from linear)
+    # Bernstein: oder n has n+1 coefficients (starts from constant)
     for i in range(0, args.max_order+1):
       c_bernstein = '{'+','.join(['c_Bernstein{}{}_{}[.1, 0.0, 1.0]'   .format(i, j, cat) for j in range(i+1)])+'}'
       pdfs.factory('Bernstein::Bernstein{}_{}({}, {})'.format(i, cat, m3m_name, c_bernstein))
 
-    # Bernstein: oder n has n+1 coefficients (starts from constant)
+    # Chebychev: order n has n coefficients (starts from linear)
     #for i in range(args.max_order):
     #  c_chebychev = '{'+','.join(['c_Chebychev{}{}_{}[.1, 0, 1]'.format(i+1, j, cat) for j in range(i+1)])+'}'
     #  pdfs.factory('Chebychev::Chebychev{}({}, {})'.format(i+1, m3m_name, c_chebychev)) 
@@ -162,7 +162,7 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
       mnlls    = []
       for i, pdf in enumerate(pdf_list):
         norm = ROOT.RooRealVar("nbkg", "", 0, 1e+6)
-        ext_pdf = ROOT.RooAddPdf(pdf.GetName()+"_ext", "", ROOT.RooArgList(pdf), ROOT.RooArgList(norm)) if not 'Bernstein' in pdf.GetName() or pdf.GetName()=='Bernstein0' else pdf
+        ext_pdf = ROOT.RooAddPdf(pdf.GetName()+"_ext", "", ROOT.RooArgList(pdf), ROOT.RooArgList(norm)) if not 'Bernstein' in pdf.GetName() else pdf
         #note: ROOT bug, see https://root-forum.cern.ch/t/problem-with-fit-in-range-with-roobernstein/41593
         results = ext_pdf.fitTo(data,  ROOT.RooFit.Save(True), ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'), ROOT.RooFit.Extended(not 'Bernstein' in pdf.GetName()))
         chi2 = ROOT.RooChi2Var("chi2"+pdf.GetName(), "", ext_pdf, hist, ROOT.RooFit.DataError(ROOT.RooAbsData.Expected))
