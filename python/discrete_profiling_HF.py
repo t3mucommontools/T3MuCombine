@@ -12,10 +12,10 @@ https://github.com/BParkHNLs/flashggFinalFit/blob/mg-branch/Background/test/fTes
 NOTE: the code will probably crash on exit. This is somehow related to the RooChi2Var object.
 '''
 )
-parser.add_argument('-i', '--input_file', type=str,  default='input.root',  help='input ttree'                    )
+parser.add_argument('-i', '--input_file', type=str,  default='../T3M_HF/inputdata/input.root',  help='input ttree'                    )
 parser.add_argument("-t", "--type",       type=str,  default="threeGlobal", help="specify type (threeGlobal/twoGlobalTracker)", action="store")
 parser.add_argument("-r", "--run",        type=str,  default="2018",        help="Run (2017/2018)", action="store")
-parser.add_argument('-s', '--setting'   , type=str  , default='config.txt', help='config file, same as createdatacards'  )
+parser.add_argument('-s', '--setting'   , type=str  , default='../T3M_HF/configs/config.txt', help='config file, same as createdatacards'  )
 parser.add_argument('-M', '--max-order' , type=int  , default=6           , help='max pdf order to consider'          )
 parser.add_argument('-U', '--unblind'   , action='store_true'             , help='don\'t use blinded ranges'          )
 args = parser.parse_args()
@@ -103,7 +103,8 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
 
     #reduce to sidebands
     sidebands = "("+m3m_name+"<"+str(mass_range_left[category][1])+"&&"+m3m_name+">="+str(mass_range_left[category][0])+")||("+m3m_name+"<"+str(mass_range_right[category][1])+"&&"+m3m_name+">="+str(mass_range_right[category][0])+")"
-    if(not args.unblind): data = data.reduce(ROOT.RooArgSet(mass), sidebands)
+    if(not args.unblind): 
+        data = data.reduce(ROOT.RooArgSet(mass), sidebands)
     else: data = data.reduce(ROOT.RooArgSet(mass))
 
     #hist = ROOT.RooDataHist('histo_'+cat, 'histo_'+cat, ROOT.RooArgSet(mass), data)
@@ -121,17 +122,22 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
     powerlaw = ROOT.RooGenericPdf("PowerLaw_{}".format(cat), "TMath::Power(@0, @1)", ROOT.RooArgList(mass, c_powerlaw))
     getattr(pdfs, 'import')(powerlaw)
 
-    pdfs.factory("Exponential::Exponential_{C}({M}, slope_{C}[0, -10, 10])".format(M=m3m_name, C=cat))
+    pdfs.factory("Exponential::Exponential_{C}({M}, slope_{C}[0, -1000, 100])".format(M=m3m_name, C=cat))
    
     # Bernstein: oder n has n+1 coefficients (starts from constant)
-    for i in range(0, args.max_order+1):
+    for i in range(1, args.max_order+1):
       c_bernstein = '{'+','.join(['c_Bernstein{}{}_{}[.1, 0.0, 1.0]'   .format(i, j, cat) for j in range(i+1)])+'}'
       pdfs.factory('Bernstein::Bernstein{}_{}({}, {})'.format(i, cat, m3m_name, c_bernstein))
 
-    # Chebychev: order n has n coefficients (starts from linear)
+    ## Chebychev: order n has n coefficients (starts from linear)
     #for i in range(args.max_order):
     #  c_chebychev = '{'+','.join(['c_Chebychev{}{}_{}[.1, 0, 1]'.format(i+1, j, cat) for j in range(i+1)])+'}'
     #  pdfs.factory('Chebychev::Chebychev{}({}, {})'.format(i+1, m3m_name, c_chebychev)) 
+
+    # Polynomial: order n has n coefficients (starts from constant)
+    for i in range(1, args.max_order):
+      c_polynomial = '{'+','.join(['c_Polynomial{}{}_{}[.1, -100, 100]'.format(i+1, j, cat) for j in range(i+1)])+'}'
+      pdfs.factory('Polynomial::Polynomial{}_{}({}, {})'.format(i, cat, m3m_name, c_polynomial)) 
 
     wspace = ROOT.RooWorkspace('wspace')
     getattr(wspace, 'import')(mass)
@@ -152,7 +158,7 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
     gofmax  = 0
     bestfit = None
     #families = ['Bernstein', 'Chebychev', 'Exponential', 'PowerLaw']
-    families = ['Bernstein', 'Exponential', 'PowerLaw']  
+    families = ['Polynomial', 'Exponential', 'PowerLaw']  
     allpdfs_list = ROOT.RooArgList(pdfs.allPdfs())
     allpdfs_list = [allpdfs_list.at(j) for j in range(allpdfs_list.getSize())]
 
@@ -208,7 +214,7 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
     leg.Draw("SAME")
     can.Update()
     can.Modified()
-    roocat = ROOT.RooCategory("roomultipdf_cat_{}".format(cat), "")
+    roocat = ROOT.RooCategory("roomultipdf_cat_HF_{}".format(cat), "")
     
     multipdf = ROOT.RooMultiPdf("multipdf", "", roocat, envelope)
     #indexing Expo in the multipdf. Change line below to switch to "bestfit"
