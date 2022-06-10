@@ -10,11 +10,20 @@ import array
 def load_dp(path):
     fil = ROOT.TFile.Open(path, "READ")
     wsp = fil.Get("ospace")
+    print('opening ext. workspace from tile', path)
     return wsp
 
 def take_index(cat, typ, year):
     wsp = load_dp("../../python/MultiPdfWorkspaces/"+year+"_"+typ+"_"+cat+".root") 
-    return wsp.pdf("bkg").getCurrentIndex()
+    return wsp.pdf("multipdf").getCurrentIndex()
+
+def take_paramsel_dp(catlist):
+    fil = ROOT.TFile.Open("../workspaces/CMS_T3MBkg_13TeV.root", "READ")
+    wsp = fil.Get("w_all")
+    parameters  = [ROOT.RooArgList(wsp.pdf('multipdf_'+cat).getParameters(ROOT.RooArgSet(wsp.var("m3m"))))[i] for cat in catlist for i in range(ROOT.RooArgList(wsp.pdf('multipdf_'+cat).getParameters(ROOT.RooArgSet(wsp.var("m3m")))).getSize())] 
+    parameters  = [p for p in parameters if not p.isConstant() and not 'roomultipdf_cat' in p.GetName()]
+    parameters_selection = ['{P}={m},{M}'.format(P=p.GetName(), m=p.getMin(), M=p.getMax()) for p in parameters]
+    return parameters_selection
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -37,20 +46,21 @@ if __name__ == "__main__":
             command +="combineTool.py -M "+args.method+" --run observed -d workspace.root --cl 0.90 -m 1.777;"
     else: #toys
         command +="combineTool.py -M "+args.method+" --cl 0.90 -m 1.777 --testStat=LHC "
-        command +="--frequentist "+args.input_file+" -T 3000 --expectedFromGrid 0.5 --plot=../plots/limit_combined_hybridnew_HF.pdf --rMin -1 --rMax 10 "
+        command +="--frequentist "+args.input_file+" -T 1000 --expectedFromGrid 0.5 --plot=../plots/limit_combined_hybridnew_HF.pdf --rMin -1 --rMax 10 "
         if(args.discrete=='true'):
             
             discrete_prof = ["roomultipdf_cat_HF_{c}={i}".format(c=categ, i=take_index(categ, args.typ, args.run)) for categ in categorylist]
-            discrete_prof = ','.discrete_prof
+            discrete_prof = ','.join(discrete_prof)
             command += "--setParameters "+discrete_prof+" "
 
-            parameter_selection = ["slope_{c}={m},{M}".format(c=categ, m=-1000, M=100) for categ in categorylist]
-            parameter_selection +=["bkg_norm_dp_{c}={m},{M}".format(c=categ, m=0, M=1000000) for c in categorylist]
+            parameter_selection =["bkg_norm_{c}={m},{M}".format(c=categ, m=0, M=1000000) for c in categorylist]
+            #parameter_selection += ["slope_{c}={m},{M}".format(c=categ, m=-1000, M=100) for categ in categorylist]
+            parameter_selection += take_paramsel_dp(categorylist)
             parameters_selection  =  ':'.join(parameter_selection)
             command += "--setParameterRanges "+parameters_selection+" "
         else:
             parameter_selection = ["bkg_exp_slope_{c}={m},{M}".format(c=categ, m=-1000, M=100) for categ in categorylist]
-            parameter_selection +=["bkg_exp_offset_{c}={m},{M}".format(c=categ, m=0, M=1000000) for categ in categorylist]
+            parameter_selection +=["bkg_norm_{c}={m},{M}".format(c=categ, m=0, M=1000000) for categ in categorylist]
             parameters_selection  =  ':'.join(parameter_selection)
             command += "--setParameterRanges "+parameters_selection+" "
         if(args.blind=='true'):
