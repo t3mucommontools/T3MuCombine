@@ -630,8 +630,8 @@ BkgModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string>, RooFitResult
    RooDataSet* dataToFit[NCAT];
    RooAbsPdf* pdfBkgExp[NCAT];
    RooAbsPdf* BkgModel[NCAT];
-   RooAbsPdf* bkg_powerlawpdf[NCAT];
 
+   RooAbsPdf* bkg_powerlawpdf[NCAT];
    RooRealVar* exp_offset[NCAT];
 
    RooRealVar* m3m     = w->var("m3m");  

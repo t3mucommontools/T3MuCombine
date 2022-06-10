@@ -23,15 +23,13 @@ args = parser.parse_args()
 with open(args.settings, 'r') as file_:
     lines = file_.readlines()
 
-tmpcuts = [ l.strip('\r\n') for l in lines[2].split(',') ]
+tmpcuts = ['1', '1', '1'] + [ l.strip('\r\n') for l in lines[2].split(',') ]
 tmpcats = [ l.strip('\r\n') for l in lines[1].split(',') ]
-
-tmpcuts = tmpcuts + ["1.1"]
 
 bdtcuts = {}
 category_cuts = {}
 for icat, cat_ in enumerate(tmpcats):
-    bdtcuts['2glbTrk_'+cat_] = " bdt > "+tmpcuts[icat]+" && bdt < "+tmpcuts[icat+1]
+    bdtcuts['2glbTrk_'+cat_] = " bdt < "+tmpcuts[icat]+" && bdt > "+tmpcuts[icat+3]
     if 'A' in cat_: category_cuts['2glbTrk_'+cat_] = " category==0 "
     if 'B' in cat_: category_cuts['2glbTrk_'+cat_] = " category==1 "
     if 'C' in cat_: category_cuts['2glbTrk_'+cat_] = " category==2 "
@@ -112,8 +110,8 @@ ChebychevMap = {}
 
 ## Bernstein polynomials
 for i in range(1, args.max_order+1):
-  c_bernstein = [ ROOT.RooRealVar('c_Bernstein{}'.format(j), 'c_Bernstein{}'.format(j), 0.01, -10, 10) for j in range(1,i+1)]
-  c_chebychev = [ ROOT.RooRealVar('c_Chebychev{}'.format(j), 'c_Chebychev{}'.format(j), 0.01, -10, 10) for j in range(1,i+1)]
+  c_bernstein = [ ROOT.RooRealVar('c_Bernstein{}{}'.format(i, j), 'c_Bernstein{}{}'.format(i, j), 0.01, -10, 10) for j in range(1,i+1)]
+  c_chebychev = [ ROOT.RooRealVar('c_Chebychev{}{}'.format(i, j), 'c_Chebychev{}{}'.format(i, j), 0.01, -10, 10) for j in range(1,i+1)]
   BernsteinMap['Bertnstein{}'.format(i)] = ROOT.RooBernstein('Bernstein{}'.format(i), 'Bernstein{}'.format(i), mass, ROOT.RooArgList(*c_bernstein))
   ChebychevMap['Chebychev{}'.format(i)] = ROOT.RooChebychev('Chebychev{}'.format(i), 'Chebychev{}'.format(i), mass, ROOT.RooArgList(*c_chebychev))
   #pdfs.factory('Bernstein::Bernstein{}(mass, {})'.format(i, c_bernstein))
@@ -171,7 +169,7 @@ for j, fam in enumerate(families):
 
     if gof_prob > 0.01 and fis_prob < 0.1:
       if gof_prob > gofmax:
-        gofmax = mnll
+        gofmax = gof_prob
         bestfit = pdf.GetName()
       envelope.add(pdf)
       pdf.plotOn(frame, ROOT.RooFit.LineColor(envelope.getSize()), ROOT.RooFit.Name(pdf.GetName()), ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'))
@@ -179,10 +177,28 @@ for j, fam in enumerate(families):
 for pdf in [envelope.at(i) for i in range(envelope.getSize())]:
   leg.AddEntry(frame.findObject(pdf.GetName()), pdf.GetName()+" (bestfit)" if bestfit==pdf.GetName() else pdf.GetName(), "l")
 
-frame.Draw()
-leg.Draw("SAME")
+
+
+can.SetTitle("Category %s" % category);     
+can.SetMinimum(0.01);
+can.SetMaximum(1.40*can.GetMaximum());
+can.GetXaxis().SetTitle("m_{3mu} [GeV]");
+
+ctmp_sig = TCanvas("Category %s" % category,"Categories",0,0,660,660);
+ctmp_sig.SetFrameLineWidth(3);
+ctmp_sig.SetTickx();
+ctmp_sig.SetTicky();
+
 can.Update()
 can.Modified()
+can.Print();
+can.Draw("SAME");
+
+leg.SetBorderSize(0);
+leg.SetFillStyle(0);
+leg.SetTextSize(0.029);
+leg.Draw("SAME");  
+ctmp_sig.SaveAs("plots/MultiPdf_category_%s_SplusB.png" % category);
 
 cat = ROOT.RooCategory("roomultipdf_cat", "")
 
@@ -190,6 +206,8 @@ multipdf = ROOT.RooMultiPdf("multipdf", "", cat, envelope)
 cat.setIndex([envelope.at(i).GetName() for i in range(envelope.getSize())].index(bestfit))
 outerspace = ROOT.RooWorkspace('ospace')
 getattr(outerspace, 'import')(envelope)
+getattr(outerspace, 'import')(multipdf)
+getattr(outerspace, 'import')(data)
 
 if not os.path.exists('MultiPdfWorkspaces'):
   os.makedirs("MultiPdfWorkspaces")
