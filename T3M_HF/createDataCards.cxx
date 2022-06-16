@@ -621,29 +621,16 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
    RooRealVar categ(categ_name, categ_name, 0, 2);//mass resolution category 0=A, 1=B, 2=C
    RooRealVar isMC(MClable_name, MClable_name, 0, 4); //0=data, 1=Ds, 2=B0, 3=Bp, 4=W
    RooRealVar weight(weight_name, weight_name, 0, 1); //normalisation of MC including corrections i.e. PU reweighting
-   RooRealVar year("year", "year", 2016, 2018); //year 
-   RooRealVar dimu_OS1("dimu_OS1", "dimu_OS1", 0.0, 2.0); //dimu_OS1 
-   RooRealVar dimu_OS2("dimu_OS2", "dimu_OS2", 0.0, 2.0); //dimu_OS2 
 
    RooArgSet variables(m3m);
    variables.add(bdt);
    variables.add(categ);
    variables.add(isMC);
    variables.add(weight);
-   variables.add(year);
-   variables.add(dimu_OS1);
-   variables.add(dimu_OS2);
 
    TString name, bdtcut, category_cut;
-   //TString yearcut = "(abs(dimu_OS1-1.02)<0.03 || abs(dimu_OS2-1.02)<0.03)";
-   TString yearcut = MClable_name+">-999";
-   //TString yearcut = "year=="+era;
 
    for(unsigned int category=0; category< NCAT; category++){
-      if(category%3==0) yearcut = "(!(dimu_OS1<1.044 && dimu_OS1>0.994) && !(dimu_OS2<1.044 && dimu_OS2>0.994))";
-      if(category%3==1) yearcut = "(!(dimu_OS1<1.053 && dimu_OS1>0.985) && !(dimu_OS2<1.053 && dimu_OS2>0.985))";
-      if(category%3==2) yearcut = "(!(dimu_OS1<1.064 && dimu_OS1>0.974) && !(dimu_OS2<1.064 && dimu_OS2>0.974))";
-
       name = TString::Format("Sig_%s",cat_names.at(category).c_str());
       bdtcut = bdt_cuts.at(category);
       TString mc_cut = MClable_name+">0";
@@ -653,15 +640,11 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
           if(category%3==i) 
               category_cut = categ_name+"=="+std::to_string(i);
       }
-      RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+"&&"+yearcut+")"), WeightVar(weight_name));
+      RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+")"), WeightVar(weight_name));
       sigds.Print();
       w->import(sigds,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
    }
    for(unsigned int category=0; category< NCAT; category++){
-      if(category%3==0) yearcut = "(!(dimu_OS1<1.044 && dimu_OS1>0.994) && !(dimu_OS2<1.044 && dimu_OS2>0.994))";
-      if(category%3==1) yearcut = "(!(dimu_OS1<1.053 && dimu_OS1>0.985) && !(dimu_OS2<1.053 && dimu_OS2>0.985))";
-      if(category%3==2) yearcut = "(!(dimu_OS1<1.064 && dimu_OS1>0.974) && !(dimu_OS2<1.064 && dimu_OS2>0.974))";
-
       name = TString::Format("Bkg_%s",cat_names.at(category).c_str());
       bdtcut = bdt_cuts.at(category);
       TString mc_cut = MClable_name+"==0";
@@ -671,7 +654,7 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
           if(category%3==i) 
               category_cut = categ_name+"=="+std::to_string(i);
       }
-      RooDataSet bkgds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+"&&"+yearcut+")"));
+      RooDataSet bkgds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+")"));
       bkgds.Print();
       w->import(bkgds,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
    }
