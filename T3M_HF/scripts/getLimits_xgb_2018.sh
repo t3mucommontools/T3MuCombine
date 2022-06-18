@@ -3,6 +3,7 @@ mkdir  plots/2018_twoGlobalTracker_xgb_setting1
 mkdir  datacards/2018_twoGlobalTracker_xgb_setting1
 mkdir  workspaces/2018_twoGlobalTracker_xgb_setting1
 
+'''
 cd datacards/;
 echo "==================================="
 echo "         Printing Limits           "
@@ -23,7 +24,7 @@ for cat in A B C; do
 done
 
 cd -;
-
+'''
 mv plots/*png plots/2018_twoGlobalTracker_xgb_setting1
 mv datacards/*txt datacards/2018_twoGlobalTracker_xgb_setting1
 mv workspaces/*root workspaces/2018_twoGlobalTracker_xgb_setting1

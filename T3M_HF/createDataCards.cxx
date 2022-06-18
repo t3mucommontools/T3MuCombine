@@ -582,6 +582,7 @@ MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, s
 
       legmc->Draw();  
 
+
       //draw contour
       //need to retrieve fit results!
       //sigpdf[category]->plotOn( plot_sgn[category], RooFit::LineColor(kRed),RooFit::VisualizeError(results,2), RooFit::FillColor(kYellow),RooFit::FillStyle(3001)) ;

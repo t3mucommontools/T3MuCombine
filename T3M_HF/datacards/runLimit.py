@@ -31,8 +31,8 @@ if __name__ == "__main__":
     parser.add_argument("-b", "--blind",help="blind option. [Default: %(default)s] ", action="store", default = 'true')
     parser.add_argument("-m", "--method",help="AsymptoticLimits or HybridNew. [Default: %(default)s] ", action="store", default = 'AsymptoticLimits')
     parser.add_argument("-c", "--categories", help="Comma separated list of categories. [Default: %(default)s] ", action="store", default = 'A1,B1,C1,A2,B2,C2,A3,B3,C3')
-    parser.add_argument("-d", "--discrete", help="Use discrete profiling method. [Default: %(default)s] ", action="store", default = 'false')
-    parser.add_argument("-t", "--typ", help="specify type (threeGlobal/twoGlobalTracker)", action="store", default="threeGlobal")
+    parser.add_argument("-d", "--discrete", help="Use discrete profiling method. [Default: %(default)s] ", action="store_false", default=False)
+    parser.add_argument("-t", "--type", help="specify type (threeGlobal/twoGlobalTracker)", action="store", default="threeGlobal")
     parser.add_argument("-r", "--run", help="Run (2017/2018)", action="store", default="2018")
     parser.add_argument("-q", "--quantile", help="set to compute the median expected and the 68% and 95% interval boundaries", action="store", default="0.5", choices=["0.025", "0.16", "0.5", "0.84", "0.975"])
     parser.add_argument("-s", "--submit", help="submit jobs to HTcondor", action="store", default="false")
@@ -69,6 +69,7 @@ if __name__ == "__main__":
         discrete_prof = ','.join(discrete_prof)
         command += " --setParameters "+discrete_prof+" "
 
+
         parameter_selection =["bkg_norm_{c}={m},{M}".format(c=categ, m=0, M=1000000) for categ in categorylist]
         #parameter_selection += ["slope_{c}={m},{M}".format(c=categ, m=-1000, M=100) for categ in categorylist]
         parameter_selection += take_paramsel_dp(categorylist)
@@ -86,3 +87,4 @@ if __name__ == "__main__":
 
     print command
     os.system(command)
+
