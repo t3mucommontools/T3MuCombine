@@ -120,5 +120,3 @@ bkg_powerlaw_slope_B2[-1.0,-10.0,1.0];
 
 bkg_powerlaw_slope_C1[-1.0,-10.0,1.0];
 bkg_powerlaw_slope_C2[-1.0,-10.0,1.0];
-
-sqrtS[13000., 13000., 13000.]

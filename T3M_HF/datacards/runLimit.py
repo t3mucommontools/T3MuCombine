@@ -69,8 +69,9 @@ if __name__ == "__main__":
         discrete_prof = ','.join(discrete_prof)
         command += " --setParameters "+discrete_prof+" "
 
-        #parameter_selection =["bkg_norm_{c}={m},{M}".format(c=categ, m=0, M=1000000) for categ in categorylist]
-        parameter_selection += ["exp_slope_2glbTrk_{c}={m},{M}".format(c=categ, m=-1000, M=100) for categ in categorylist]
+
+        parameter_selection =["bkg_norm_{c}={m},{M}".format(c=categ, m=0, M=1000000) for categ in categorylist]
+        #parameter_selection += ["slope_{c}={m},{M}".format(c=categ, m=-1000, M=100) for categ in categorylist]
         parameter_selection += take_paramsel_dp(categorylist)
         parameters_selection  =  ':'.join(parameter_selection)
         command += " --setParameterRanges "+parameters_selection+" "
@@ -79,8 +80,8 @@ if __name__ == "__main__":
         paramlist = ','.join(paramlist)
         command += " --freezeParameters "+paramlist+" "
     else:
-        parameter_selection = ["exp_slope_2glbTrk_{c}={m},{M}".format(c=categ, m=-1000, M=100) for categ in categorylist]
-        #parameter_selection +=["bkg_norm_{c}={m},{M}".format(c=categ, m=0, M=1000000) for categ in categorylist]
+        parameter_selection = ["bkg_exp_slope_{c}={m},{M}".format(c=categ, m=-1000, M=100) for categ in categorylist]
+        parameter_selection +=["bkg_norm_{c}={m},{M}".format(c=categ, m=0, M=1000000) for categ in categorylist]
         parameters_selection  =  ':'.join(parameter_selection)
         command += " --setParameterRanges "+parameters_selection+" "
 
