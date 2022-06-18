@@ -542,7 +542,7 @@ MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, s
       legmc->SetTextSize(0.029);
 
       legmc->Draw();  
-      ctmp_sig->SaveAs("plots/"+TString::Format("Signal_%s",cat_names.at(category).c_str())+configs+".png");
+      ctmp_sig->SaveAs("plots/"+TString::Format("Signal_%s",cat_names.at(category).c_str())+".png");
       ctmp_sig->Write();
    }
    f.Close();
