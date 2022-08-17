@@ -643,7 +643,9 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
       }
       RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+")"), WeightVar(weight_name));
       sigds.Print();
-      w->import(sigds,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
+      //reduce to only one variable
+      RooDataSet* sigds_reduced = (RooDataSet*) sigds.reduce(RooArgSet(m3m));
+      w->import(*sigds_reduced,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
    }
    for(unsigned int category=0; category< NCAT; category++){
       name = TString::Format("Bkg_%s",cat_names.at(category).c_str());
@@ -657,7 +659,9 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
       }
       RooDataSet bkgds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+")"));
       bkgds.Print();
-      w->import(bkgds,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
+      //reduce to only one variable
+      RooDataSet* bkgds_reduced = (RooDataSet*) bkgds.reduce(RooArgSet(m3m));
+      w->import(*bkgds_reduced,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
    }
    f->Close();
 }
