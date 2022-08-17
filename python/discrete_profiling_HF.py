@@ -181,7 +181,6 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
           converged = i
         print(">>>", pdf.GetName(), " chi2 ", chi2.getVal())
 
-        del chi2 # RooChi2Var makes the code crash at the end of the execution. This line makes it crash faster.
         #if gof_prob > 0.01 and fis_prob < 0.1 and results.covQual()==3:
         if fis_prob < 0.1 and results.covQual()==3:
           if gof_prob > gofmax:
@@ -207,6 +206,7 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
                        ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'))
         elif fis_prob >= 0.1:
           break
+        del chi2 # RooChi2Var makes the code crash at the end of the execution. This line makes it crash faster.
     for pdf in [envelope.at(i) for i in range(envelope.getSize())]:
       leg.AddEntry(frame.findObject(pdf.GetName()), pdf.GetName()+" (bestfit)" if bestfit==pdf.GetName() else pdf.GetName(), "l")
     
@@ -214,7 +214,7 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
     leg.Draw("SAME")
     can.Update()
     can.Modified()
-    roocat = ROOT.RooCategory("roomultipdf_cat_HF_{}".format(cat), "")
+    roocat = ROOT.RooCategory("roomultipdf_cat_{}_{}_{}".format(args.run,args.type,cat), "")
     
     multipdf = ROOT.RooMultiPdf("multipdf", "", roocat, envelope)
     #indexing Expo in the multipdf. Change line below to switch to "bestfit"

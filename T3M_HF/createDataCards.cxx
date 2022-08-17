@@ -902,7 +902,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       }
 //      outFile << Form("bkg_norm_%s rateParam %s bkg 1.", cat_names.at(c).c_str(), cat_names.at(c).c_str()) << endl;
       if(dp) {
-          outFile << Form("roomultipdf_cat_HF_%s discrete", cat_names.at(c).c_str()) << endl;
+          outFile << Form("roomultipdf_cat_"+Run+"_"+type+"_%s discrete", cat_names.at(c).c_str()) << endl;
       } else {
           outFile << Form("bkg_exp_slope_%s flatParam", cat_names.at(c).c_str()) << endl;
       }
