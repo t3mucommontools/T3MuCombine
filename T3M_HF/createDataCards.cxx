@@ -188,9 +188,9 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
       //retrieving parameters from fitted shape
 
       // fix all the parameters expect for the nomralisation of signal
-      TString name_mean       = "m0_fixed_"+cat_reso[cr];
-      TString name_alpha_cb   = "alpha_cb_fixed_"+cat_reso[cr];
-      TString name_n_cb       = "n_cb_fixed_"+cat_reso[cr];
+      TString name_mean       = "m0_"+cat_reso[cr];
+      TString name_alpha_cb   = "alpha_cb_"+cat_reso[cr];
+      TString name_n_cb       = "n_cb_"+cat_reso[cr];
 
       RooRealVar mean    (name_mean,"mean", sig_m0->getVal(), sig_m0->getVal(), sig_m0->getVal() );
       RooRealVar alpha_cb (name_alpha_cb,"alpha_cb",sig_alpha->getVal(), sig_alpha->getVal(), sig_alpha->getVal());
@@ -204,16 +204,16 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
           std::string cat_name = cat_names.at(category).c_str();
           if(cat_name.rfind(cat_reso[cr], 0) == 0){ //A1,A2,A3
               //fraction can change depending on subcategory
-              TString name_f_cb   = TString::Format("f_cb_fixed_%s", cat_name.c_str());
+              TString name_f_cb   = TString::Format("f_cb_%s", cat_name.c_str());
               f_cb[category] = new RooRealVar (name_f_cb,"f_cb",sig_f[category]->getVal(), sig_f[category]->getVal(), sig_f[category]->getVal());
               f_cb[category]->setError(sig_f[category]->getError());
 
               //sigmas can change depending on subcategory
-              TString name_sigma  = TString::Format("sigma_fixed_%s", cat_name.c_str());
+              TString name_sigma  = TString::Format("sigma_%s", cat_name.c_str());
               sigma[category] = new RooRealVar(name_sigma,"sigma",sig_sigma[category]->getVal(), sig_sigma[category]->getVal(), sig_sigma[category]->getVal());              
               sigma[category]->setError(sig_sigma[category]->getError());
 
-              TString name_sigma_gaus = TString::Format("sigma_gaus_fixed_%s", cat_name.c_str());
+              TString name_sigma_gaus = TString::Format("sigma_gaus_%s", cat_name.c_str());
               sigma_gaus[category] = new RooRealVar(name_sigma_gaus,"sigma_gaus",sig_gaus_sigma[category]->getVal(), sig_gaus_sigma[category]->getVal(), sig_gaus_sigma[category]->getVal());              
               sigma_gaus[category]->setError(sig_gaus_sigma[category]->getError());
           }
@@ -349,7 +349,7 @@ MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names
 
       //bkgpdf[category]->paramOn( plot[category], Format("NELU", AutoPrecision(2)),ShowConstants(), Layout(0.4,0.99,0.9));
       plot[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
-      plot[category]->SetMinimum(0.01);
+      plot[category]->SetMinimum(0.00);
       plot[category]->SetMaximum(1.40*plot[category]->GetMaximum());
       plot[category]->GetXaxis()->SetTitle("m_{3mu} [GeV]");
 
@@ -487,7 +487,7 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
 
       //bkgpdf[category]->paramOn( plot[category], Format("NELU", AutoPrecision(2)),ShowConstants(), Layout(0.4,0.99,0.9));
       plot[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
-      plot[category]->SetMinimum(0.01);
+      plot[category]->SetMinimum(0.00);
       plot[category]->SetMaximum(1.40*plot[category]->GetMaximum());
       plot[category]->GetXaxis()->SetTitle("m_{3mu} [GeV]");
 
@@ -643,7 +643,9 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
       }
       RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+")"), WeightVar(weight_name));
       sigds.Print();
-      w->import(sigds,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
+      //reduce to only one variable
+      RooDataSet* sigds_reduced = (RooDataSet*) sigds.reduce(RooArgSet(m3m));
+      w->import(*sigds_reduced,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
    }
    for(unsigned int category=0; category< NCAT; category++){
       name = TString::Format("Bkg_%s",cat_names.at(category).c_str());
@@ -657,7 +659,9 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
       }
       RooDataSet bkgds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+")"));
       bkgds.Print();
-      w->import(bkgds,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
+      //reduce to only one variable
+      RooDataSet* bkgds_reduced = (RooDataSet*) bkgds.reduce(RooArgSet(m3m));
+      w->import(*bkgds_reduced,Rename(name),RooFit::RenameVariable(m3m_name,"m3m"));
    }
    f->Close();
 }
