@@ -848,7 +848,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       outFile << "------------------------------" << endl;
 
       outFile << Form("bin               %s        %s     ",cat_names.at(c).c_str(),cat_names.at(c).c_str())<<  endl;
-      outFile << "process              signal     bkg     " << endl;
+      outFile << "process              sig     bkg     " << endl;
       outFile << "process                0          1      " << endl;
       outFile << "rate                "  << " " << signal[c]->sumEntries()*signalScaler << "    " <<  data[c]->sumEntries()  << endl;
       outFile << "--------------------------------" << endl;
