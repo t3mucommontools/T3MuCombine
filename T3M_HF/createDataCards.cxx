@@ -871,10 +871,10 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
          outFile << "UncRatioAcc_13TeV lnN  1.01      - " << endl;
          if(type=="threeGlobal"){
              outFile << "UncMuonEff_13TeV  lnN  1.016     - " << endl;
-             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.06     - " <<endl;
          }else{
              outFile << "UncMuonEff_13TeV  lnN  1.08     - " << endl; //TrackerNotGlobal SF
-             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.06     - " <<endl;
          }
       }
 
@@ -894,10 +894,10 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
          outFile << "UncRatioAcc_13TeV lnN  1.01      - " <<endl;
          if(type=="threeGlobal"){
              outFile << "UncMuonEff_13TeV  lnN  1.015     - " << endl;
-             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.03     - " <<endl;
          }else{
              outFile << "UncMuonEff_13TeV  lnN  1.04     - " << endl; //TrackerNotGlobal SF
-             outFile << "UncMVAshape_13TeV  lnN  1.10     - " <<endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.03     - " <<endl;
          }
       }
 //      outFile << Form("bkg_norm_%s rateParam %s bkg 1.", cat_names.at(c).c_str(), cat_names.at(c).c_str()) << endl;
