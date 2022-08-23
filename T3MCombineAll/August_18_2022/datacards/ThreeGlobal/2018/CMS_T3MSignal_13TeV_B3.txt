@@ -13,7 +13,7 @@ observation   -1
 bin               B3        B3     
 process              sig     bkg     
 process                0          1      
-rate                 34.5725    9024
+rate                 37.8256    3634
 --------------------------------
 DsNorm_13TeV      lnN  1.03      - 
 BRDToTau_13TeV    lnN  1.03      - 
@@ -27,5 +27,5 @@ UncTrigger_13TeV  lnN  1.08      -
 UncBDTCut_13TeV   lnN  1.05      - 
 UncRatioAcc_13TeV lnN  1.01      - 
 UncMuonEff_13TeV  lnN  1.016     - 
-UncMVAshape_13TeV  lnN  1.10     - 
+UncMVAshape_13TeV  lnN  1.06     - 
 roomultipdf_cat_2018_threeGlobal_B3 discrete
