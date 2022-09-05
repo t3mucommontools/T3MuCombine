@@ -38,7 +38,7 @@ BsScaling_13TeV         lnN          1.04     -        1.04     -        1.04   
 DpmScaling_13TeV        lnN          1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
 DsNorm_13TeV            lnN          1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
 UncBDTCut_13TeV         lnN          1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -      
-UncMVAshape_13TeV       lnN          1.06     -        1.06     -        1.06     -        1.06     -        1.06     -        1.06     -      
+UncMVAshape_13TeV       lnN          1.035    -        1.035    -        1.035    -        1.035    -        1.035    -        1.035    -      
 UncMuonEff_13TeV        lnN          1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -      
 UncRatioAcc_13TeV       lnN          1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -      
 UncTrigger_13TeV        lnN          1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -      

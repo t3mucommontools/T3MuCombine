@@ -27,5 +27,5 @@ UncTrigger_13TeV  lnN  1.08      -
 UncBDTCut_13TeV   lnN  1.05      - 
 UncRatioAcc_13TeV lnN  1.01      - 
 UncMuonEff_13TeV  lnN  1.08     - 
-UncMVAshape_13TeV  lnN  1.06     - 
+UncMVAshape_13TeV  lnN  1.035     - 
 roomultipdf_cat_2018_twoGlobalTracker_C1 discrete
