@@ -27,6 +27,7 @@ parser.add_argument(      '--lhparams', default='r'             , help='paramete
 parser.add_argument(      '--limit'   , action='store_true'     , help='run the upper limit with toys')
 parser.add_argument(      '--cl'      , default='0.9'           , help='confidence level used for the upper limit')
 parser.add_argument(      '--grid'    , default='0.5'           , help='quantile considered for the upper limit computation')
+parser.add_argument(      '--tofreeze', default=None            , help='parameters to freeze to help the fit convergence')
 
 args = parser.parse_args()
 
@@ -77,6 +78,7 @@ class Command:
 DATACARD   = os.path.abspath(args.datacard)
 WORKSPACE  = os.path.basename(args.datacard).replace('.txt', '.root')
 PARAMETERS = '--setParameterRanges "{}"'.format(args.pranges) if args.pranges!='' else ''
+PARAMETERS = PARAMETERS + ' --freezeParameters "{}"'.format(args.tofreeze) if args.tofreeze is not None else PARAMETERS
 BLINDER    = '-t -1 --expectSignal {EXP}'.format(EXP=args.expected) if not args.unblind else ''
 
 OUTPUT = os.path.abspath('_'.join([args.label, 'rMin'+args.rmin, 'rMax'+args.rmax]+['unblinded' if args.unblind else 'rAsimov'+args.expected]))
@@ -119,16 +121,19 @@ CMD_SIGNIFICANCE_ASYM = '\n'.join([
   DAT=DATACARD
 ).split('\n')
 
+# then plot with
+# plot1DScan.py /path/to/main.root --others /path/to/additional.root --POI r --output myscan --main-label main_file
 CMD_LHSCAN = '\n'.join([
   'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
   'for nui in {NUI}; do \
     echo scanning $nui;\
-    combine {WSP} -M MultiDimFit --algo grid --points 20 {PAR} -m 1.777 --rMin "{r}" --rMax "{R}" -P $nui -n scan_$nui;\
+    combine {WSP} -M MultiDimFit --algo grid --points 20 {PAR} -m 1.777 --rMin "{r}" --rMax "{R}" -P $nui -n scan_$nui {BLI} --squareDistPoiStep --autoRange 3;\
     plot1DScan.py higgsCombinescan_$nui.MultiDimFit.mH1.777.root --POI  \"$nui\" --output plot_$nui;\
   done'
 ]).format(
   DAT=DATACARD  ,
   WSP=WORKSPACE ,
+  BLI=BLINDER   ,
   PAR=PARAMETERS,
   r  =args.rmin ,
   R  =args.rmax ,
