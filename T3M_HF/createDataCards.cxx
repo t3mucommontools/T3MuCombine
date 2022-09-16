@@ -367,7 +367,7 @@ MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names
       legmc->AddEntry(plot[category]->getObject(0),"MC Signal (B=10^{-7})","LPE");
       legmc->AddEntry(plot[category]->getObject(1),"Signal Model","L");
       legmc->AddEntry(plot[category]->getObject(2),"Data","LPE");
-      legmc->AddEntry(plot[category]->getObject(3),"EXP","L");
+      legmc->AddEntry(plot[category]->getObject(3),"Bkg Model","L");
 
       legmc->SetBorderSize(0);
       legmc->SetFillStyle(0);
@@ -505,7 +505,7 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       legmc->AddEntry(plot[category]->getObject(0),"MC Signal (B=10^{-7})","LPE");
       legmc->AddEntry(plot[category]->getObject(1),"Signal Model","L");
       legmc->AddEntry(plot[category]->getObject(2),"Data","LPE");
-      legmc->AddEntry(plot[category]->getObject(3),"EXP","L");
+      legmc->AddEntry(plot[category]->getObject(3),"Bkg Model","L");
 
       legmc->SetBorderSize(0);
       legmc->SetFillStyle(0);
