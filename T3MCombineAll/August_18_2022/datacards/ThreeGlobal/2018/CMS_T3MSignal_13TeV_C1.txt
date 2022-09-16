@@ -13,7 +13,7 @@ observation   -1
 bin               C1        C1     
 process              sig     bkg     
 process                0          1      
-rate                 2.88819    19
+rate                 2.85163    19
 --------------------------------
 DsNorm_13TeV      lnN  1.03      - 
 BRDToTau_13TeV    lnN  1.03      - 
