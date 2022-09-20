@@ -25,7 +25,7 @@ void SetConstantParams(const RooArgSet* params);
 void tokenize(std::string const &str, const char delim, std::vector<std::string> &out);
 
 void
-createDataCards(TString inputfile, int signalsample = 0, bool blind = true, string modelCard="model_card.rs", string configFile="config.txt", TString type="threeGlobal", TString Run="2017", bool dp =true, bool doscan = false)
+createDataCards(TString inputfile, int signalsample = 0, bool blind = true, string modelCard="model_card.rs", string configFile="config.txt", TString type="threeGlobal", TString Run="2017", bool dp = true, bool doscan = false)
 {
    //Set verbosity
    ROOT::Minuit2::Minuit2Minimizer min (ROOT::Minuit2::kCombined);
@@ -219,50 +219,49 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
           }
       }
 
-      //Apply correction to the fixed mass      
-      RooRealVar UncMean("UncMean_"+cat_reso[cr], "UncMean", 0., -5, 5);
-      // According to ANv2 L798, "mean" is 0.09% smaller in data. So we scale MC mean by 0.9991, and assign 0.0009 uncertainty
-      TString line = "(1+0.0009*UncMean_"+cat_reso[cr]+")*" + std::to_string(sig_m0->getVal()*0.9991); 
-      RooFormulaVar fmean("fmean_"+cat_reso[cr],line,RooArgList(UncMean));
-
-      //Apply correction to the fixed sigmas
       for (unsigned int category=0; category < NCAT; category++){
           std::string cat_name = cat_names.at(category).c_str();
           TString tcat_name = cat_names.at(category).c_str();
           if(cat_name.rfind(cat_reso[cr], 0) == 0){ //A1,A2,A3
-              RooRealVar UncSigma("UncSigma_"+tcat_name, "UncSigma", 0., -5, 5);
+
+              //Apply correction to the fixed mass      
+              RooRealVar UncMean("UncMean", "UncMean", 0., -5, 5);
+              // According to ANv2 L798, "mean" is 0.09% smaller in data. So we scale MC mean by 0.9991, and assign 0.0009 uncertainty
+              TString line = "(1+0.0009*UncMean)*" + std::to_string(sig_m0->getVal()*0.9991); 
+              RooFormulaVar fmean("fmean_"+tcat_name,line,RooArgList(UncMean));
+
+              //Apply correction to the fixed sigmas
+              RooRealVar UncSigma("UncSigma", "UncSigma", 0., -5, 5);
               // According to Fig47, MC has up to 2% worse resolution! We don't scale the MC resolution, but only assign 2% uncertainty
-              TString line2 = "(1+0.02*UncSigma_"+tcat_name+")*" + std::to_string(sig_sigma[category]->getVal()); 
+              TString line2 = "(1+0.02*UncSigma)*" + std::to_string(sigma[category]->getVal()); 
               RooFormulaVar fsigma("fsigma_"+tcat_name,line2,RooArgList(UncSigma));
 
               //Define pdf for each subcategory
-              RooCBShape  CB_final("CB_final_"+tcat_name+"_"+type+"_"+Run,"CB PDF",*m3m,mean,*sigma[category],alpha_cb,n_cb) ;
-              RooGaussian GS_final("GS_final_"+tcat_name+"_"+type+"_"+Run,"GS PDF",*m3m,mean,*sigma_gaus[category]) ;
-              RooAddPdf signal("SignalModel_"+tcat_name,"",RooArgList(CB_final,GS_final), *f_cb[category]);
+              //RooCBShape  CB_final("CB_final_"+tcat_name+"_"+type+"_"+Run,"CB PDF",*m3m,mean,*sigma[category],alpha_cb,n_cb) ;
+              //RooGaussian GS_final("GS_final_"+tcat_name+"_"+type+"_"+Run,"GS PDF",*m3m,mean,*sigma_gaus[category]) ;
+              //RooAddPdf signal("SignalModel_"+tcat_name,"",RooArgList(CB_final,GS_final), *f_cb[category]);
               
               // then recreate the signal shape using the 2 RooFormulaVar and the other 4 parameters
-              //RooGaussian signal1("Signal1","",M3m,fmean,sigma_gaus) ;
-              //RooCBShape signal2("Signal2","",M3m,fmean,fsigma,alpha_cb,n_cb) ;
-              //RooAddPdf signal("Signal","",RooArgList(signal1,signal2), frac_gaus);
+              RooCBShape CB_final("CB_final_"+tcat_name+"_"+type+"_"+Run,"CB PDF",*m3m,fmean,fsigma,alpha_cb,n_cb) ;
+              RooGaussian GS_final("GS_final_"+tcat_name+"_"+type+"_"+Run,"GS PDF",*m3m,fmean,*sigma_gaus[category]) ;
+              RooAddPdf signal("SignalModel_"+tcat_name,"",RooArgList(CB_final,GS_final), *f_cb[category]);
 
-              w->import(mean);
-              w->import(*sigma[category]);
-              w->import(*sigma_gaus[category]);
-              w->import(n_cb);
-              w->import(alpha_cb);
-              w->import(*f_cb[category]);
               w->defineSet("SigPdfParam_"+tcat_name, RooArgSet(
-                       mean, //*w->var("sig_m0_"+cat_reso[cr]+subc),
-                       *sigma[category], //*w->var("sig_sigma_"+cat_reso[cr]+subc),
-                       //sigma_cb,
+                       //mean, //*w->var("sig_m0_"+cat_reso[cr]+subc),
+                       //*sigma[category], //*w->var("sig_sigma_"+cat_reso[cr]+subc),
                        *sigma_gaus[category], //*w->var("sig_gaus_sigma_"+cat_reso[cr]+subc),
                        alpha_cb, //*w->var("sig_alpha_"+cat_reso[cr]+subc),
                        n_cb, //*w->var("sig_n_"+cat_reso[cr]+subc),
                        *f_cb[category] //*w->var("sig_f_"+cat_reso[cr]+subc)
-              )); 
+              ), true); 
               SetConstantParams(w->set("SigPdfParam_"+tcat_name));
 
-              //w->import(*SignalModel[cr]);
+             //add mean and sigma to named set
+              w->import(mean);
+              w->import(*sigma[category]);
+              w->extendSet("SigPdfParam_"+tcat_name, "m0_"+cat_reso[cr]);
+              w->extendSet("SigPdfParam_"+tcat_name, "sigma_"+tcat_name);
+
               w->import(signal);
           }
        }
@@ -367,7 +366,7 @@ MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names
       legmc->AddEntry(plot[category]->getObject(0),"MC Signal (B=10^{-7})","LPE");
       legmc->AddEntry(plot[category]->getObject(1),"Signal Model","L");
       legmc->AddEntry(plot[category]->getObject(2),"Data","LPE");
-      legmc->AddEntry(plot[category]->getObject(3),"EXP","L");
+      legmc->AddEntry(plot[category]->getObject(3),"Bkg Model","L");
 
       legmc->SetBorderSize(0);
       legmc->SetFillStyle(0);
@@ -505,7 +504,7 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       legmc->AddEntry(plot[category]->getObject(0),"MC Signal (B=10^{-7})","LPE");
       legmc->AddEntry(plot[category]->getObject(1),"Signal Model","L");
       legmc->AddEntry(plot[category]->getObject(2),"Data","LPE");
-      legmc->AddEntry(plot[category]->getObject(3),"EXP","L");
+      legmc->AddEntry(plot[category]->getObject(3),"Bkg Model","L");
 
       legmc->SetBorderSize(0);
       legmc->SetFillStyle(0);
@@ -523,10 +522,14 @@ MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, s
 
    RooDataSet* signalAll[NCAT];
    RooAbsPdf* sigpdf[NCAT];
+   RooArgSet* params[NCAT];
+
    TFile f("signal_shapes.root","recreate");
    for(unsigned int category=0; category< NCAT; category++){
       signalAll[category] = (RooDataSet*) w->data(TString::Format("Sig_%s",cat_names.at(category).c_str()));
       sigpdf[category] = (RooAbsPdf*)w->pdf("SignalModel"+TString::Format("_%s",cat_names.at(category).c_str()));
+      params[category] = (RooArgSet*)w->set("SigPdfParam"+TString::Format("_%s",cat_names.at(category).c_str()));
+      //TO DO: display mass and sigma on canvases
    }
 
    RooRealVar* m3m     = w->var("m3m");  
@@ -544,7 +547,7 @@ MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, s
       signalAll[category]->plotOn( plot_sgn[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.75));
       //signalAll[category]->statOn( plot_sgn[category],Layout(0.65,0.99,0.9)) ;
       sigpdf[category]->plotOn( plot_sgn[category], RooFit::LineColor(kRed),RooFit::LineWidth(2));
-      sigpdf[category]->paramOn( plot_sgn[category], Format("NEU", RooFit::AutoPrecision(2)), ShowConstants(), Layout(0.45,0.9,0.9));
+      sigpdf[category]->paramOn( plot_sgn[category], RooFit::Parameters(*params[category]), Format("NEU", RooFit::AutoPrecision(2)), ShowConstants(true), Layout(0.45,0.9,0.9));
       plot_sgn[category]->getAttText()->SetTextSize(0.025);
 
       plot_sgn[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
@@ -621,13 +624,15 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
    RooRealVar bdt(bdt_name, bdt_name, -2, 2);
    RooRealVar categ(categ_name, categ_name, 0, 2);//mass resolution category 0=A, 1=B, 2=C
    RooRealVar isMC(MClable_name, MClable_name, 0, 4); //0=data, 1=Ds, 2=B0, 3=Bp, 4=W
-   RooRealVar weight(weight_name, weight_name, 0, 1); //normalisation of MC including corrections i.e. PU reweighting
+   RooRealVar weight(weight_name, weight_name, 0, 1); //normalisation of MC
+   RooRealVar weight_MC("weight_MC", "weight_MC", 0.0, 2.0); //normalisation of MC //including corrections
 
    RooArgSet variables(m3m);
    variables.add(bdt);
    variables.add(categ);
    variables.add(isMC);
    variables.add(weight);
+   variables.add(weight_MC);
 
    TString name, bdtcut, category_cut;
 
@@ -741,7 +746,7 @@ MakeSigWS(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName,  std::vec
    TString wsDir   = "workspaces/";
    RooWorkspace *wAll = new RooWorkspace("w_all","w_all");
    RooAbsPdf* SigPdf[NCAT];
-   cout << "-----------------------------------Write signal workspace in: " <<std::endl;
+   cout << "-----------------------------------Write signal workspace--------------" <<std::endl;
 
    for(unsigned int category=0; category < NCAT; category++){
 
@@ -874,7 +879,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
              outFile << "UncMVAshape_13TeV  lnN  1.06     - " <<endl;
          }else{
              outFile << "UncMuonEff_13TeV  lnN  1.08     - " << endl; //TrackerNotGlobal SF
-             outFile << "UncMVAshape_13TeV  lnN  1.06     - " <<endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.035     - " <<endl;
          }
       }
 
@@ -897,7 +902,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
              outFile << "UncMVAshape_13TeV  lnN  1.03     - " <<endl;
          }else{
              outFile << "UncMuonEff_13TeV  lnN  1.04     - " << endl; //TrackerNotGlobal SF
-             outFile << "UncMVAshape_13TeV  lnN  1.03     - " <<endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.036     - " <<endl;
          }
       }
 //      outFile << Form("bkg_norm_%s rateParam %s bkg 1.", cat_names.at(c).c_str(), cat_names.at(c).c_str()) << endl;
@@ -906,6 +911,8 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       } else {
           outFile << Form("bkg_exp_slope_%s flatParam", cat_names.at(c).c_str()) << endl;
       }
+      outFile << "UncMean	param 	0.0	1.0	" << endl;
+      outFile << "UncSigma	param 	0.0	1.0	" << endl;
       outFile.close();
 
       cout << "Write data card in: " << filename << " file" << endl;
