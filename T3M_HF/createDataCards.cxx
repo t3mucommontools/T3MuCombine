@@ -246,18 +246,23 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
               RooGaussian GS_final("GS_final_"+tcat_name+"_"+type+"_"+Run,"GS PDF",*m3m,fmean,*sigma_gaus[category]) ;
               RooAddPdf signal("SignalModel_"+tcat_name,"",RooArgList(CB_final,GS_final), *f_cb[category]);
 
-              w->import(signal);
               w->defineSet("SigPdfParam_"+tcat_name, RooArgSet(
                        //mean, //*w->var("sig_m0_"+cat_reso[cr]+subc),
-                       fmean,
-                       fsigma,
-                       *sigma[category], //*w->var("sig_sigma_"+cat_reso[cr]+subc),
+                       //*sigma[category], //*w->var("sig_sigma_"+cat_reso[cr]+subc),
                        *sigma_gaus[category], //*w->var("sig_gaus_sigma_"+cat_reso[cr]+subc),
                        alpha_cb, //*w->var("sig_alpha_"+cat_reso[cr]+subc),
                        n_cb, //*w->var("sig_n_"+cat_reso[cr]+subc),
                        *f_cb[category] //*w->var("sig_f_"+cat_reso[cr]+subc)
               ), true); 
               SetConstantParams(w->set("SigPdfParam_"+tcat_name));
+
+             //add mean and sigma to named set
+              w->import(mean);
+              w->import(*sigma[category]);
+              w->extendSet("SigPdfParam_"+tcat_name, "m0_"+cat_reso[cr]);
+              w->extendSet("SigPdfParam_"+tcat_name, "sigma_"+tcat_name);
+
+              w->import(signal);
           }
        }
    }
@@ -517,10 +522,14 @@ MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, s
 
    RooDataSet* signalAll[NCAT];
    RooAbsPdf* sigpdf[NCAT];
+   RooArgSet* params[NCAT];
+
    TFile f("signal_shapes.root","recreate");
    for(unsigned int category=0; category< NCAT; category++){
       signalAll[category] = (RooDataSet*) w->data(TString::Format("Sig_%s",cat_names.at(category).c_str()));
       sigpdf[category] = (RooAbsPdf*)w->pdf("SignalModel"+TString::Format("_%s",cat_names.at(category).c_str()));
+      params[category] = (RooArgSet*)w->set("SigPdfParam"+TString::Format("_%s",cat_names.at(category).c_str()));
+      //TO DO: display mass and sigma on canvases
    }
 
    RooRealVar* m3m     = w->var("m3m");  
@@ -538,7 +547,7 @@ MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, s
       signalAll[category]->plotOn( plot_sgn[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.75));
       //signalAll[category]->statOn( plot_sgn[category],Layout(0.65,0.99,0.9)) ;
       sigpdf[category]->plotOn( plot_sgn[category], RooFit::LineColor(kRed),RooFit::LineWidth(2));
-      sigpdf[category]->paramOn( plot_sgn[category], Format("NEU", RooFit::AutoPrecision(2)), ShowConstants(), Layout(0.45,0.9,0.9));
+      sigpdf[category]->paramOn( plot_sgn[category], RooFit::Parameters(*params[category]), Format("NEU", RooFit::AutoPrecision(2)), ShowConstants(true), Layout(0.45,0.9,0.9));
       plot_sgn[category]->getAttText()->SetTextSize(0.025);
 
       plot_sgn[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
