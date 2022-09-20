@@ -1,7 +1,7 @@
 Combination of CMS_T3MSignal_13TeV_A1.txt  CMS_T3MSignal_13TeV_A2.txt  CMS_T3MSignal_13TeV_A3.txt  CMS_T3MSignal_13TeV_B1.txt  CMS_T3MSignal_13TeV_B2.txt  CMS_T3MSignal_13TeV_B3.txt  CMS_T3MSignal_13TeV_C1.txt  CMS_T3MSignal_13TeV_C2.txt  CMS_T3MSignal_13TeV_C3.txt
 imax 9 number of bins
 jmax 1 number of processes minus 1
-kmax 13 number of nuisance parameters
+kmax 15 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes bkg       ch1       ../workspaces/CMS_T3MBkg_13TeV.root w_all:t3m_bkg_expo_A1
 shapes data_obs  ch1       ../workspaces/CMS_T3MBkg_13TeV.root w_all:data_obs_A1
@@ -52,6 +52,8 @@ UncMuonEff_13TeV        lnN          1.016    -        1.016    -        1.016  
 UncRatioAcc_13TeV       lnN          1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -      
 UncTrigger_13TeV        lnN          1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -        1.08     -      
 fUnc_13TeV              lnN          1.07     -        1.07     -        1.07     -        1.07     -        1.07     -        1.07     -        1.07     -        1.07     -        1.07     -      
+UncSigma      param  0.0 1.0
+UncMean       param  0.0 1.0
 bkg_exp_slope_A1  flatParam
 bkg_exp_slope_A2  flatParam
 bkg_exp_slope_A3  flatParam

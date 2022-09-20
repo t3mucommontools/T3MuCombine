@@ -1,7 +1,7 @@
 Combination of CMS_T3MSignal_13TeV_A1.txt  CMS_T3MSignal_13TeV_A2.txt  CMS_T3MSignal_13TeV_B1.txt  CMS_T3MSignal_13TeV_B2.txt  CMS_T3MSignal_13TeV_C1.txt  CMS_T3MSignal_13TeV_C2.txt
 imax 6 number of bins
 jmax 1 number of processes minus 1
-kmax 13 number of nuisance parameters
+kmax 15 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes bkg       ch1       ../workspaces/CMS_T3MBkg_13TeV.root w_all:t3m_bkg_expo_A1
 shapes data_obs  ch1       ../workspaces/CMS_T3MBkg_13TeV.root w_all:data_obs_A1
@@ -28,7 +28,7 @@ observation  -1     -1     -1     -1     -1     -1
 bin                                  ch1       ch1       ch2       ch2       ch3       ch3       ch4       ch4       ch5       ch5       ch6       ch6     
 process                              sig       bkg       sig       bkg       sig       bkg       sig       bkg       sig       bkg       sig       bkg     
 process                              0         1         0         1         0         1         0         1         0         1         0         1       
-rate                                 0.890368  11        1.75253   172       1.94656   60        4.24907   826       0.531368  20        1.02683   328     
+rate                                 0.877543  13        1.84402   194       1.70381   44        4.45438   928       0.465133  20        0.68778   147     
 ----------------------------------------------------------------------------------------------------------------------------------
 BRBtoD_13TeV            lnN          1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
 BRBtoTau_13TeV          lnN          1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
@@ -43,6 +43,8 @@ UncMuonEff_13TeV        lnN          1.04      -         1.04      -         1.0
 UncRatioAcc_13TeV       lnN          1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -       
 UncTrigger_13TeV        lnN          1.11      -         1.11      -         1.11      -         1.11      -         1.11      -         1.11      -       
 fUnc_13TeV              lnN          1.07      -         1.07      -         1.07      -         1.07      -         1.07      -         1.07      -       
+UncSigma      param  0.0 1.0
+UncMean       param  0.0 1.0
 bkg_exp_slope_A1  flatParam
 bkg_exp_slope_A2  flatParam
 bkg_exp_slope_C2  flatParam

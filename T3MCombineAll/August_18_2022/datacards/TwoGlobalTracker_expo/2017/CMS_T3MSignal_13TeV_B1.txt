@@ -13,7 +13,7 @@ observation   -1
 bin               B1        B1     
 process              sig     bkg     
 process                0          1      
-rate                 1.94656    60
+rate                 1.70381    44
 --------------------------------
 DsNorm_13TeV      lnN  1.062      - 
 BRDToTau_13TeV    lnN  1.03      - 
@@ -29,3 +29,5 @@ UncRatioAcc_13TeV lnN  1.01      -
 UncMuonEff_13TeV  lnN  1.04     - 
 UncMVAshape_13TeV  lnN  1.036     - 
 bkg_exp_slope_B1 flatParam
+UncMean	param 	0.0	1.0	
+UncSigma	param 	0.0	1.0	
