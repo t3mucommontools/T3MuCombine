@@ -41,7 +41,7 @@ UncBDTCut_17        lnN          1.05      -         1.05      -         1.05   
 UncL1_17            lnN          1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
 UncMVAshape_13TeV       lnN          1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -       
 UncMuonEff_17_2glbtk       lnN          1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -       
-UncRatioAcc_17      lnN          1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -       
+UncRatioAcc_17        lnN          1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -       
 fUnc_17             lnN          1.02      -         1.02      -         1.02      -         1.02      -         1.02      -         1.02      -       
 UncSigma      param  0.0 1.0
 UncMean       param  0.0 1.0

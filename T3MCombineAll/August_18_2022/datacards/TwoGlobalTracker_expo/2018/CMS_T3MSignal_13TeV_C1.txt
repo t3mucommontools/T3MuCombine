@@ -26,7 +26,7 @@ ySig_bscal  lnN  1.04      -
 UncHLT_18     lnN  1.05      - 
 UncL1_18      lnN  1.02      - 
 UncBDTCut_18  lnN  1.05      - 
-UncRatioAcc_18lnN  1.01      - 
+UncRatioAcc_18  lnN  1.01      - 
 UncMuonEff_18_2glbtk lnN  1.08     - 
 UncMVAshape_13TeV  lnN  1.04     - 
 bkg_exp_slope_C1 flatParam

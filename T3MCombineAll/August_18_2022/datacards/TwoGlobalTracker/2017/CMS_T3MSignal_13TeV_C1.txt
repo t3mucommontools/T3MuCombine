@@ -25,7 +25,7 @@ ySig_dscal  lnN  1.03      -
 ySig_bscal  lnN  1.04      - 
 UncL1_17      lnN  1.05      - 
 UncBDTCut_17  lnN  1.05      - 
-UncRatioAcc_17lnN  1.01      - 
+UncRatioAcc_17  lnN  1.01      - 
 UncMuonEff_17_2glbtk lnN  1.04     - 
 UncMVAshape_13TeV  lnN  1.04     - 
 roomultipdf_cat_2017_twoGlobalTracker_C1 discrete
