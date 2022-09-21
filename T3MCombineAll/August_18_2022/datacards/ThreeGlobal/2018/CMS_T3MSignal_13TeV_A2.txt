@@ -15,20 +15,20 @@ process              sig     bkg
 process                0          1      
 rate                 10.3463    395
 --------------------------------
-DsNorm_13TeV      lnN  1.04      - 
-BRDToTau_13TeV    lnN  1.03      - 
-BRDsPhiPi_13TeV   lnN  1.08      - 
-BRBtoD_13TeV      lnN  1.05      - 
-BRBtoTau_13TeV    lnN  1.03      - 
-fUnc_13TeV        lnN  1.02      - 
-DpmScaling_13TeV  lnN  1.03      - 
-BsScaling_13TeV   lnN  1.04      - 
-UncHLT_13TeV      lnN  1.05      - 
-UncL1_13TeV       lnN  1.02      - 
-UncBDTCut_13TeV   lnN  1.05      - 
-UncRatioAcc_13TeV lnN  1.01      - 
-WNorm_13TeV       lnN  1.05      - 
-UncMuonEff_13TeV  lnN  1.016     - 
+DsNorm_18     lnN  1.04      - 
+ySig_dstn   lnN  1.03      - 
+ySig_dsmmp  lnN  1.08      - 
+ySig_bdt    lnN  1.05      - 
+ySig_bt     lnN  1.03      - 
+fUnc_18       lnN  1.02      - 
+ySig_dscal  lnN  1.03      - 
+ySig_bscal  lnN  1.04      - 
+UncHLT_18     lnN  1.05      - 
+UncL1_18      lnN  1.02      - 
+UncBDTCut_18  lnN  1.05      - 
+UncRatioAcc_18lnN  1.01      - 
+WNorm_18_3glb      lnN  1.05      - 
+UncMuonEff_18_3glb lnN  1.016     - 
 UncMVAshape_13TeV  lnN  1.06     - 
 roomultipdf_cat_2018_threeGlobal_A2 discrete
 UncMean	param 	0.0	1.0	
