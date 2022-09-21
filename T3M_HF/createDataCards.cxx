@@ -25,7 +25,7 @@ void SetConstantParams(const RooArgSet* params);
 void tokenize(std::string const &str, const char delim, std::vector<std::string> &out);
 
 void
-createDataCards(TString inputfile, int signalsample = 0, bool blind = true, string modelCard="model_card.rs", string configFile="config.txt", TString type="threeGlobal", TString Run="2017", bool dp = true, bool doscan = false)
+createDataCards(TString inputfile, int signalsample = 0, bool blind = true, string modelCard="model_card.rs", string configFile="config.txt", TString type="threeGlobal", TString Run="2017", bool dp = false, bool doscan = false)
 {
    //Set verbosity
    ROOT::Minuit2::Minuit2Minimizer min (ROOT::Minuit2::kCombined);
@@ -859,53 +859,50 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       outFile << "--------------------------------" << endl;
 
 
+      //Correlated uncertanties across categories and years
       //outFile << "lumi_13TeV       lnN  1.027      - " << endl;
-      //outFile << "lumi_13TeV        lnN  1.027     - " << endl;
-      //outFile << "DsNorm_13TeV      lnN  1.033     - " << endl;
+      outFile << "ySig_dstn         lnN  1.03      - " << endl; //unc. on BR(Ds->taunu)
+      outFile << "ySig_dsmmp        lnN  1.08      - " << endl; //unc. on BR(Ds->phi(mumu)pi)
+      outFile << "ySig_bdt          lnN  1.05      - " << endl; //unc. on BR(B->D+X)
+      outFile << "ySig_bt           lnN  1.03      - " << endl; //unc. on BR(B->tau+X)   
+      outFile << "ySig_dscal        lnN  1.03      - " << endl; //unc. on scaling Ds to include D+
+      outFile << "ySig_bscal        lnN  1.04      - " << endl; //unc. on scaling B0 and B+ to include Bs
+
+      //Uncorrelated uncertanties across years
       if (Run.Contains("2018")){ 
-         outFile << "DsNorm_13TeV      lnN  1.04      - " << endl; // updated on 13 April
-         outFile << "BRDToTau_13TeV    lnN  1.03      - " << endl;
-         outFile << "BRDsPhiPi_13TeV   lnN  1.08      - " << endl;
-         outFile << "BRBtoD_13TeV      lnN  1.05      - " << endl;
-         outFile << "BRBtoTau_13TeV    lnN  1.03      - " << endl;    
-         outFile << "fUnc_13TeV        lnN  1.02      - " << endl; // updated on 13 April
-         outFile << "DpmScaling_13TeV  lnN  1.03      - " << endl;
-         outFile << "BsScaling_13TeV   lnN  1.04      - " << endl;
-         outFile << "UncHLT_13TeV      lnN  1.05      - " << endl; // 2018 only //updated Sept 22
-         outFile << "UncL1_13TeV       lnN  1.02      - " << endl; // TripleMu  //updated Sept 22
-         outFile << "UncBDTCut_13TeV   lnN  1.05      - " << endl;
-         outFile << "UncRatioAcc_13TeV lnN  1.01      - " << endl;
-         if(type=="threeGlobal"){
-             outFile << "WNorm_13TeV       lnN  1.05      - " << endl; // added Sept 22
-             outFile << "UncMuonEff_13TeV  lnN  1.016     - " << endl;
-             outFile << "UncMVAshape_13TeV  lnN  1.06     - " <<endl;
+         outFile << "DsNorm_18      lnN  1.04      - " << endl; // normalisation factor computed on control channel
+         outFile << "fUnc_18        lnN  1.02      - " << endl; // B/D ratio
+         outFile << "UncHLT_18      lnN  1.05      - " << endl; // uncertanty on 2018 HLT
+         outFile << "UncL1_18       lnN  1.02      - " << endl; // events triggered by TripleMu
+         outFile << "UncBDTCut_18   lnN  1.05      - " << endl; //unc. on BDT selection
+         outFile << "UncRatioAcc_18 lnN  1.01      - " << endl; //unc. on 3mu/2mu ratio acceptance
+
+         //Uncorrelated uncertanties across categories
+         if(type=="3glb"){
+             outFile << "WNorm_18_3glb       lnN  1.05      - " << endl; // 100% unc. on 5% additional W yield
+             outFile << "UncMuonEff_18_3glb  lnN  1.016     - " << endl; //GlobalMu ID tag&probe
+             outFile << "UncMVAshape_18_3glb  lnN  1.06     - " <<endl;  //MVAglb correction
          }else{
-             outFile << "UncMuonEff_13TeV  lnN  1.08     - " << endl; //TrackerNotGlobal SF
-             outFile << "UncMVAshape_13TeV  lnN  1.04     - " <<endl;
+             outFile << "UncMuonEff_18_2glbtk  lnN  1.08     - " << endl; //TrackerNotGlobal ID tag&probe
+             outFile << "UncMVAshape_18_2glbtk  lnN  1.04     - " <<endl; //MVAtk correction
          }
       }
 
       if (Run.Contains("2017")){
-         //    outFile << "MuES_13TeV        lnN  1.007     - " << endl;
-         //    outFile << "MuRes_13TeV       lnN  1.025     - " << endl;
-         outFile << "DsNorm_13TeV      lnN  1.062      - " <<endl;
-         outFile << "BRDToTau_13TeV    lnN  1.03      - " <<endl;
-         outFile << "BRDsPhiPi_13TeV   lnN  1.08      - " <<endl;
-         outFile << "BRBtoD_13TeV      lnN  1.05      - " <<endl;
-         outFile << "BRBtoTau_13TeV    lnN  1.03      - " <<endl;
-         outFile << "fUnc_13TeV        lnN  1.02      - " <<endl; // updated on 13 April
-         outFile << "DpmScaling_13TeV  lnN  1.03      - " <<endl;
-         outFile << "BsScaling_13TeV   lnN  1.04      - " <<endl;
-         outFile << "UncL1_13TeV       lnN  1.05      - " <<endl; // TripleMu  //updated Sept 22
-         outFile << "UncBDTCut_13TeV   lnN  1.05      - " <<endl;
-         outFile << "UncRatioAcc_13TeV lnN  1.01      - " <<endl;
-         if(type=="threeGlobal"){
-             outFile << "WNorm_13TeV       lnN  1.03      - " << endl; // added Sept 22
-             outFile << "UncMuonEff_13TeV  lnN  1.015     - " << endl;
-             outFile << "UncMVAshape_13TeV  lnN  1.03     - " <<endl;
+         outFile << "DsNorm_17      lnN  1.062      - " <<endl; //normalisation factor computed on control channel
+         outFile << "fUnc_17        lnN  1.02      - " <<endl;  //B/D ratio
+         outFile << "UncL1_17       lnN  1.05      - " <<endl;  //events triggered by TripleMu
+         outFile << "UncBDTCut_17   lnN  1.05      - " <<endl;  //unc. on BDT selection
+         outFile << "UncRatioAcc_17 lnN  1.01      - " <<endl;  //unc. on 3mu/2mu ratio acceptance
+
+         //Uncorrelated uncertanties across categories
+         if(type=="3glb"){
+             outFile << "WNorm_17_3glb       lnN  1.03      - " << endl; // 100% unc. on 5% additional W yield
+             outFile << "UncMuonEff_17_3glb  lnN  1.015     - " << endl; //GlobalMu ID tag&probe
+             outFile << "UncMVAshape_17_3glb  lnN  1.03     - " <<endl;  //MVAglb correction
          }else{
-             outFile << "UncMuonEff_13TeV  lnN  1.04     - " << endl; //TrackerNotGlobal SF
-             outFile << "UncMVAshape_13TeV  lnN  1.04     - " <<endl;
+             outFile << "UncMuonEff_17_2glbtk  lnN  1.04     - " << endl; //TrackerNotGlobal ID tag&probe
+             outFile << "UncMVAshape_17_2glbtk  lnN  1.04     - " <<endl; //MVAtk correction
          }
       }
 //      outFile << Form("bkg_norm_%s rateParam %s bkg 1.", cat_names.at(c).c_str(), cat_names.at(c).c_str()) << endl;
