@@ -20,12 +20,13 @@ BRDToTau_13TeV    lnN  1.03      -
 BRDsPhiPi_13TeV   lnN  1.08      - 
 BRBtoD_13TeV      lnN  1.05      - 
 BRBtoTau_13TeV    lnN  1.03      - 
-fUnc_13TeV        lnN  1.07      - 
+fUnc_13TeV        lnN  1.02      - 
 DpmScaling_13TeV  lnN  1.03      - 
 BsScaling_13TeV   lnN  1.04      - 
-UncTrigger_13TeV  lnN  1.11      - 
+UncL1_13TeV       lnN  1.05      - 
 UncBDTCut_13TeV   lnN  1.05      - 
 UncRatioAcc_13TeV lnN  1.01      - 
+WNorm_13TeV       lnN  1.03      - 
 UncMuonEff_13TeV  lnN  1.015     - 
 UncMVAshape_13TeV  lnN  1.03     - 
 roomultipdf_cat_2017_threeGlobal_C3 discrete
