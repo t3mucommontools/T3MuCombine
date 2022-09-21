@@ -863,23 +863,25 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       //outFile << "lumi_13TeV        lnN  1.027     - " << endl;
       //outFile << "DsNorm_13TeV      lnN  1.033     - " << endl;
       if (Run.Contains("2018")){ 
-         outFile << "DsNorm_13TeV      lnN  1.03      - " << endl; // updated on 13 April
+         outFile << "DsNorm_13TeV      lnN  1.04      - " << endl; // updated on 13 April
          outFile << "BRDToTau_13TeV    lnN  1.03      - " << endl;
          outFile << "BRDsPhiPi_13TeV   lnN  1.08      - " << endl;
          outFile << "BRBtoD_13TeV      lnN  1.05      - " << endl;
          outFile << "BRBtoTau_13TeV    lnN  1.03      - " << endl;    
-         outFile << "fUnc_13TeV        lnN  1.07      - " << endl; // updated on 13 April
+         outFile << "fUnc_13TeV        lnN  1.02      - " << endl; // updated on 13 April
          outFile << "DpmScaling_13TeV  lnN  1.03      - " << endl;
          outFile << "BsScaling_13TeV   lnN  1.04      - " << endl;
-         outFile << "UncTrigger_13TeV  lnN  1.08      - " << endl; 
+         outFile << "UncHLT_13TeV      lnN  1.05      - " << endl; // 2018 only //updated Sept 22
+         outFile << "UncL1_13TeV       lnN  1.02      - " << endl; // TripleMu  //updated Sept 22
          outFile << "UncBDTCut_13TeV   lnN  1.05      - " << endl;
          outFile << "UncRatioAcc_13TeV lnN  1.01      - " << endl;
          if(type=="threeGlobal"){
+             outFile << "WNorm_13TeV       lnN  1.05      - " << endl; // added Sept 22
              outFile << "UncMuonEff_13TeV  lnN  1.016     - " << endl;
              outFile << "UncMVAshape_13TeV  lnN  1.06     - " <<endl;
          }else{
              outFile << "UncMuonEff_13TeV  lnN  1.08     - " << endl; //TrackerNotGlobal SF
-             outFile << "UncMVAshape_13TeV  lnN  1.035     - " <<endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.04     - " <<endl;
          }
       }
 
@@ -891,18 +893,19 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
          outFile << "BRDsPhiPi_13TeV   lnN  1.08      - " <<endl;
          outFile << "BRBtoD_13TeV      lnN  1.05      - " <<endl;
          outFile << "BRBtoTau_13TeV    lnN  1.03      - " <<endl;
-         outFile << "fUnc_13TeV        lnN  1.07      - " <<endl; // updated on 13 April
+         outFile << "fUnc_13TeV        lnN  1.02      - " <<endl; // updated on 13 April
          outFile << "DpmScaling_13TeV  lnN  1.03      - " <<endl;
          outFile << "BsScaling_13TeV   lnN  1.04      - " <<endl;
-         outFile << "UncTrigger_13TeV  lnN  1.11      - " <<endl;
+         outFile << "UncL1_13TeV       lnN  1.05      - " <<endl; // TripleMu  //updated Sept 22
          outFile << "UncBDTCut_13TeV   lnN  1.05      - " <<endl;
          outFile << "UncRatioAcc_13TeV lnN  1.01      - " <<endl;
          if(type=="threeGlobal"){
+             outFile << "WNorm_13TeV       lnN  1.03      - " << endl; // added Sept 22
              outFile << "UncMuonEff_13TeV  lnN  1.015     - " << endl;
              outFile << "UncMVAshape_13TeV  lnN  1.03     - " <<endl;
          }else{
              outFile << "UncMuonEff_13TeV  lnN  1.04     - " << endl; //TrackerNotGlobal SF
-             outFile << "UncMVAshape_13TeV  lnN  1.036     - " <<endl;
+             outFile << "UncMVAshape_13TeV  lnN  1.04     - " <<endl;
          }
       }
 //      outFile << Form("bkg_norm_%s rateParam %s bkg 1.", cat_names.at(c).c_str(), cat_names.at(c).c_str()) << endl;
