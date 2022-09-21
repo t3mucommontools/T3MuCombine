@@ -1,7 +1,7 @@
 Combination of CMS_T3MSignal_13TeV_A1.txt  CMS_T3MSignal_13TeV_A2.txt  CMS_T3MSignal_13TeV_A3.txt  CMS_T3MSignal_13TeV_B1.txt  CMS_T3MSignal_13TeV_B2.txt  CMS_T3MSignal_13TeV_B3.txt  CMS_T3MSignal_13TeV_C1.txt  CMS_T3MSignal_13TeV_C2.txt  CMS_T3MSignal_13TeV_C3.txt
 imax 9 number of bins
 jmax 1 number of processes minus 1
-kmax 15 number of nuisance parameters
+kmax 16 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes bkg       ch1       ../workspaces/CMS_T3MBkg_13TeV.root w_all:multipdf_A1
 shapes data_obs  ch1       ../workspaces/CMS_T3MBkg_13TeV.root w_all:data_obs_A1
@@ -47,11 +47,12 @@ BsScaling_13TeV         lnN          1.04     -        1.04     -        1.04   
 DpmScaling_13TeV        lnN          1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
 DsNorm_13TeV            lnN          1.062    -        1.062    -        1.062    -        1.062    -        1.062    -        1.062    -        1.062    -        1.062    -        1.062    -      
 UncBDTCut_13TeV         lnN          1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -      
+UncL1_13TeV             lnN          1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -        1.05     -      
 UncMVAshape_13TeV       lnN          1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
 UncMuonEff_13TeV        lnN          1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -        1.015    -      
 UncRatioAcc_13TeV       lnN          1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -        1.01     -      
-UncTrigger_13TeV        lnN          1.11     -        1.11     -        1.11     -        1.11     -        1.11     -        1.11     -        1.11     -        1.11     -        1.11     -      
-fUnc_13TeV              lnN          1.07     -        1.07     -        1.07     -        1.07     -        1.07     -        1.07     -        1.07     -        1.07     -        1.07     -      
+WNorm_13TeV             lnN          1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
+fUnc_13TeV              lnN          1.02     -        1.02     -        1.02     -        1.02     -        1.02     -        1.02     -        1.02     -        1.02     -        1.02     -      
 UncSigma      param  0.0 1.0
 UncMean       param  0.0 1.0
 roomultipdf_cat_2017_threeGlobal_A2  discrete
