@@ -863,7 +863,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       //outFile << "lumi_13TeV       lnN  1.027      - " << endl;
       outFile << "ySig_dstn         lnN  1.03      - " << endl; //unc. on BR(Ds->taunu)
       outFile << "ySig_dsmmp        lnN  1.08      - " << endl; //unc. on BR(Ds->phi(mumu)pi)
-      outFile << "ySig_bdt          lnN  1.05      - " << endl; //unc. on BR(B->D+X)
+      outFile << "ySig_bds          lnN  1.05      - " << endl; //unc. on BR(B->D+X)
       outFile << "ySig_bt           lnN  1.03      - " << endl; //unc. on BR(B->tau+X)   
       outFile << "ySig_dscal        lnN  1.03      - " << endl; //unc. on scaling Ds to include D+
       outFile << "ySig_bscal        lnN  1.04      - " << endl; //unc. on scaling B0 and B+ to include Bs
