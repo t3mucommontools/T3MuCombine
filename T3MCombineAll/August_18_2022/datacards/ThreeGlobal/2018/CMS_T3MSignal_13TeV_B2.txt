@@ -18,7 +18,7 @@ rate                 13.9432    270
 DsNorm_18     lnN  1.04      - 
 ySig_dstn   lnN  1.03      - 
 ySig_dsmmp  lnN  1.08      - 
-ySig_bdt    lnN  1.05      - 
+ySig_bds  lnN  1.05      - 
 ySig_bt     lnN  1.03      - 
 fUnc_18       lnN  1.02      - 
 ySig_dscal  lnN  1.03      - 

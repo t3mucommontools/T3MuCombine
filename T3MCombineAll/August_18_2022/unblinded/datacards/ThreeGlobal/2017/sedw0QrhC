@@ -1,0 +1,18 @@
+# HF Tau to three mu
+imax 1
+jmax 1
+kmax *
+---------------
+shapes data_obs  C3 ../workspaces/CMS_T3MBkg_13TeV.root w_all:data_obs_C3
+shapes bkg C3 ../workspaces/CMS_T3MBkg_13TeV.root w_all:multipdf_C3
+shapes sig C3 ../workspaces/CMS_T3MSignal_13TeV.root w_all:SignalModel_C3
+---------------
+bin            C3  
+observation   1070
+------------------------------
+bin               C3        C3     
+process              sig     bkg     
+process                0          1      
+rate                 3.17032    1070
+--------------------------------
+DsNorm_13TeV      lnN  1.062      - 
