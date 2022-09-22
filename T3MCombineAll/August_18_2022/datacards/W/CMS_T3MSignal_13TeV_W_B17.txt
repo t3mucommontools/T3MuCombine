@@ -20,10 +20,10 @@ br_Wtaunu          lnN                       1.018               -
 br_Wmunu          lnN                       1.014               -
 WNLO          lnN                       1.04               -
 Lumi17          lnN                       1.023               -
-muonID_17          lnN                       1.014               -
-HLT_Mu_17          lnN                       1.021               -
+muonID_B17          lnN                       1.014               -
+HLT_Mu_B17          lnN                       1.021               -
 HLT_iso17          lnN                       1.12               -
-HLT_TkMu_17          lnN                       1.1               -
+HLT_TkMu_B17          lnN                       1.1               -
 mc_stat_B17 lnN                       1.0084        -   
 bkgNorm_B17 rateParam                 Wtau3mu_B17        bkg      1.
 --------------------------------------------------------------------------------
