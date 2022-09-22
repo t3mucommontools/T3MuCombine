@@ -1,7 +1,7 @@
 Combination of CMS_T3MSignal_13TeV_W_A17.txt  CMS_T3MSignal_13TeV_W_B17.txt  CMS_T3MSignal_13TeV_W_C17.txt
 imax 3 number of bins
 jmax 1 number of processes minus 1
-kmax 21 number of nuisance parameters
+kmax 15 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes bkg       ch1       ../../workspaces/W/CMS_T3M_13TeV_W_A17.root t3m_shapes:bkg
 shapes data_obs  ch1       ../../workspaces/W/CMS_T3M_13TeV_W_A17.root t3m_shapes:data_obs
@@ -21,12 +21,8 @@ process                         sig      bkg      sig      bkg      sig      bkg
 process                         0        1        0        1        0        1      
 rate                            1.5133   12.4247  1.8643   24.6076  0.6181   8.4926 
 ----------------------------------------------------------------------------------------------------------------------------------
-HLT_Mu_A17              lnN     1.019    -        -        -        -        -      
-HLT_Mu_B17              lnN     -        -        1.021    -        -        -      
-HLT_Mu_C17              lnN     -        -        -        -        1.022    -      
-HLT_TkMu_A17            lnN     1.11     -        -        -        -        -      
-HLT_TkMu_B17            lnN     -        -        1.1      -        -        -      
-HLT_TkMu_C17            lnN     -        -        -        -        1.15     -      
+HLT_Mu_17               lnN     1.019    -        1.021    -        1.022    -      
+HLT_TkMu_17             lnN     1.11     -        1.1      -        1.15     -      
 HLT_iso17               lnN     1.12     -        1.12     -        1.12     -      
 Lumi17                  lnN     1.023    -        1.023    -        1.023    -      
 WNLO                    lnN     1.04     -        1.04     -        1.04     -      
@@ -35,9 +31,7 @@ br_Wtaunu               lnN     1.018    -        1.018    -        1.018    -
 mc_stat_A17             lnN     1.0093   -        -        -        -        -      
 mc_stat_B17             lnN     -        -        1.0084   -        -        -      
 mc_stat_C17             lnN     -        -        -        -        1.0145   -      
-muonID_A17              lnN     1.013    -        -        -        -        -      
-muonID_B17              lnN     -        -        1.014    -        -        -      
-muonID_C17              lnN     -        -        -        -        1.015    -      
+muonID_17               lnN     1.013    -        1.014    -        1.015    -      
 xs_W                    lnN     1.037    -        1.037    -        1.037    -      
 sigma_C17     param  0.0273 0.0005
 sigma_A17     param  0.0115 0.0002
