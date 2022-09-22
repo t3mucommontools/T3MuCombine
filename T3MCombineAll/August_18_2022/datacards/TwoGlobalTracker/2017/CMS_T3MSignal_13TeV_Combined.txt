@@ -1,7 +1,7 @@
 Combination of CMS_T3MSignal_13TeV_A1.txt  CMS_T3MSignal_13TeV_A2.txt  CMS_T3MSignal_13TeV_B1.txt  CMS_T3MSignal_13TeV_B2.txt  CMS_T3MSignal_13TeV_C1.txt  CMS_T3MSignal_13TeV_C2.txt
 imax 6 number of bins
 jmax 1 number of processes minus 1
-kmax 15 number of nuisance parameters
+kmax 17 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes bkg       ch1       ../workspaces/CMS_T3MBkg_13TeV.root w_all:multipdf_A1
 shapes data_obs  ch1       ../workspaces/CMS_T3MBkg_13TeV.root w_all:data_obs_A1
@@ -25,24 +25,26 @@ shapes sig       ch6       ../workspaces/CMS_T3MSignal_13TeV.root w_all:SignalMo
 bin          ch1    ch2    ch3    ch4    ch5    ch6  
 observation  -1     -1     -1     -1     -1     -1   
 ----------------------------------------------------------------------------------------------------------------------------------
-bin                                  ch1       ch1       ch2       ch2       ch3       ch3       ch4       ch4       ch5       ch5       ch6       ch6     
-process                              sig       bkg       sig       bkg       sig       bkg       sig       bkg       sig       bkg       sig       bkg     
-process                              0         1         0         1         0         1         0         1         0         1         0         1       
-rate                                 0.877543  13        1.84402   194       1.70381   44        4.45438   928       0.465133  20        0.68778   147     
+bin                                      ch1       ch1       ch2       ch2       ch3       ch3       ch4       ch4       ch5       ch5       ch6       ch6     
+process                                  sig       bkg       sig       bkg       sig       bkg       sig       bkg       sig       bkg       sig       bkg     
+process                                  0         1         0         1         0         1         0         1         0         1         0         1       
+rate                                     0.877543  13        1.84402   194       1.70381   44        4.45438   928       0.465133  20        0.68778   147     
 ----------------------------------------------------------------------------------------------------------------------------------
-ySig_bds        lnN          1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
-ySig_bt           lnN          1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
-ySig_dstn         lnN          1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
-ySig_dsmmp        lnN          1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -       
-ySig_bscal        lnN          1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -       
-ySig_dscal        lnN          1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
-DsNorm_17           lnN          1.062     -         1.062     -         1.062     -         1.062     -         1.062     -         1.062     -       
-UncBDTCut_17        lnN          1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
-UncL1_17            lnN          1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
-UncMVAshape_17_2glbtk      lnN          1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -       
-UncMuonEff_17_2glbtk       lnN          1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -       
-UncRatioAcc_17        lnN          1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -       
-fUnc_17             lnN          1.02      -         1.02      -         1.02      -         1.02      -         1.02      -         1.02      -       
+DsNorm_17               lnN              1.062     -         1.062     -         1.062     -         1.062     -         1.062     -         1.062     -       
+UncBDTCut_17            lnN              1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
+UncL1_17                lnN              1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
+UncMVAshape_17_2glbtk   lnN              1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -       
+UncRatioAcc_17          lnN              1.01      -         1.01      -         1.01      -         1.01      -         1.01      -         1.01      -       
+fUnc_17                 lnN              1.02      -         1.02      -         1.02      -         1.02      -         1.02      -         1.02      -       
+muonID_A17              lnN              1.04      -         1.04      -         -         -         -         -         -         -         -         -       
+muonID_B17              lnN              -         -         -         -         1.04      -         1.04      -         -         -         -         -       
+muonID_C17              lnN              -         -         -         -         -         -         -         -         1.04      -         1.04      -       
+ySig_bds                lnN              1.05      -         1.05      -         1.05      -         1.05      -         1.05      -         1.05      -       
+ySig_bscal              lnN              1.04      -         1.04      -         1.04      -         1.04      -         1.04      -         1.04      -       
+ySig_bt                 lnN              1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+ySig_dscal              lnN              1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
+ySig_dsmmp              lnN              1.08      -         1.08      -         1.08      -         1.08      -         1.08      -         1.08      -       
+ySig_dstn               lnN              1.03      -         1.03      -         1.03      -         1.03      -         1.03      -         1.03      -       
 UncSigma      param  0.0 1.0
 UncMean       param  0.0 1.0
 roomultipdf_cat_2017_twoGlobalTracker_B2  discrete

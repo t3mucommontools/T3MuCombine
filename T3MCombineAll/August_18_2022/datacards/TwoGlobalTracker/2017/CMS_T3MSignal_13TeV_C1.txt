@@ -26,7 +26,7 @@ ySig_bscal  lnN  1.04      -
 UncL1_17      lnN  1.05      - 
 UncBDTCut_17  lnN  1.05      - 
 UncRatioAcc_17  lnN  1.01      - 
-UncMuonEff_17_2glbtk lnN  1.04     - 
+muonID_C17 lnN  1.04     - 
 UncMVAshape_17_2glbtk lnN  1.04     - 
 roomultipdf_cat_2017_twoGlobalTracker_C1 discrete
 UncMean	param 	0.0	1.0	
