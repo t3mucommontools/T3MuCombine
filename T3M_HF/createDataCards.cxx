@@ -25,7 +25,7 @@ void SetConstantParams(const RooArgSet* params);
 void tokenize(std::string const &str, const char delim, std::vector<std::string> &out);
 
 void
-createDataCards(TString inputfile, int signalsample = 0, bool blind = true, string modelCard="model_card.rs", string configFile="config.txt", TString type="threeGlobal", TString Run="2017", bool dp = false, bool doscan = false)
+createDataCards(TString inputfile, int signalsample = 0, bool blind = true, string modelCard="model_card.rs", string configFile="config.txt", TString type="threeGlobal", TString Run="2017", bool dp = true, bool doscan = false)
 {
    //Set verbosity
    ROOT::Minuit2::Minuit2Minimizer min (ROOT::Minuit2::kCombined);
@@ -78,7 +78,7 @@ createDataCards(TString inputfile, int signalsample = 0, bool blind = true, stri
    w->var("m3m")->setMin(MMIN);
    w->var("m3m")->setMax(MMAX);
 
-   w->Print();
+   //w->Print();
    AddData(inputfile, Run, w,NCAT,branch_names,cat_names,bdt_val);
 
    SigModelFit(w, NCAT, cat_names, signal_fitresults, type, Run);
@@ -876,6 +876,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
          outFile << "UncL1_18       lnN  1.02      - " << endl; // events triggered by TripleMu
          outFile << "UncBDTCut_18   lnN  1.05      - " << endl; //unc. on BDT selection
          outFile << "UncRatioAcc_18 lnN  1.01      - " << endl; //unc. on 3mu/2mu ratio acceptance
+         outFile << "UncPionEff_18  lnN  1.021      - " << endl; //unc. on pion reconstruction efficiency
 
          //Uncorrelated uncertanties across categories
          if(type=="3glb"){
@@ -894,6 +895,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
          outFile << "UncL1_17       lnN  1.05      - " <<endl;  //events triggered by TripleMu
          outFile << "UncBDTCut_17   lnN  1.05      - " <<endl;  //unc. on BDT selection
          outFile << "UncRatioAcc_17 lnN  1.01      - " <<endl;  //unc. on 3mu/2mu ratio acceptance
+         outFile << "UncPionEff_17  lnN  1.022      - " << endl; //unc. on pion reconstruction efficiency
 
          //Uncorrelated uncertanties across categories
          if(type=="3glb"){
