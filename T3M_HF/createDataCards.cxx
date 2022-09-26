@@ -879,7 +879,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
          outFile << "UncPionEff_18  lnN  1.021      - " << endl; //unc. on pion reconstruction efficiency
 
          //Uncorrelated uncertanties across categories
-         if(type=="3glb"){
+         if(type=="threeGlobal"){
              outFile << "WNorm_18_3glb       lnN  1.05      - " << endl; // 100% unc. on 5% additional W yield
              outFile << "UncMuonEff_18_3glb  lnN  1.016     - " << endl; //GlobalMu ID tag&probe
              outFile << "UncMVAshape_18_3glb  lnN  1.06     - " <<endl;  //MVAglb correction
@@ -898,7 +898,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
          outFile << "UncPionEff_17  lnN  1.022      - " << endl; //unc. on pion reconstruction efficiency
 
          //Uncorrelated uncertanties across categories
-         if(type=="3glb"){
+         if(type=="threeGlobal"){
              outFile << "WNorm_17_3glb       lnN  1.03      - " << endl; // 100% unc. on 5% additional W yield
              outFile << "UncMuonEff_17_3glb  lnN  1.015     - " << endl; //GlobalMu ID tag&probe
              outFile << "UncMVAshape_17_3glb  lnN  1.03     - " <<endl;  //MVAglb correction
