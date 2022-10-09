@@ -13,7 +13,7 @@ observation   202
 bin               A2        A2     
 process              sig     bkg     
 process                0          1      
-rate                 2.62728    202
+rate                 1.71945    202
 --------------------------------
 ySig_dstn         lnN  1.03      - 
 ySig_dsmmp        lnN  1.08      - 
