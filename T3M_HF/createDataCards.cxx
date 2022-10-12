@@ -15,10 +15,10 @@ void AddData(TString, TString, RooWorkspace*, const Int_t NCAT, std::vector<stri
 void SigModelFit(RooWorkspace*, const Int_t NCAT, std::vector<string>, RooFitResult** signal_fitresults, TString type, TString Run);
 void BkgModelFit(RooWorkspace*, const Int_t NCAT, std::vector<string>, RooFitResult** bkg_fitresults, bool blind, std::vector<string> cat_names, TString m3m_name, bool dp, TString type, TString Run);
 void MakeSigWS(RooWorkspace* w, const Int_t NCAT, const char* filename,  std::vector<string>);
-void MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* filename,  std::vector<string>, bool dp);
+void MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* filename,  std::vector<string>, bool dp, TString type, TString Run);
 void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, const char* fileBkgName, string configFile,  std::vector<string> cat_names, TString type, TString Run, bool blind, bool dp);
-void MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool dp, bool blind, string configs);
-void MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool dp, bool blind, string configs);
+void MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool dp, bool blind, string configs, TString type, TString Run);
+void MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool dp, bool blind, string configs, TString type, TString Run);
 void MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, string configs);
 
 void SetConstantParams(const RooArgSet* params);
@@ -85,14 +85,14 @@ createDataCards(TString inputfile, int signalsample = 0, bool blind = true, stri
    MakeSigWS(w, NCAT, fileBaseName, cat_names);
 
    BkgModelFit(w, NCAT, cat_names, bkg_fitresults, blind, cat_names, m3m_name, dp, type, Run);
-   MakeBkgWS(w, NCAT, fileBkgName, cat_names, dp);
+   MakeBkgWS(w, NCAT, fileBkgName, cat_names, dp, type, Run);
 
    MakeDataCard(w, NCAT, fileBaseName, fileBkgName, configFile_prefix, cat_names, type, Run, blind, dp);
 
    TString filename("temp_workspace.root");
    w->writeToFile(filename);
-   MakePlots(w,NCAT,cat_names, dp, blind, configFile_prefix);
-   //MakePlotsSplusB(w,NCAT,cat_names, dp, blind,configFile_prefix);
+   MakePlots(w,NCAT,cat_names, dp, blind, configFile_prefix, type, Run);
+   //MakePlotsSplusB(w,NCAT,cat_names, dp, blind,configFile_prefix, type, Run);
    MakePlotsSgn(w,NCAT,cat_names,configFile_prefix);
 
    w->Print();
@@ -272,7 +272,7 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
 }
 
 void
-MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool dp, bool blind, string configs){
+MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool dp, bool blind, string configs, TString type, TString Run){
 
    RooDataSet* signalAll[NCAT];
    RooDataSet* dataAll[NCAT];
@@ -302,7 +302,7 @@ MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names
           RooMultiPdf* multipdf = (RooMultiPdf*) w->pdf(TString::Format("multipdf_%s",cat_names.at(category).c_str()));
           bkgpdf[category] =(RooAbsPdf*)multipdf->getCurrentPdf();
       }
-      else bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("t3m_bkg_expo_%s",cat_names.at(category).c_str()));
+      else bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("t3m_bkg_expo_"+type+"_"+Run+"_%s",cat_names.at(category).c_str()));
    }
 
    m3m->setRange("SB1_A",1.62,1.75);
@@ -380,7 +380,7 @@ MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names
 
 
 void
-MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool dp, bool blind, string configs){
+MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool dp, bool blind, string configs, TString type, TString Run){
 
    RooDataSet* signalAll[NCAT];
    RooDataSet* dataAll[NCAT];
@@ -410,7 +410,7 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
           RooMultiPdf* multipdf = (RooMultiPdf*) w->pdf(TString::Format("multipdf_%s",cat_names.at(category).c_str()));
           bkgpdf[category] =(RooAbsPdf*)multipdf->getCurrentPdf();
       }
-      else bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("t3m_bkg_expo_%s",cat_names.at(category).c_str()));
+      else bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("t3m_bkg_expo_"+type+"_"+Run+"_%s",cat_names.at(category).c_str()));
    }
 
    m3m->setRange("SB1_A",1.62,1.75);
@@ -429,7 +429,8 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
    text->SetNDC();
    text->SetTextSize(0.04);
       
-   TString filename("yields.txt");
+   TString filename(type+"_"+Run+"_yields.txt");
+   //TString filename("yields.txt");
    ofstream outFile(filename);
    outFile << "cat\tsig\tbkg\n" << endl;
 
@@ -608,6 +609,11 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
    TString MClable_name = branch_names.at(4);
    TString weight_name = branch_names.at(5);
 
+   //additional var pre-app comment
+   TString dimu1_name = branch_names.at(6);
+   TString dimu2_name = branch_names.at(7);
+   TString omega_cut = "abs("+dimu1_name+"-0.782)>0.01 && abs("+dimu2_name+"-0.782)>0.01";
+
    //build strings for bdt cut selection
    vector<TString> bdt_cuts; // reserved to handle bdt cuts (full selection string)
    for (unsigned int category=0; category < NCAT; category++){
@@ -625,14 +631,18 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
    RooRealVar categ(categ_name, categ_name, 0, 2);//mass resolution category 0=A, 1=B, 2=C
    RooRealVar isMC(MClable_name, MClable_name, 0, 4); //0=data, 1=Ds, 2=B0, 3=Bp, 4=W
    RooRealVar weight(weight_name, weight_name, 0, 1); //normalisation of MC
-   RooRealVar weight_MC("weight_MC", "weight_MC", 0.0, 2.0); //normalisation of MC //including corrections
+
+   RooRealVar dimu1(dimu1_name, dimu1_name, 0.2, 1.8); //dimu_OS1
+   RooRealVar dimu2(dimu2_name, dimu2_name, 0.2, 1.8); //dimu_OS2
 
    RooArgSet variables(m3m);
    variables.add(bdt);
    variables.add(categ);
    variables.add(isMC);
    variables.add(weight);
-   variables.add(weight_MC);
+
+   variables.add(dimu1);
+   variables.add(dimu2);
 
    TString name, bdtcut, category_cut;
 
@@ -646,7 +656,7 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
           if(category%3==i) 
               category_cut = categ_name+"=="+std::to_string(i);
       }
-      RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+")"), WeightVar(weight_name));
+      RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+"&&"+omega_cut+")"), WeightVar(weight_name));
       sigds.Print();
       //reduce to only one variable
       RooDataSet* sigds_reduced = (RooDataSet*) sigds.reduce(RooArgSet(m3m));
@@ -662,7 +672,7 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
           if(category%3==i) 
               category_cut = categ_name+"=="+std::to_string(i);
       }
-      RooDataSet bkgds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+")"));
+      RooDataSet bkgds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+"&&"+omega_cut+")"));
       bkgds.Print();
       //reduce to only one variable
       RooDataSet* bkgds_reduced = (RooDataSet*) bkgds.reduce(RooArgSet(m3m));
@@ -708,7 +718,7 @@ BkgModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string>, RooFitResult
       bkg_norm[category] = w->var(TString::Format("bkg_norm_%s",cat_names.at(category).c_str())) ;
       //define bkg model
       if(!discpf) {
-          pdfBkgExp[category]   =  (RooAbsPdf*)  w->pdf("t3m_bkg_expo"+TString::Format("_%s",cat_names.at(category).c_str()));
+          pdfBkgExp[category]   =  (RooAbsPdf*)  w->pdf(TString::Format("t3m_bkg_expo_"+type+"_"+Run+"_%s",cat_names.at(category).c_str()));
       }else{
           //open rootfile created by running discrete_profiling_HF.py
           TString dp_filepath = "../python/MultiPdfWorkspaces/"+Run+"_"+type+"_"+cat_names.at(category).c_str()+".root";
@@ -773,7 +783,7 @@ MakeSigWS(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName,  std::vec
 
 
 void 
-MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, std::vector<string> cat_names, bool discpf) {
+MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, std::vector<string> cat_names, bool discpf, TString type, TString Run) {
    TString wsDir   = "workspaces/";
 
    bool blind_WP = false;
@@ -797,7 +807,7 @@ MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, std::vect
 
       wAll->import(*dataToWp[category],Rename(TString::Format("data_obs_%s",cat_names.at(category).c_str())));
       if(!discpf)
-         wAll->import(*w->pdf(TString::Format("t3m_bkg_expo_%s",cat_names.at(category).c_str())));
+         wAll->import(*w->pdf(TString::Format("t3m_bkg_expo_"+type+"_"+Run+"_%s",cat_names.at(category).c_str())));
       else{
          //wAll->import(*w->pdf(TString::Format("t3m_bkg_dp_%s",cat_names.at(category).c_str())));
          wAll->import(*w->pdf(TString::Format("multipdf_%s",cat_names.at(category).c_str() )));
@@ -843,7 +853,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       outFile << Form("shapes data_obs  %s ",cat_names.at(c).c_str())  << wsDir+TString(fileBkgName)+".root " << Form("w_all:data_obs_%s",cat_names.at(c).c_str()) << endl;
       if(dp) outFile << Form("shapes bkg %s ", cat_names.at(c).c_str())   << wsDir+TString(fileBkgName)+".root " << Form("w_all:multipdf_%s",cat_names.at(c).c_str()) << endl;
       // if(dp) outFile << Form("shapes bkg %s ", cat_names.at(c).c_str())   << wsDir+TString(fileBkgName)+".root " << Form("w_all:t3m_bkg_dp_%s",cat_names.at(c).c_str()) << endl;
-      else outFile << Form("shapes bkg %s ", cat_names.at(c).c_str())   << wsDir+TString(fileBkgName)+".root " << Form("w_all:t3m_bkg_expo_%s",cat_names.at(c).c_str()) << endl;
+      else outFile << Form("shapes bkg %s ", cat_names.at(c).c_str())   << wsDir+TString(fileBkgName)+".root " << Form("w_all:t3m_bkg_expo_"+type+"_"+Run+"_%s",cat_names.at(c).c_str()) << endl;
       outFile << Form("shapes sig %s ", cat_names.at(c).c_str()) << wsDir+TString(fileBaseName)+".root " << Form("w_all:SignalModel_%s",cat_names.at(c).c_str()) << endl;
 
       outFile << "---------------" << endl;
@@ -911,7 +921,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       if(dp) {
           outFile << Form("roomultipdf_cat_"+Run+"_"+type+"_%s discrete", cat_names.at(c).c_str()) << endl;
       } else {
-          outFile << Form("bkg_exp_slope_%s flatParam", cat_names.at(c).c_str()) << endl;
+          outFile << Form("bkg_exp_slope_"+type+"_"+Run+"_%s flatParam", cat_names.at(c).c_str()) << endl;
       }
       outFile << "UncMean	param 	0.0	1.0	" << endl;
       outFile << "UncSigma	param 	0.0	1.0	" << endl;
