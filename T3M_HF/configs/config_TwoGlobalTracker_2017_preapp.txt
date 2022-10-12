@@ -1,0 +1,3 @@
+T3MMiniTree,var_tauMassRefitted,bdt,category,dataMCType,eventWeight,var_Mosss1,var_Mosss2
+A1,B1,C1,A2,B2,C2
+0.94,0.94,0.88,0.70,0.70,0.71

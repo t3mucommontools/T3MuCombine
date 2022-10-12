@@ -8,9 +8,9 @@ createDataCards.cxx
 inputs to be provided:
 - configuration file with format:
 ```
-outputTree,tripletMass,bdt,category,isMC,weight
+OutputTree,tripletMass,bdt_cv,category,isMC,weight,dimu_OS1,dimu_OS2
 A1,B1,C1,A2,B2,C2,A3,B3,C3
-0.1825,0.2075,0.2175,0.1125,0.1375,0.1675,0.0425,0.0525,0.1125
+0.9325,0.9525,0.8375,0.7925,0.9025,0.4125,0.2475,0.4575,0.1375
 ```
 
 First line: comma separated list of names for reading the ntuples
@@ -20,6 +20,8 @@ First line: comma separated list of names for reading the ntuples
 4) branch name for mass resolution category (integer, 0:A, 1:B, 2:C)
 5) branch name for MC lable (MC==0 is data, MC>0 are signals, no limit on the number of signal samples)
 6) branch name for event weight (includes MC normalisation and correction factors, is supposed to be 1 for data)
+7) branch name for m(#mu#mu) - first OS pair
+8) branch name for m(#mu#mu) - second OS pair
 
 Second line: comma separated list of categories
 
@@ -32,12 +34,6 @@ example input TTree can be found at:
 scp -r /afs/cern.ch/user/f/fsimone/public/Tau3mu/inputdata .
 ``` 
 
-input files for TwoGlobalTracker category can be found at:
-```
-/afs/cern.ch/user/b/bjoshi/public/forFsimone/T3MMiniTree_2glbTrk_BPH_preapproval_iteration_2_twoGlobalTracker_weights_corrected_2017.root
-
-/afs/cern.ch/user/b/bjoshi/public/forFsimone/T3MMiniTree_2glbTrk_BPH_preapproval_iteration_2_twoGlobalTracker_weights_corrected_2018.root
-```
 --run argument (2017 or 2018) will affect the systematic uncertainties in the datacards
 
 example call for 9 event categories, threeGlobal channel:
@@ -46,5 +42,7 @@ example call for 9 event categories, threeGlobal channel:
 ```./run.py -i inputdata/dataset_UL2018_ThreeGlobal_outputTree.root -c model_card_v3.rs --run 2018 --type threeGlobal -v 3 -s config_ThreeGlobal_2018.txt```
 
 example call for 6 event categories, twoGlobalTracker:  
-```./run.py -i inputfile_6categories.root -c model_card_v2.rs --run 2018 --type twoGlobalTracker -v 2 -s config_v2.txt```
+```./run.py -i inputdata/dataset_UL2017_TwoGlobalTracker_outputTree.root -c model_card_v2.rs --run 2017 --type twoGlobalTracker -v 2 -s configs/config_TwoGlobalTracker_2017.txt```
+
+```./run.py -i inputdata/dataset_UL2018_TwoGlobalTracker_outputTree.root -c model_card_v2.rs --run 2018 --type twoGlobalTracker -v 2 -s configs/config_TwoGlobalTracker_2018.txt```
 
