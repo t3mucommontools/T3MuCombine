@@ -24,11 +24,11 @@ ROOT.gROOT.SetBatch(True)
 
 filename = args.input_file
 
-#filename = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/inputdata/t3mminitree_xgb_'+args.run+'_22aug22.root'
-#args.setting = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/config_ThreeGlobal_'+args.run+'_22aug22.txt'
+filename = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/inputdata/t3mminitree_xgb_'+args.run+'_22aug22.root'
+args.setting = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/config_ThreeGlobal_'+args.run+'_22aug22.txt'
 
-filename = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/inputdata/T3MMiniTree_xgboost_setting2_'+args.run+'UL_v2.root'
-args.setting = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/config_xgboost_TwoGlobalTracker_'+args.run+'_v2.txt'
+#filename = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/inputdata/T3MMiniTree_xgboost_setting2_'+args.run+'UL_v2_dimuonMass.root'
+#args.setting = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/config_xgboost_TwoGlobalTracker_'+args.run+'_v2.txt'
 
 branch_names = []
 cat_names = []
@@ -49,6 +49,10 @@ bdt_name = branch_names[2]
 categ_name = branch_names[3]
 MClabel_name = branch_names[4]
 weight_name = branch_names[5]
+dimu1_name = branch_names[6]
+dimu2_name = branch_names[7]
+
+omega_cut = " abs("+dimu1_name+"-0.782)>0.01 && abs("+dimu2_name+"-0.782)>0.01 "
 
 bdt_cutlist = []
 for idx,cat in enumerate(cat_names):
@@ -87,12 +91,16 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
     roocategory = ROOT.RooRealVar(categ_name, categ_name, 0, 2); #mass resolution category 0=A, 1=B, 2=C
     roomc = ROOT.RooRealVar(MClabel_name, MClabel_name, 0, 4); #0=data, 1=Ds, 2=B0, 3=Bp, 4=W
     rooweight = ROOT.RooRealVar(weight_name, weight_name, 0, 1); #normalisation of MC including corrections i.e. PU reweighting
+    roodimu1 = ROOT.RooRealVar(dimu1_name, dimu1_name, 0.2, 1.8);
+    roodimu2 = ROOT.RooRealVar(dimu2_name, dimu2_name, 0.2, 1.8);
     #set of variables
     variables = ROOT.RooArgSet(mass);
     variables.add(roobdt)
     variables.add(roocategory)
     variables.add(roomc)
     variables.add(rooweight)
+    variables.add(roodimu1)
+    variables.add(roodimu2)
 
     category = '' #A, B, C
     for reso in category_cuts: 
@@ -105,10 +113,11 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
 
     #debug
     print("category "+cat)
-    print(data_cut+"&&"+category_cuts[category]+"&&"+bdt_cutlist[idx])
+    print(data_cut+"&&"+category_cuts[category]+"&&"+bdt_cutlist[idx]+"&&"+omega_cut)
 
     #take rooDataSet from tree
-    data = ROOT.RooDataSet('data_'+cat, '', tree, variables, data_cut+"&&"+category_cuts[category]+"&&"+bdt_cutlist[idx], weight_name)#.binnedClone('data')
+    data = ROOT.RooDataSet('data_'+cat, '', tree, variables, data_cut+"&&"+category_cuts[category]+"&&"+bdt_cutlist[idx]+"&&"+omega_cut, weight_name)#.binnedClone('data')
+    #data = ROOT.RooDataSet('data_'+cat, '', tree, variables, data_cut+"&&"+category_cuts[category]+"&&"+bdt_cutlist[idx], weight_name)#.binnedClone('data')
 
     #reduce to sidebands
     sidebands = "("+m3m_name+"<"+str(mass_range_left[category][1])+"&&"+m3m_name+">="+str(mass_range_left[category][0])+")||("+m3m_name+"<"+str(mass_range_right[category][1])+"&&"+m3m_name+">="+str(mass_range_right[category][0])+")"
@@ -167,7 +176,8 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
     gofmax  = 0
     bestfit = None
     #families = ['Bernstein', 'Chebychev', 'Exponential', 'PowerLaw']
-    families = ['Polynomial', 'Exponential', 'PowerLaw']  
+    #families = ['Polynomial', 'Exponential', 'PowerLaw']  
+    families = ['Bernstein', 'Exponential', 'PowerLaw']  
     #families = ['Exponential', 'PowerLaw']  
     allpdfs_list = ROOT.RooArgList(pdfs.allPdfs())
     allpdfs_list = [allpdfs_list.at(j) for j in range(allpdfs_list.getSize())]
