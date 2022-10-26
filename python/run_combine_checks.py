@@ -145,7 +145,7 @@ CMD_LHSCAN = '\n'.join([
 
 CMD_LIMIT = '\n'.join([
   'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
-  "combine -M HybridNew --testStat=LHC --fitNuisances={BLI} --frequentist {WSP} -T {TOY} -C {CL}  --plot='limit_combined_hybridnew_{CL}.pdf' --rMin {r} --rMax {R} {PAR} --rule {RL}"
+  "combine -M HybridNew {WSP} {BLI} --LHCmode LHC-limits -T {TOY} -C {CL}  --plot='limit_combined_hybridnew_{CL}.pdf' --rMin {r} --rMax {R} {PAR} --rule {RL}"
 ]).format(
   DAT=DATACARD ,
   WSP=WORKSPACE,
@@ -156,7 +156,7 @@ CMD_LIMIT = '\n'.join([
   r  =args.rmin,
   R  =args.rmax,
   PAR=PARAMETERS,
-  BLI='1' if args.unblind else '0  --expectedFromGrid {CI}'.format(CI=args.grid),
+  BLI='--expectedFromGrid {CI}'.format(CI=args.grid) if not args.unblind else '',
 ).split('\n')
 
 impacts_cmd  = Command('Impacts'                , CMD_IMPACTS           , OUTPUT_IMPACTS ).run(args.impacts )
