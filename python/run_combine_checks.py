@@ -107,7 +107,7 @@ CMD_IMPACTS = '\n'.join([
   WSP=WORKSPACE     ,
   PAR=PARAMETERS    ,
   B  =BLINDER       ,
-  REB='-rebinFactor {}'.format(args.rebin) if args.rebin is not None else '',
+  REB='--rebinFactor {}'.format(args.rebin) if args.rebin is not None else '',
 ).split('\n')
 
 CMD_SIGNIFICANCE_TOYS = '\n'.join([
