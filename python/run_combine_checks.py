@@ -28,6 +28,8 @@ parser.add_argument(      '--limit'   , action='store_true'     , help='run the 
 parser.add_argument(      '--cl'      , default='0.9'           , help='confidence level used for the upper limit')
 parser.add_argument(      '--grid'    , default='0.5'           , help='quantile considered for the upper limit computation')
 parser.add_argument(      '--tofreeze', default=None            , help='parameters to freeze to help the fit convergence')
+parser.add_argument('-m', '--method'  , default='CLs'           , help='method to use for upper limits', choices=['CLs', 'CLsplusb'])
+parser.add_argument(      '--rebin'   , default=None            , help='rebin the mass distribution when running FitDiagnostic fits')
 
 args = parser.parse_args()
 
@@ -63,7 +65,7 @@ class Command:
         print(self.o+'/LOGFILE.txt')
 
       if args.log:
-        os.system('echo \>\> %s\n' %cmd)
+        os.system('echo \>\> %s\n 2>&1' %cmd)
       ret = os.system(cmd)
       if ret:
         self.ERROR("an error was encountered when running the last command")
@@ -89,7 +91,7 @@ OUTPUT_LHSCAN   = OUTPUT+'/lh_scan'
 OUTPUT_LIMIT    = '_'.join([OUTPUT+'/limit', 'CL'+args.cl, 'grid'+args.grid.replace('.','p')])
 
 CMD_IMPACTS = '\n'.join([
-  'combine -M FitDiagnostics -d {DAT} {B} --plots --rMin "{r}" --rMax "{R}" --minos all {PAR}',
+  'combine -M FitDiagnostics -d {DAT} {B} --plots --rMin "{r}" --rMax "{R}" --minos all {PAR} {REB}',
   'python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py -a fitDiagnostics.root -g plots.root',
   'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
   'combineTool.py -M Impacts -d {WSP} -m 1.777 {B} --doInitialFit --robustFit=1 --rMin "{r}" --rMax "{R}"',
@@ -105,6 +107,7 @@ CMD_IMPACTS = '\n'.join([
   WSP=WORKSPACE     ,
   PAR=PARAMETERS    ,
   B  =BLINDER       ,
+  REB='-rebinFactor {}'.format(args.rebin) if args.rebin is not None else '',
 ).split('\n')
 
 CMD_SIGNIFICANCE_TOYS = '\n'.join([
@@ -142,17 +145,18 @@ CMD_LHSCAN = '\n'.join([
 
 CMD_LIMIT = '\n'.join([
   'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
-  "combine -M HybridNew --testStat=LHC --fitNuisances={BLI} --frequentist {WSP} -T {TOY} --expectedFromGrid {CI} -C {CL}  --plot='limit_combined_hybridnew_{CL}.pdf' --rMin {r} --rMax {R} {PAR}"
+  "combine -M HybridNew --testStat=LHC --fitNuisances={BLI} --frequentist {WSP} -T {TOY} -C {CL}  --plot='limit_combined_hybridnew_{CL}.pdf' --rMin {r} --rMax {R} {PAR} --rule {RL}"
 ]).format(
   DAT=DATACARD ,
   WSP=WORKSPACE,
   TOY=args.toys,
   CI =args.grid,
   CL =args.cl  ,
+  RL =args.method,
   r  =args.rmin,
   R  =args.rmax,
   PAR=PARAMETERS,
-  BLI=1 if args.unblind else 0,
+  BLI='1' if args.unblind else '0  --expectedFromGrid {CI}'.format(CI=args.grid),
 ).split('\n')
 
 impacts_cmd  = Command('Impacts'                , CMD_IMPACTS           , OUTPUT_IMPACTS ).run(args.impacts )
