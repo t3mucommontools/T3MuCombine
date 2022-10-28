@@ -8,21 +8,21 @@ parser.add_argument('-S', '--scale' , default=5, type=float, help='Number of sig
 args = parser.parse_args()
 
 class Category:
-  DEFAULT_RANGE = (-100, 100)
+  DEFAULT_RANGE = lambda par: (-100, 100)
   EXCLUDE       = ['m3m', 'm0_A', 'm0_B', 'm0_C', 'alpha_cb_A', 'alpha_cb_B', 'alpha_cb_C', 'n_cb_A', 'n_cb_B', 'n_cb_C']
   ranges = {
     'slope'       : DEFAULT_RANGE,
     'c_PowerLaw'  : DEFAULT_RANGE,
     'f_cb'        : DEFAULT_RANGE,
-    'Bernstein'   : (0,1),
-    'sigma'       : (0.001, 0.1),
+    'Bernstein'   : lambda par: (0,1),
+    'sigma'       : lambda par: (0.001, 0.1),
     'c_Polynomial': lambda par: (par.getVal()-args.scale*par.getError(), par.getVal()+args.scale*par.getError()),
   }
   @staticmethod
   def get_range(par):
     for key, ran in Category.ranges.items():
-      if key in par.GetName(): return ran
-    return Category.DEFAULT_RANGE
+      if key in par.GetName(): return ran(par)
+    return Category.DEFAULT_RANGE(par)
   def __init__(self, name, file, ID=''):
     self.id     = ID
     self.name   = name
