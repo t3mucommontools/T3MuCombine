@@ -23,8 +23,11 @@ parser.add_argument('-I', '--impacts' , action='store_true'     , help='run the 
 parser.add_argument('-A', '--sig-asym', action='store_true'     , help='run the significance computation using asymptotic formulae')
 parser.add_argument('-T', '--sig-toys', action='store_true'     , help='run the significance computation using toys')
 parser.add_argument('-L', '--lhscan'  , action='store_true'     , help='run the likelihood scan')
+parser.add_argument('-D', '--teststat', action='store_true'     , help='compute the test statistics distribution')
+parser.add_argument('-F', '--fit'     , action='store_true'     , help='compute the best fit for the signal strength')
 parser.add_argument(      '--lhparams', default='r'             , help='parameters to run the likelihood scan in the form "par1 par2 par3"')
 parser.add_argument(      '--limit'   , action='store_true'     , help='run the upper limit with toys')
+parser.add_argument(      '--alimit'  , action='store_true'     , help='run the upper limit with asymptotic formulae')
 parser.add_argument(      '--cl'      , default='0.9'           , help='confidence level used for the upper limit')
 parser.add_argument(      '--grid'    , default='0.5'           , help='quantile considered for the upper limit computation')
 parser.add_argument(      '--tofreeze', default=None            , help='parameters to freeze to help the fit convergence')
@@ -39,6 +42,7 @@ class Command:
   INFO    = lambda self, msg: print("\033[92m[INFO]  "  + msg + "\033[0m")
   CODE    = lambda self, msg: print("\033[95m" + msg + "\033[0m")
   def __init__(self, name, commands, output):
+    assert type(commands)==list, "Please pass command(s) via a python list"
     self.n = name
     self.o = output
     self.c = commands
@@ -88,7 +92,10 @@ OUTPUT_IMPACTS  = OUTPUT+'/impacts'
 OUTPUT_SIG_TOYS = OUTPUT+'/significance_toys'
 OUTPUT_SIG_ASYM = OUTPUT+'/significance_asymptotic'
 OUTPUT_LHSCAN   = OUTPUT+'/lh_scan'
+OUTPUT_TESTSTAT = OUTPUT+'/teststat'
 OUTPUT_LIMIT    = '_'.join([OUTPUT+'/limit', 'CL'+args.cl, 'grid'+args.grid.replace('.','p')])
+OUTPUT_ALIMIT   = '_'.join([OUTPUT+'/asymptoticlimit', 'CL'+args.cl])
+OUTPUT_FIT      = OUTPUT+'/bestfit'
 
 CMD_IMPACTS = '\n'.join([
   'combine -M FitDiagnostics -d {DAT} {B} --plots --rMin "{r}" --rMax "{R}" --minos all {PAR} {REB}',
@@ -143,6 +150,23 @@ CMD_LHSCAN = '\n'.join([
   NUI=args.lhparams,
 ).split('\n')
 
+CMD_TESTSTAT = '\n'.join([
+  'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
+  'for n in {{1..100}}; do \
+    combine -M HybridNew {WSP} --LHCmode LHC-significance --saveToys --fullBToys --saveHybridResult -T {TOY} {PAR} --rMin {r} --rMax {R} -s -1; \
+  done',
+  'hadd -k -f grid.root *.root',
+  '$CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/plotTestStatCLs.py grid.root {BLI} --val all --mass 120',
+]).format(
+  DAT=DATACARD ,
+  WSP=WORKSPACE,
+  TOY=args.toys,
+  r  =args.rmin,
+  R  =args.rmax,
+  PAR=PARAMETERS,
+  BLI='-E -q {}'.format(args.grid) if not args.unblind else '',
+).split('\n')
+
 CMD_LIMIT = '\n'.join([
   'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
   "combine -M HybridNew {WSP} {BLI} --LHCmode LHC-limits -T {TOY} -C {CL}  --plot='limit_combined_hybridnew_{CL}.pdf' --rMin {r} --rMax {R} {PAR} --rule {RL}"
@@ -159,8 +183,30 @@ CMD_LIMIT = '\n'.join([
   BLI='--expectedFromGrid {CI}'.format(CI=args.grid) if not args.unblind else '',
 ).split('\n')
 
+CMD_FIT = '\n'.join([
+  'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
+  'combine -M FitDiagnostics {WSP} --plots --rMin {r} --rMax {R} {PAR}',
+]).format(
+  WSP=WORKSPACE,
+  DAT=DATACARD ,
+  r  =args.rmin,
+  R  =args.rmax,
+  PAR=PARAMETERS,
+).split('\n')
+
+CMD_ALIMIT = '\n'.join([
+  'combine -M AsymptoticLimits --run {BLI} --cl {CL} -d {DAT}'
+]).format(
+  BLI='blind' if not args.unblind else 'observed',
+  CL =args.cl ,
+  DAT=DATACARD,
+).split('\n')
+
 impacts_cmd  = Command('Impacts'                , CMD_IMPACTS           , OUTPUT_IMPACTS ).run(args.impacts )
 sig_asym_cmd = Command('Asymptotic significance', CMD_SIGNIFICANCE_ASYM , OUTPUT_SIG_ASYM).run(args.sig_asym)
 sig_toys_cmd = Command('Toys significance'      , CMD_SIGNIFICANCE_TOYS , OUTPUT_SIG_TOYS).run(args.sig_toys)
 lhscan_cmd   = Command('LHScan'                 , CMD_LHSCAN            , OUTPUT_LHSCAN  ).run(args.lhscan  )
-lhscan_cmd   = Command('Upper limit'            , CMD_LIMIT             , OUTPUT_LIMIT   ).run(args.limit   )
+limit_cmd    = Command('Upper limit'            , CMD_LIMIT             , OUTPUT_LIMIT   ).run(args.limit   )
+alimit_cmd   = Command('Upper limit'            , CMD_ALIMIT            , OUTPUT_ALIMIT  ).run(args.alimit  )
+teststat_cmd = Command('Test-stat distribution' , CMD_TESTSTAT          , OUTPUT_TESTSTAT).run(args.teststat)
+fit_cmd      = Command('Test-stat distribution' , CMD_FIT               , OUTPUT_FIT     ).run(args.fit     )
