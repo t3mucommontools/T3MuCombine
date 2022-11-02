@@ -4,7 +4,7 @@ jmax 1
 kmax *
 ---------------
 shapes data_obs  B1 ../workspaces/CMS_T3MBkg_13TeV.root w_all:data_obs_B1
-shapes bkg B1 ../workspaces/CMS_T3MBkg_13TeV.root w_all:multipdf_B1
+shapes bkg B1 ../workspaces/CMS_T3MBkg_13TeV.root w_all:roomultipdf_2018_twoGlobalTracker_B1
 shapes sig B1 ../workspaces/CMS_T3MSignal_13TeV.root w_all:SignalModel_B1
 ---------------
 bin            B1  
@@ -13,7 +13,7 @@ observation   196
 bin               B1        B1     
 process              sig     bkg     
 process                0          1      
-rate                 4.84557    196
+rate                 4.84557    1    
 --------------------------------
 ySig_dstn         lnN  1.03      - 
 ySig_dsmmp        lnN  1.08      - 

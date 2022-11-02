@@ -4,7 +4,7 @@ jmax 1
 kmax *
 ---------------
 shapes data_obs  C3 ../workspaces/CMS_T3MBkg_13TeV.root w_all:data_obs_C3
-shapes bkg C3 ../workspaces/CMS_T3MBkg_13TeV.root w_all:multipdf_C3
+shapes bkg C3 ../workspaces/CMS_T3MBkg_13TeV.root w_all:roomultipdf_2017_threeGlobal_C3
 shapes sig C3 ../workspaces/CMS_T3MSignal_13TeV.root w_all:SignalModel_C3
 ---------------
 bin            C3  
@@ -13,7 +13,7 @@ observation   1015
 bin               C3        C3     
 process              sig     bkg     
 process                0          1      
-rate                 3.05643    1015
+rate                 3.05643    1    
 --------------------------------
 ySig_dstn         lnN  1.03      - 
 ySig_dsmmp        lnN  1.08      - 
