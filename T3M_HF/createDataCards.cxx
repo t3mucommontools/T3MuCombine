@@ -185,9 +185,16 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
       cout<<"Fit results"<<endl;
       r->floatParsFinal().Print("s");
 
-      //retrieving parameters from fitted shape
+      //Save fitted pdf to wp for plotting purposes!
+      for (unsigned int category=0; category < NCAT; category++){
+          std::string cat_name = cat_names.at(category).c_str();
+          if(cat_name.rfind(cat_reso[cr], 0) == 0){ //A1,A2,A3
+              w->import(*SignalModel[category]);
+          }
+      }
 
-      // fix all the parameters expect for the nomralisation of signal
+      //retrieving parameters from fitted shape
+      // fix all the parameters except for the normalisation of signal
       TString name_mean       = "m0_"+cat_reso[cr];
       TString name_alpha_cb   = "alpha_cb_"+cat_reso[cr];
       TString name_n_cb       = "n_cb_"+cat_reso[cr];
@@ -225,15 +232,19 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
           if(cat_name.rfind(cat_reso[cr], 0) == 0){ //A1,A2,A3
 
               //Apply correction to the fixed mass      
-              RooRealVar UncMean("UncMean", "UncMean", 0., -5, 5);
+              char line[100];
+              RooRealVar UncMean("UncMean", "", 0., -5, 5);
+              UncMean.setVal(0.0);
               // According to ANv2 L798, "mean" is 0.09% smaller in data. So we scale MC mean by 0.9991, and assign 0.0009 uncertainty
-              TString line = "(1+0.0009*UncMean)*" + std::to_string(sig_m0->getVal()*0.9991); 
+              sprintf(line, "(1+0.0009*%s)*%.5f", "UncMean", sig_m0->getVal()*0.9991); // mass mean value
               RooFormulaVar fmean("fmean_"+tcat_name,line,RooArgList(UncMean));
 
               //Apply correction to the fixed sigmas
-              RooRealVar UncSigma("UncSigma", "UncSigma", 0., -5, 5);
+              char line2[100];
+              RooRealVar UncSigma("UncSigma", "", 0., -5, 5);
+              UncSigma.setVal(0.0);
               // According to Fig47, MC has up to 2% worse resolution! We don't scale the MC resolution, but only assign 2% uncertainty
-              TString line2 = "(1+0.02*UncSigma)*" + std::to_string(sigma[category]->getVal()); 
+              sprintf(line2, "(1+0.02*%s)*%.5f", "UncSigma", sigma[category]->getVal()); // mass mean value
               RooFormulaVar fsigma("fsigma_"+tcat_name,line2,RooArgList(UncSigma));
 
               //Define pdf for each subcategory
@@ -297,9 +308,9 @@ MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names
       else dataToPlot[category] = (RooDataSet*)dataAll[category]->reduce("m3m > 1.62 && m3m < 2.0");
       dataToPlot[category]->Print();
 
-      sigpdf[category] =(RooAbsPdf*)w->pdf("SignalModel"+TString::Format("_%s",cat_names.at(category).c_str()));
+      sigpdf[category] =(RooAbsPdf*)w->pdf("SignalModel"+TString::Format("_fit_%s",cat_names.at(category).c_str()));
       if(dp){
-          RooMultiPdf* multipdf = (RooMultiPdf*) w->pdf(TString::Format("multipdf_%s",cat_names.at(category).c_str()));
+          RooMultiPdf* multipdf = (RooMultiPdf*) w->pdf(TString::Format("roomultipdf_"+Run+"_"+type+"_%s",cat_names.at(category).c_str()));
           bkgpdf[category] =(RooAbsPdf*)multipdf->getCurrentPdf();
       }
       else bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("t3m_bkg_expo_"+type+"_"+Run+"_%s",cat_names.at(category).c_str()));
@@ -407,7 +418,7 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
 
       sigpdf[category] =(RooAbsPdf*)w->pdf("SignalModel"+TString::Format("_%s",cat_names.at(category).c_str()));
       if(dp) {
-          RooMultiPdf* multipdf = (RooMultiPdf*) w->pdf(TString::Format("multipdf_%s",cat_names.at(category).c_str()));
+          RooMultiPdf* multipdf = (RooMultiPdf*) w->pdf(TString::Format("roomultipdf_"+Run+"_"+type+"_%s",cat_names.at(category).c_str()));
           bkgpdf[category] =(RooAbsPdf*)multipdf->getCurrentPdf();
       }
       else bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("t3m_bkg_expo_"+type+"_"+Run+"_%s",cat_names.at(category).c_str()));
@@ -523,13 +534,11 @@ MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, s
 
    RooDataSet* signalAll[NCAT];
    RooAbsPdf* sigpdf[NCAT];
-   RooArgSet* params[NCAT];
 
    TFile f("signal_shapes.root","recreate");
    for(unsigned int category=0; category< NCAT; category++){
       signalAll[category] = (RooDataSet*) w->data(TString::Format("Sig_%s",cat_names.at(category).c_str()));
-      sigpdf[category] = (RooAbsPdf*)w->pdf("SignalModel"+TString::Format("_%s",cat_names.at(category).c_str()));
-      params[category] = (RooArgSet*)w->set("SigPdfParam"+TString::Format("_%s",cat_names.at(category).c_str()));
+      sigpdf[category] = (RooAbsPdf*)w->pdf("SignalModel_fit_"+TString::Format("%s",cat_names.at(category).c_str()));
       //TO DO: display mass and sigma on canvases
    }
 
@@ -548,7 +557,7 @@ MakePlotsSgn(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, s
       signalAll[category]->plotOn( plot_sgn[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.75));
       //signalAll[category]->statOn( plot_sgn[category],Layout(0.65,0.99,0.9)) ;
       sigpdf[category]->plotOn( plot_sgn[category], RooFit::LineColor(kRed),RooFit::LineWidth(2));
-      sigpdf[category]->paramOn( plot_sgn[category], RooFit::Parameters(*params[category]), Format("NEU", RooFit::AutoPrecision(2)), ShowConstants(true), Layout(0.45,0.9,0.9));
+      sigpdf[category]->paramOn( plot_sgn[category], Format("NEU", RooFit::AutoPrecision(2)), ShowConstants(true), Layout(0.50,0.9,0.9));
       plot_sgn[category]->getAttText()->SetTextSize(0.025);
 
       plot_sgn[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
@@ -715,22 +724,23 @@ BkgModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string>, RooFitResult
       else dataToFit[category] = (RooDataSet*)dataAll[category]->reduce("m3m > 1.62 && m3m < 2.0");
       dataToFit[category]->Print();
 
-      bkg_norm[category] = w->var(TString::Format("bkg_norm_%s",cat_names.at(category).c_str())) ;
       //define bkg model
       if(!discpf) {
           pdfBkgExp[category]   =  (RooAbsPdf*)  w->pdf(TString::Format("t3m_bkg_expo_"+type+"_"+Run+"_%s",cat_names.at(category).c_str()));
+          bkg_norm[category]    = w->var(TString::Format("t3m_bkg_expo_"+type+"_"+Run+"_%s_norm",cat_names.at(category).c_str())) ;
       }else{
           //open rootfile created by running discrete_profiling_HF.py
           TString dp_filepath = "../python/MultiPdfWorkspaces/"+Run+"_"+type+"_"+cat_names.at(category).c_str()+".root";
           cout<<"Bkg model from external wp "<<dp_filepath<<endl;
           TFile *f = new TFile(dp_filepath,"READ");
           RooWorkspace* wdf = (RooWorkspace*)f->Get("ospace");
-          RooMultiPdf* multipdf = (RooMultiPdf*) wdf->pdf("multipdf")->Clone(TString::Format("multipdf_%s",cat_names.at(category).c_str()));
+          RooMultiPdf* multipdf = (RooMultiPdf*) wdf->pdf("roomultipdf_"+Run+"_"+type+"_"+cat_names.at(category).c_str())->Clone();
+          bkg_norm[category] = (RooRealVar*) wdf->var("roomultipdf_"+Run+"_"+type+"_"+cat_names.at(category).c_str()+"_norm")->Clone();
           w->import(*multipdf, RooFit::RenameVariable(m3m_name, "m3m")); //, Rename( TString::Format("multipdf_%s",cat_names.at(category).c_str()) ));
           //In this way you take the best fit pdf or the exponential, depending on what was done in discrete_profiling_HF.py
           pdfBkgExp[category] = (RooAbsPdf*) multipdf->getCurrentPdf(); //->Clone("t3m_bkg_dp_"+TString::Format("%s",cat_names.at(category).c_str()));
       }
-      BkgModel[category] = new RooAddPdf(TString::Format("BkgModel_fit_%s",cat_names.at(category).c_str()),"expo",RooArgList(*pdfBkgExp[category]), RooArgList(*bkg_norm[category]));
+      BkgModel[category] = new RooAddPdf(TString::Format("BkgModel_fit_%s",cat_names.at(category).c_str()),"bkg model",RooArgList(*pdfBkgExp[category]), RooArgList(*bkg_norm[category]));
 
       //fit SB1, SB2, combined
       if(blind){
@@ -745,6 +755,7 @@ BkgModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string>, RooFitResult
 
       //Important! Should switch to "m3m" in discrete_profiling.py
       w->import(*BkgModel[category], RooFit::RenameVariable(m3m_name, "m3m"));
+      w->import(*bkg_norm[category]);
       w->Print();
    }
 }
@@ -806,11 +817,12 @@ MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, std::vect
       else dataToWp[category] = (RooDataSet*)dataAll[category]->reduce("m3m > 1.62 && m3m < 2.0");
 
       wAll->import(*dataToWp[category],Rename(TString::Format("data_obs_%s",cat_names.at(category).c_str())));
-      if(!discpf)
+      if(!discpf){
          wAll->import(*w->pdf(TString::Format("t3m_bkg_expo_"+type+"_"+Run+"_%s",cat_names.at(category).c_str())));
-      else{
-         //wAll->import(*w->pdf(TString::Format("t3m_bkg_dp_%s",cat_names.at(category).c_str())));
-         wAll->import(*w->pdf(TString::Format("multipdf_%s",cat_names.at(category).c_str() )));
+         wAll->import(*w->var(TString::Format("t3m_bkg_expo_"+type+"_"+Run+"_%s_norm",cat_names.at(category).c_str())));
+      }else{
+         wAll->import(*w->pdf(TString::Format("roomultipdf_"+Run+"_"+type+"_%s",cat_names.at(category).c_str() )));
+         wAll->import(*w->var(TString::Format("roomultipdf_"+Run+"_"+type+"_%s_norm",cat_names.at(category).c_str() )));
       }
    }
    TString filename(wsDir+TString(fileBaseName)+".root");
@@ -851,7 +863,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
 
 
       outFile << Form("shapes data_obs  %s ",cat_names.at(c).c_str())  << wsDir+TString(fileBkgName)+".root " << Form("w_all:data_obs_%s",cat_names.at(c).c_str()) << endl;
-      if(dp) outFile << Form("shapes bkg %s ", cat_names.at(c).c_str())   << wsDir+TString(fileBkgName)+".root " << Form("w_all:multipdf_%s",cat_names.at(c).c_str()) << endl;
+      if(dp) outFile << Form("shapes bkg %s ", cat_names.at(c).c_str())   << wsDir+TString(fileBkgName)+".root " << Form("w_all:roomultipdf_"+Run+"_"+type+"_%s",cat_names.at(c).c_str()) << endl;
       // if(dp) outFile << Form("shapes bkg %s ", cat_names.at(c).c_str())   << wsDir+TString(fileBkgName)+".root " << Form("w_all:t3m_bkg_dp_%s",cat_names.at(c).c_str()) << endl;
       else outFile << Form("shapes bkg %s ", cat_names.at(c).c_str())   << wsDir+TString(fileBkgName)+".root " << Form("w_all:t3m_bkg_expo_"+type+"_"+Run+"_%s",cat_names.at(c).c_str()) << endl;
       outFile << Form("shapes sig %s ", cat_names.at(c).c_str()) << wsDir+TString(fileBaseName)+".root " << Form("w_all:SignalModel_%s",cat_names.at(c).c_str()) << endl;
@@ -865,7 +877,8 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       outFile << Form("bin               %s        %s     ",cat_names.at(c).c_str(),cat_names.at(c).c_str())<<  endl;
       outFile << "process              sig     bkg     " << endl;
       outFile << "process                0          1      " << endl;
-      outFile << "rate                "  << " " << signal[c]->sumEntries()*signalScaler << "    " <<  data[c]->sumEntries()  << endl;
+      outFile << "rate                "  << " " << signal[c]->sumEntries()*signalScaler << "    1    " << endl;
+      //outFile << "rate                "  << " " << signal[c]->sumEntries()*signalScaler << "    " <<  data[c]->sumEntries()  << endl;
       outFile << "--------------------------------" << endl;
 
 
@@ -917,7 +930,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
              outFile << "UncMVAshape_17_2glbtk  lnN  1.04     - " <<endl; //MVAtk correction
          }
       }
-//      outFile << Form("bkg_norm_%s rateParam %s bkg 1.", cat_names.at(c).c_str(), cat_names.at(c).c_str()) << endl;
+      //outFile << Form("norm_"+type+"_"+Run+"_%s rateParam %s bkg 1.", cat_names.at(c).c_str(), cat_names.at(c).c_str()) << endl;
       if(dp) {
           outFile << Form("roomultipdf_cat_"+Run+"_"+type+"_%s discrete", cat_names.at(c).c_str()) << endl;
       } else {

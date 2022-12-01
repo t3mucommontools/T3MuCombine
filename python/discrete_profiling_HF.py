@@ -12,23 +12,26 @@ https://github.com/BParkHNLs/flashggFinalFit/blob/mg-branch/Background/test/fTes
 NOTE: the code will probably crash on exit. This is somehow related to the RooChi2Var object.
 '''
 )
-parser.add_argument('-i', '--input_file', type=str,  default='input.root',  help='input ttree'                    )
+parser.add_argument('-i', '--input_file', type=str,  default='input.root',  help='input ttree'                  )
 parser.add_argument("-t", "--type",       type=str,  default="threeGlobal", help="specify type (threeGlobal/twoGlobalTracker)", action="store")
 parser.add_argument("-r", "--run",        type=str,  default="2018",        help="Run (2017/2018)", action="store")
 parser.add_argument('-s', '--setting'   , type=str  , default='config.txt', help='config file, same as createdatacards'  )
-parser.add_argument('-M', '--max-order' , type=int  , default=6           , help='max pdf order to consider'          )
-parser.add_argument('-U', '--unblind'   , action='store_true'             , help='don\'t use blinded ranges'          )
+parser.add_argument('-M', '--max-order' , type=int  , default=6           , help='max pdf order to consider'    )
+parser.add_argument('-U', '--unblind'   , action='store_true', default=False, help='don\'t use blinded ranges'  )
+parser.add_argument('-F', '--unblindfit', action='store_true', default=False, help='don\'t show ranges'     )
 args = parser.parse_args()
 
 ROOT.gROOT.SetBatch(True)
 
 filename = args.input_file
 
-filename = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/inputdata/t3mminitree_xgb_'+args.run+'_22aug22.root'
-args.setting = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/config_ThreeGlobal_'+args.run+'_22aug22.txt'
+if(args.type=='threeGlobal'):
+    filename = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/inputdata/t3mminitree_xgb_'+args.run+'_22aug22.root'
+    args.setting = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/config_ThreeGlobal_'+args.run+'_22aug22.txt'
 
-#filename = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/inputdata/T3MMiniTree_xgboost_setting2_'+args.run+'UL_v2_dimuonMass.root'
-#args.setting = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/config_xgboost_TwoGlobalTracker_'+args.run+'_v2.txt'
+if(args.type=='twoGlobalTracker'):
+    filename = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/inputdata/T3MMiniTree_xgboost_setting2_'+args.run+'UL_v2_dimuonMass.root'
+    args.setting = '/eos/user/f/fsimone/Tau23Mu_anatools/optim_Combine/T3MCombine/workdir/CMSSW_10_2_13/src/CombineHarvester/T3M_HF/config_xgboost_TwoGlobalTracker_'+args.run+'_v2.txt'
 
 branch_names = []
 cat_names = []
@@ -121,9 +124,15 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
 
     #reduce to sidebands
     sidebands = "("+m3m_name+"<"+str(mass_range_left[category][1])+"&&"+m3m_name+">="+str(mass_range_left[category][0])+")||("+m3m_name+"<"+str(mass_range_right[category][1])+"&&"+m3m_name+">="+str(mass_range_right[category][0])+")"
+
+    if(not args.unblindfit):
+        data_toplot = data.reduce(ROOT.RooArgSet(mass), sidebands)
+    else: data_toplot = data.reduce(ROOT.RooArgSet(mass))
+
     if(not args.unblind): 
         data = data.reduce(ROOT.RooArgSet(mass), sidebands)
     else: data = data.reduce(ROOT.RooArgSet(mass))
+
 
     #hist = ROOT.RooDataHist('histo_'+cat, 'histo_'+cat, ROOT.RooArgSet(mass), data)
     hist = data.binnedClone('histo_'+cat)
@@ -147,10 +156,10 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
       c_bernstein = '{'+','.join(['c_Bernstein{}{}_{}_{}_{}[.1, 0.0, 1.0]'   .format(i, j, args.run, args.type, cat) for j in range(i+1)])+'}'
       pdfs.factory('Bernstein::Bernstein{}_{}_{}_{}({}, {})'.format(i, args.run, args.type, cat, m3m_name, c_bernstein))
 
-    ## Chebychev: order n has n coefficients (starts from linear)
-    #for i in range(args.max_order):
-    #  c_chebychev = '{'+','.join(['c_Chebychev{}{}_{}[.1, 0, 1]'.format(i+1, j, cat) for j in range(i+1)])+'}'
-    #  pdfs.factory('Chebychev::Chebychev{}({}, {})'.format(i+1, m3m_name, c_chebychev)) 
+    # Chebychev: order n has n coefficients (starts from linear)
+    for i in range(args.max_order):
+      c_chebychev = '{'+','.join(['c_Chebychev{}{}_{}_{}_{}[.1, 0.0, 10.0]'.format(i+1, j, args.run, args.type, cat) for j in range(i+1)])+'}'
+      pdfs.factory('Chebychev::Chebychev{}_{}_{}_{}({}, {})'.format(i+1, args.run, args.type, cat, m3m_name, c_chebychev)) 
 
     # Polynomial: order n has n coefficients (starts from constant)
     for i in range(1, args.max_order):
@@ -166,7 +175,8 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
     
     frame = wspace.var(m3m_name).frame()
     frame.SetTitle(args.type+" "+args.run+" "+cat)
-    wspace.data('data_'+cat).plotOn(frame)
+    #wspace.data('data_'+cat).plotOn(frame)
+    data_toplot.plotOn(frame)
     
     envelope = ROOT.RooArgList("envelope")
     
@@ -177,20 +187,23 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
     bestfit = None
     #families = ['Bernstein', 'Chebychev', 'Exponential', 'PowerLaw']
     #families = ['Polynomial', 'Exponential', 'PowerLaw']  
-    families = ['Bernstein', 'Exponential', 'PowerLaw']  
-    #families = ['Exponential', 'PowerLaw']  
+    families = ['Exponential', 'PowerLaw', 'Bernstein']  
     allpdfs_list = ROOT.RooArgList(pdfs.allPdfs())
     allpdfs_list = [allpdfs_list.at(j) for j in range(allpdfs_list.getSize())]
 
     converged = 0
+    norm = ROOT.RooRealVar("roomultipdf_{}_{}_{}_norm".format(args.run,args.type,cat), "", 0, 1e+6)
     for j, fam in enumerate(families):
       pdf_list = [p for p in allpdfs_list if p.GetName().startswith(fam)]
       mnlls    = []
       for i, pdf in enumerate(pdf_list):
-        norm = ROOT.RooRealVar("nbkg", "", 0, 1e+6)
-        ext_pdf = ROOT.RooAddPdf(pdf.GetName()+"_ext", "", ROOT.RooArgList(pdf), ROOT.RooArgList(norm)) if not 'Bernstein' in pdf.GetName() else pdf
+        ext_pdf = ROOT.RooAddPdf(pdf.GetName()+"_ext", "", ROOT.RooArgList(pdf), ROOT.RooArgList(norm))
+
         #note: ROOT bug, see https://root-forum.cern.ch/t/problem-with-fit-in-range-with-roobernstein/41593
-        results = ext_pdf.fitTo(data,  ROOT.RooFit.Save(True), ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'), ROOT.RooFit.Extended(not 'Bernstein' in pdf.GetName()))
+        if (args.unblind):
+            results = ext_pdf.fitTo(data,  ROOT.RooFit.Save(True), ROOT.RooFit.Extended(True))
+        else:
+            results = ext_pdf.fitTo(data,  ROOT.RooFit.Save(True), ROOT.RooFit.Range('left,right'), ROOT.RooFit.Extended(True))
         chi2 = ROOT.RooChi2Var("chi2"+pdf.GetName(), "", ext_pdf, hist, ROOT.RooFit.DataError(ROOT.RooAbsData.Expected))
         mnll = results.minNll()+0.5*(i)
 
@@ -213,17 +226,17 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
 
           #draw exponential contour
           if "Exponential" in pdf.GetName():
-            pdf.plotOn(frame, ROOT.RooFit.LineColor(envelope.getSize()), ROOT.RooFit.Name(pdf.GetName()),
-                       ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'), ROOT.RooFit.VisualizeError(results,2),
-                       ROOT.RooFit.NormRange('unblinded' if args.unblind else 'left,right'),
+            ext_pdf.plotOn(frame, ROOT.RooFit.LineColor(envelope.getSize()), ROOT.RooFit.Name(pdf.GetName()),
+                       ROOT.RooFit.Range('unblinded' if args.unblindfit else 'left,right'), ROOT.RooFit.VisualizeError(results,2),
+                       ROOT.RooFit.NormRange('unblinded' if args.unblindfit else 'left,right'),
                        ROOT.RooFit.FillColor(ROOT.kYellow), ROOT.RooFit.FillStyle(3001))
-            pdf.plotOn(frame, ROOT.RooFit.LineColor(envelope.getSize()), ROOT.RooFit.Name(pdf.GetName()),
-                       ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'), ROOT.RooFit.VisualizeError(results,1),
-                       ROOT.RooFit.NormRange('unblinded' if args.unblind else 'left,right'),
+            ext_pdf.plotOn(frame, ROOT.RooFit.LineColor(envelope.getSize()), ROOT.RooFit.Name(pdf.GetName()),
+                       ROOT.RooFit.Range('unblinded' if args.unblindfit else 'left,right'), ROOT.RooFit.VisualizeError(results,1),
+                       ROOT.RooFit.NormRange('unblinded' if args.unblindfit else 'left,right'),
                        ROOT.RooFit.FillColor(ROOT.kGreen ), ROOT.RooFit.FillStyle(3001))
-          pdf.plotOn(frame, ROOT.RooFit.LineColor(envelope.getSize()), ROOT.RooFit.Name(pdf.GetName()),
-                       ROOT.RooFit.NormRange('unblinded' if args.unblind else 'left,right'),
-                       ROOT.RooFit.Range('unblinded' if args.unblind else 'left,right'))
+          ext_pdf.plotOn(frame, ROOT.RooFit.LineColor(envelope.getSize()), ROOT.RooFit.Name(pdf.GetName()),
+                       ROOT.RooFit.NormRange('unblinded' if args.unblindfit else 'left,right'),
+                       ROOT.RooFit.Range('unblinded' if args.unblindfit else 'left,right'))
         elif fis_prob >= 0.1:
           break
         del chi2 # RooChi2Var makes the code crash at the end of the execution. This line makes it crash faster.
@@ -237,15 +250,20 @@ for idx,cat in enumerate(cat_names): #loop on A1,A2,A3...C3
     can.Modified()
     roocat = ROOT.RooCategory("roomultipdf_cat_{}_{}_{}".format(args.run,args.type,cat), "")
     
-    multipdf = ROOT.RooMultiPdf("multipdf", "", roocat, envelope)
+    multipdf = ROOT.RooMultiPdf("roomultipdf_{}_{}_{}".format(args.run,args.type,cat), "", roocat, envelope)
     #indexing Expo in the multipdf. Change line below to switch to "bestfit"
     #roocat.setIndex([envelope.at(i).GetName() for i in range(envelope.getSize())].index('Exponential_{}_{}_{}'.format(args.run, args.type, cat)))
     roocat.setIndex([envelope.at(i).GetName() for i in range(envelope.getSize())].index(bestfit))
     outerspace = ROOT.RooWorkspace('ospace')
     getattr(outerspace, 'import')(envelope)
     getattr(outerspace, 'import')(multipdf)
-    
-    can.SaveAs("MultiPdfWorkspaces/"+args.run+"_"+args.type+"_"+cat+"_plot.png")
+    getattr(outerspace, 'import')(norm)
+   
+    if(args.unblindfit):
+        filename = "MultiPdfWorkspaces/"+args.run+"_"+args.type+"_"+cat+"_plot_unblinded.png"
+    else: 
+        filename = "MultiPdfWorkspaces/"+args.run+"_"+args.type+"_"+cat+"_plot.png"
+    can.SaveAs(filename)
     #can.SaveAs("MultiPdfWorkspaces/"+args.run+"_"+args.type+"_"+cat+"_plot.pdf", "pdf")
     outerspace.writeToFile("MultiPdfWorkspaces/"+args.run+"_"+args.type+"_"+cat+".root")
     
