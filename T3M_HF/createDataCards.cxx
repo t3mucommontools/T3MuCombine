@@ -448,7 +448,7 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
    RooPlot* plot[NCAT];
    for(unsigned int category=0; category< NCAT; category++){
       plot[category] = m3m->frame();
-      signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kCyan+2),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.0), Binning(38, 1.620000, 2.00000));
+      //signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kCyan+2),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.0), Binning(38, 1.620000, 2.00000));
       sigpdf[category]->plotOn(plot[category], RooFit::LineColor(kRed),RooFit::LineWidth(3));
 
       //signal integral
@@ -497,14 +497,15 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       outFile << TString::Format("%s",cat_names.at(category).c_str())<<"\t"<<i_sig->getVal()*signalAll[category]->sumEntries()<<"\t"<<i_bkg->getVal()*dataAll[category]->sumEntries() / i_bkg_sb->getVal()<<endl;
 
       //bkgpdf[category]->paramOn( plot[category], Format("NELU", AutoPrecision(2)),ShowConstants(), Layout(0.4,0.99,0.9));
-      plot[category]->SetTitle(TString::Format("Category %s",cat_names.at(category).c_str()));     
+      plot[category]->SetTitle(""); //TString::Format("Category %s",cat_names.at(category).c_str()));     
       plot[category]->SetMinimum(0.00);
       plot[category]->SetMaximum(1.40*plot[category]->GetMaximum());
-      plot[category]->GetXaxis()->SetTitle("m_{3mu} [GeV]");
+      plot[category]->GetXaxis()->SetTitle("m(3mu) [GeV]");
+      plot[category]->GetYaxis()->SetTitle("Events / 10 MeV");
 
       cout<<"chi2 bkg category: "<<cat_names.at(category).c_str()<<" "<<plot[category]->chiSquare()<<endl;
 
-      TCanvas* ctmp_sig = new TCanvas(TString::Format("Category %s",cat_names.at(category).c_str()),"Categories",0,0,660,660);
+      TCanvas* ctmp_sig = new TCanvas(TString::Format("Category %s",cat_names.at(category).c_str()),"Categories",50,50,800,800);
       ctmp_sig->SetFrameLineWidth(3);
       ctmp_sig->SetTickx();
       ctmp_sig->SetTicky();
@@ -512,18 +513,59 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       plot[category]->Print();
       plot[category]->Draw("SAME");
 
-      TLegend *legmc = new TLegend(0.50,0.70,0.86,0.86);
-      legmc->AddEntry(plot[category]->getObject(0),"MC Signal (B=10^{-7})","LPE");
-      legmc->AddEntry(plot[category]->getObject(1),"Signal Model","L");
-      legmc->AddEntry(plot[category]->getObject(2),"Data","LPE");
-      legmc->AddEntry(plot[category]->getObject(3),"Bkg Model","L");
-
+      TLegend *legmc = new TLegend(0.48,0.60,0.86,0.78);
       legmc->SetBorderSize(0);
       legmc->SetFillStyle(0);
-      legmc->SetTextSize(0.029);
+      legmc->SetTextFont(42);
+      //legmc->SetTextSize(0.05);
+      legmc->AddEntry(plot[category]->getObject(1),"Data","PE");
+      //legmc->AddEntry(plot[category]->getObject(0),"MC Signal (B=10^{-7})","LPE");
+      legmc->AddEntry(plot[category]->getObject(0),"Signal (B=10^{-7})","L");
+      legmc->AddEntry(plot[category]->getObject(2),"Background-only fit","L");
 
-      legmc->Draw();  
+      legmc->Draw();
+
+      ////add lumi TDR style
+      TLatex latex;
+      latex.SetNDC();
+      latex.SetTextAngle(0);
+      latex.SetTextColor(kBlack);
+      float l  = ctmp_sig->GetLeftMargin();
+      float t  = ctmp_sig->GetTopMargin();
+      float ri = ctmp_sig->GetRightMargin();
+      float bo = ctmp_sig->GetBottomMargin();
+      float lumiTextSize     = 0.50;;
+      float lumiTextOffset   = 0.2; 
+      TString lumiText = Run;
+      if(Run=="2017") lumiText+=", 38 fb^{-1} (13 TeV)";
+      if(Run=="2018") lumiText+=", 59.7 fb^{-1} (13 TeV)";
+      latex.SetTextFont(42);
+      latex.SetTextAlign(31);
+      latex.SetTextSize(lumiTextSize*t);
+      latex.DrawLatex(1-ri,1-t+lumiTextOffset*t,lumiText);  
+
+      ////add CMS text
+      float cmsTextFont   = 61;
+      float cmsTextSize   = 0.65;
+      float extraTextFont = 52;
+      float relPosX    = 0.045;
+      float relPosY    = 0.035;
+      float posX_ =  l + 0.05*(1-l-ri);
+      float posY_ = 0.95 -t - relPosY*(1-t-bo);
+      latex.SetTextFont(cmsTextFont);
+      latex.SetTextSize(cmsTextSize*t);
+      latex.SetTextAlign(12);
+      latex.DrawLatex(posX_, posY_, "CMS");
+      ////add Category text
+      latex.SetTextSize(cmsTextSize*t*0.80);
+      latex.DrawLatex(0.5, posY_, TString::Format("Category %s",cat_names.at(category).c_str()));     
+      ////add Preliminary text
+      latex.SetTextFont(extraTextFont);
+      latex.SetTextSize(cmsTextSize*t);
+      latex.DrawLatex(posX_, posY_ - 1.2*cmsTextSize*t, "Preliminary");
+
       ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".png");
+      //ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".pdf");
    }
    outFile.close();
 }
