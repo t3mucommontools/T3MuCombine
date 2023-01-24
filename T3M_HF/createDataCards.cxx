@@ -238,16 +238,16 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
               char line[100];
               RooRealVar UncMean("UncMean", "", 0., -5, 5);
               UncMean.setVal(0.0);
-              // According to ANv2 L798, "mean" is 0.09% smaller in data. So we scale MC mean by 0.9991, and assign 0.0009 uncertainty
-              sprintf(line, "(1+0.0009*%s)*%.5f", "UncMean", sig_m0->getVal()*0.9991); // mass mean value
+              // for 2022 analysis, "mea" is shifted by 0.2%
+              sprintf(line, "(1+0.002*%s)*%.5f", "UncMean", sig_m0->getVal()*0.998); // mass mean value
               RooFormulaVar fmean("fmean_"+tcat_name,line,RooArgList(UncMean));
 
               //Apply correction to the fixed sigmas
               char line2[100];
               RooRealVar UncSigma("UncSigma", "", 0., -5, 5);
               UncSigma.setVal(0.0);
-              // According to Fig47, MC has up to 2% worse resolution! We don't scale the MC resolution, but only assign 2% uncertainty
-              sprintf(line2, "(1+0.02*%s)*%.5f", "UncSigma", sigma[category]->getVal()); // mass mean value
+              // for 2022, the MC resoluzion is 6% worse
+              sprintf(line2, "(1+0.06*%s)*%.5f", "UncSigma", sigma[category]->getVal()); // mass mean value
               RooFormulaVar fsigma("fsigma_"+tcat_name,line2,RooArgList(UncSigma));
 
               //Define pdf for each subcategory
@@ -541,11 +541,11 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       float ri = ctmp_sig->GetRightMargin();
       float bo = ctmp_sig->GetBottomMargin();
       float lumiTextSize     = 0.50;;
-      float lumiTextOffset   = 0.2; 
-      TString lumiText = "2022";
-      //TString lumiText = Run;
+      float lumiTextOffset   = 0.2;
+      TString lumiText = Run;
       if(Run=="2017") lumiText+=", 38 fb^{-1} (13 TeV)";
-      if(Run=="2018") lumiText+=", 34 fb^{-1} (13.6 TeV)";
+      if(Run=="2018") lumiText+=", 59.7 fb^{-1} (13 TeV)";
+      if(Run=="2022") lumiText+=", 34 fb^{-1} (13.6 TeV)";
       latex.SetTextFont(42);
       latex.SetTextAlign(31);
       latex.SetTextSize(lumiTextSize*t);
@@ -960,10 +960,33 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       outFile << "ySig_dscal        lnN  1.03      - " << endl; //unc. on scaling Ds to include D+
       outFile << "ySig_bscal        lnN  1.04      - " << endl; //unc. on scaling B0 and B+ to include Bs
 
+       
+       if (Run.Contains("2022")){
+          outFile << "DsNorm_22      lnN  1.05      - " << endl; // normalisation factor computed on control channel
+          outFile << "fUnc_22        lnN  1.07      - " << endl; // B/D ratio
+          outFile << "UncHLT_22      lnN  1.05      - " << endl; // uncertanty on 2022 HLT
+          outFile << "UncL1_22       lnN  1.001      - " << endl; // events triggered by TripleMu
+          outFile << "UncBDTCut_22   lnN  1.05      - " << endl; //unc. on BDT selection
+          outFile << "UncRatioAcc_22 lnN  1.01      - " << endl; //unc. on 3mu/2mu ratio acceptance
+          outFile << "UncPionEff_22  lnN  1.021      - " << endl; //unc. on pion reconstruction efficiency
+
+          //Uncorrelated uncertanties across categories
+          if(type=="threeGlobal"){
+              outFile << "WNorm_22_3glb       lnN  1.05      - " << endl; // 100% unc. on 5% additional W yield
+              outFile << "UncMuonEff_22_3glb  lnN  1.016     - " << endl; //GlobalMu ID tag&probe
+              outFile << "UncMVAshape_22_3glb  lnN  1.06     - " <<endl;  //MVAglb correction
+          }else{
+              outFile << "UncMuonEff_22_2glbtk  lnN  1.08     - " << endl; //TrackerNotGlobal ID tag&probe
+              outFile << "UncMVAshape_22_2glbtk  lnN  1.04     - " <<endl; //MVAtk correction
+          }
+       }
+       
+       
+       
       //Uncorrelated uncertanties across years
       if (Run.Contains("2018")){ 
          outFile << "DsNorm_18      lnN  1.04      - " << endl; // normalisation factor computed on control channel
-         outFile << "fUnc_18        lnN  1.02      - " << endl; // B/D ratio
+         outFile << "fUnc_18        lnN  1.07      - " << endl; // B/D ratio
          outFile << "UncHLT_18      lnN  1.05      - " << endl; // uncertanty on 2018 HLT
          outFile << "UncL1_18       lnN  1.02      - " << endl; // events triggered by TripleMu
          outFile << "UncBDTCut_18   lnN  1.05      - " << endl; //unc. on BDT selection
@@ -983,7 +1006,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
 
       if (Run.Contains("2017")){
          outFile << "DsNorm_17      lnN  1.062      - " <<endl; //normalisation factor computed on control channel
-         outFile << "fUnc_17        lnN  1.02      - " <<endl;  //B/D ratio
+         outFile << "fUnc_17        lnN  1.07      - " <<endl;  //B/D ratio
          outFile << "UncL1_17       lnN  1.05      - " <<endl;  //events triggered by TripleMu
          outFile << "UncBDTCut_17   lnN  1.05      - " <<endl;  //unc. on BDT selection
          outFile << "UncRatioAcc_17 lnN  1.01      - " <<endl;  //unc. on 3mu/2mu ratio acceptance
