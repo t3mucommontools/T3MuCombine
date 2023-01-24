@@ -37,7 +37,7 @@ scp -r /afs/cern.ch/user/f/fsimone/public/Tau3mu/inputdata .
 --run argument (2017 or 2018) will affect the systematic uncertainties in the datacards
 
 example call for 9 event categories, threeGlobal channel, 2022:
-```./run.py -i /eos/user/f/fsimone/Tau23Mu_anatools/2022_analysis/miniTree/t3mminitree_xgb_2022_Jan11.root -c model_card_v3.rs -s configs/config_ThreeGlobal_2022.txt -t threeGlobal -r 2018 -b true -v 3```
+```./run.py -i /eos/user/f/fsimone/Tau23Mu_anatools/2022_analysis/miniTree/t3mminitree_xgb_2022_Jan11.root -c model_card_v3.rs -s configs/config_ThreeGlobal_2022.txt -t threeGlobal -r 2022 -b true -v 3```
 
 example call for 6 event categories, twoGlobalTracker:  
 ```./run.py -i inputdata/dataset_UL2017_TwoGlobalTracker_outputTree.root -c model_card_v2.rs --run 2017 --type twoGlobalTracker -v 2 -s configs/config_TwoGlobalTracker_2017.txt```
