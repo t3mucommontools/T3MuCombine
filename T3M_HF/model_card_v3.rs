@@ -1,6 +1,6 @@
 m3m[1.62,2.0];
 
-sig_alpha_A[ 1, -10., 10.];
+sig_alpha_A[1, -10., 10.]; 
 sig_n_A[0.2, 0.0, 200.0];
 sig_m0_A[1.776, 1.775, 1.778];
 
@@ -22,9 +22,9 @@ sig_gaus_sigma_A3[0.01,0.00001,0.8];
 t3m_sig_CBshape_A3_threeGlobal  = CBShape(m3m, sig_m0_A, sig_sigma_A3, sig_alpha_A, sig_n_A);
 t3m_sig_GSshape_A3_threeGlobal  = Gaussian(m3m,sig_m0_A, sig_gaus_sigma_A3);
 
-cb_fraction_A1[0.5,0,1];
-cb_fraction_A2[0.5,0,1];
-cb_fraction_A3[0.5,0,1];
+cb_fraction_A1[0.5,0,1]; 
+cb_fraction_A2[0.5,0,1]; 
+cb_fraction_A3[0.5,0,1]; 
 ////////////////
 
 sig_alpha_B[ 1, -10., 10.];
@@ -143,4 +143,4 @@ t3m_bkg_expo_threeGlobal_2018_C2 = Exponential(m3m, bkg_exp_slope_threeGlobal_20
 t3m_bkg_expo_threeGlobal_2018_C3 = Exponential(m3m, bkg_exp_slope_threeGlobal_2018_C3);
 
 
-sqrtS[13000., 13000., 13000.]
+sqrtS[13600., 13600., 13600.]
