@@ -525,7 +525,7 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
 
       legmc->Draw();
 
-      ////add lumi TDR style
+      //add lumi TDR style
       TLatex latex;
       latex.SetNDC();
       latex.SetTextAngle(0);
@@ -544,7 +544,7 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       latex.SetTextSize(lumiTextSize*t);
       latex.DrawLatex(1-ri,1-t+lumiTextOffset*t,lumiText);  
 
-      ////add CMS text
+      //add CMS text
       float cmsTextFont   = 61;
       float cmsTextSize   = 0.65;
       float extraTextFont = 52;
@@ -556,16 +556,17 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       latex.SetTextSize(cmsTextSize*t);
       latex.SetTextAlign(12);
       latex.DrawLatex(posX_, posY_, "CMS");
-      ////add Category text
+      //add Category text
       latex.SetTextSize(cmsTextSize*t*0.80);
       latex.DrawLatex(0.5, posY_, TString::Format("Category %s",cat_names.at(category).c_str()));     
-      ////add Preliminary text
+      //add Preliminary  text
       latex.SetTextFont(extraTextFont);
       latex.SetTextSize(cmsTextSize*t);
       latex.DrawLatex(posX_, posY_ - 1.2*cmsTextSize*t, "Preliminary");
 
       ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".png");
-      //ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".pdf");
+      ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".pdf");
+      ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".root");
    }
    outFile.close();
 }
@@ -889,6 +890,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       data[c]  = (RooDataSet *) w->data(Form("Bkg_%s",cat_names.at(c).c_str()));  //  meaningless for now
       signal[c] = (RooDataSet*) w->data(Form("Sig_%s",cat_names.at(c).c_str()));
       TString filename(cardDir+TString(fileBaseName)+Form("_%s",cat_names.at(c).c_str() ) +".txt");
+      TString cat_name = cat_names.at(c).c_str();
 
       ofstream outFile(filename);
 
@@ -932,14 +934,24 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       outFile << "ySig_bt           lnN  1.03      - " << endl; //unc. on BR(B->tau+X)   
       outFile << "ySig_dscal        lnN  1.03      - " << endl; //unc. on scaling Ds to include D+
       outFile << "ySig_bscal        lnN  1.04      - " << endl; //unc. on scaling B0 and B+ to include Bs
-
+      //Unc on BDT cut efficiency correlated across categories and years
+      //Value changes depending on BDT subcategory and year (e.g. A1, A2, A3 are different, A1, B1, C1 are the same)
+      if (Run.Contains("2018")){ 
+         if (cat_name.Contains("1"))  outFile << "UncBDTCut         lnN  1.15      - " << endl; //unc. on BDT selection
+         if (cat_name.Contains("2"))  outFile << "UncBDTCut         lnN  1.07      - " << endl; //unc. on BDT selection
+         if (cat_name.Contains("3"))  outFile << "UncBDTCut         lnN  1.00      - " << endl; //unc. on BDT selection
+      }
+      if (Run.Contains("2017")){ 
+         if (cat_name.Contains("1"))  outFile << "UncBDTCut         lnN  1.20      - " << endl; //unc. on BDT selection
+         if (cat_name.Contains("2"))  outFile << "UncBDTCut         lnN  1.05      - " << endl; //unc. on BDT selection
+         if (cat_name.Contains("3"))  outFile << "UncBDTCut         lnN  1.00      - " << endl; //unc. on BDT selection
+      }
       //Uncorrelated uncertanties across years
       if (Run.Contains("2018")){ 
          outFile << "DsNorm_18      lnN  1.04      - " << endl; // normalisation factor computed on control channel
-         outFile << "fUnc_18        lnN  1.02      - " << endl; // B/D ratio
+         outFile << "fUnc_18        lnN  1.07      - " << endl; // B/D ratio
          outFile << "UncHLT_18      lnN  1.05      - " << endl; // uncertanty on 2018 HLT
          outFile << "UncL1_18       lnN  1.02      - " << endl; // events triggered by TripleMu
-         outFile << "UncBDTCut_18   lnN  1.05      - " << endl; //unc. on BDT selection
          outFile << "UncRatioAcc_18 lnN  1.01      - " << endl; //unc. on 3mu/2mu ratio acceptance
          outFile << "UncPionEff_18  lnN  1.021      - " << endl; //unc. on pion reconstruction efficiency
 
@@ -956,9 +968,8 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
 
       if (Run.Contains("2017")){
          outFile << "DsNorm_17      lnN  1.062      - " <<endl; //normalisation factor computed on control channel
-         outFile << "fUnc_17        lnN  1.02      - " <<endl;  //B/D ratio
+         outFile << "fUnc_17        lnN  1.07      - " <<endl;  //B/D ratio
          outFile << "UncL1_17       lnN  1.05      - " <<endl;  //events triggered by TripleMu
-         outFile << "UncBDTCut_17   lnN  1.05      - " <<endl;  //unc. on BDT selection
          outFile << "UncRatioAcc_17 lnN  1.01      - " <<endl;  //unc. on 3mu/2mu ratio acceptance
          outFile << "UncPionEff_17  lnN  1.022      - " << endl; //unc. on pion reconstruction efficiency
 
