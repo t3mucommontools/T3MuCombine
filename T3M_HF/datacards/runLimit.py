@@ -9,7 +9,7 @@ import array
 from datetime import datetime
 
 def open_wp():
-    fil = ROOT.TFile.Open("../workspaces/CMS_T3MBkg_13TeV.root", "READ")
+    fil = ROOT.TFile.Open("../workspaces/CMS_T3MBkg_13.6TeV.root", "READ")
     wsp = fil.Get("w_all")
     return wsp
 
@@ -27,7 +27,7 @@ def take_paramsel_dp(catlist):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--input-file",help="input file. [Default: %(default)s] ", action="store", default = 'CMS_T3MSignal_13TeV_Combined.txt')
+    parser.add_argument("-i", "--input-file",help="input file. [Default: %(default)s] ", action="store", default = 'CMS_T3MSignal_13.6TeV_Combined.txt')
     parser.add_argument("-b", "--blind",help="blind option. [Default: %(default)s] ", action="store", default = 'true')
     parser.add_argument("-m", "--method",help="AsymptoticLimits or HybridNew. [Default: %(default)s] ", action="store", default = 'AsymptoticLimits')
     parser.add_argument("-c", "--categories", help="Comma separated list of categories. [Default: %(default)s] ", action="store", default = 'A1,B1,C1,A2,B2,C2,A3,B3,C3')
@@ -49,7 +49,7 @@ if __name__ == "__main__":
             command +="combineTool.py -M "+args.method+" --run blind -d workspace_"+now+".root --cl 0.90 -m 1.777 --noFitAsimov"
         else:
             command +="combineTool.py -M "+args.method+" --run expected -d workspace_"+now+".root --cl 0.90 -m 1.777"
-            command +="combineTool.py -M "+args.method+" --run observed -d workspace_"+now+".root --cl 0.90 -m 1.777"
+            #command +="combineTool.py -M "+args.method+" --run observed -d workspace_"+now+".root --cl 0.90 -m 1.777"
     else: #toys
         command +="combineTool.py -M "+args.method+" --cl 0.90 -m 1.777 --testStat=LHC "
         command +=" --frequentist "+args.input_file+" -T 500 --plot=../plots/limit_combined_hybridnew_HF.pdf --rMin -1 --rMax 10 "
@@ -80,8 +80,10 @@ if __name__ == "__main__":
         paramlist = ','.join(paramlist)
         command += " --freezeParameters "+paramlist+" "
     else:
-        parameter_selection = ["bkg_exp_slope_{c}={m},{M}".format(c=categ, m=-1000, M=100) for categ in categorylist]
-        parameter_selection +=["bkg_norm_{c}={m},{M}".format(c=categ, m=0, M=1000000) for categ in categorylist]
+        #parameter_selection = ["bkg_exp_slope_{c}={m},{M}".format(c=categ, m=-1000, M=100) for categ in categorylist]
+        parameter_selection = ["bkg_exp_slope_{t}_{r}_{c}={m},{M}".format(t=args.type, r=args.run, c=categ, m=-1000, M=100) for categ in categorylist]
+        #parameter_selection +=["bkg_norm_{c}={m},{M}".format(c=categ, m=0, M=1000000) for categ in categorylist]
+        parameter_selection +=["t3m_bkg_expo_{t}_{r}_{c}_norm={m},{M}".format(t=args.type, r=args.run, c=categ, m=0, M=100000) for categ in categorylist]
         parameters_selection  =  ':'.join(parameter_selection)
         command += " --setParameterRanges "+parameters_selection+" "
 
