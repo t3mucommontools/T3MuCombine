@@ -949,7 +949,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       //Uncorrelated uncertanties across years
       if (Run.Contains("2018")){ 
          outFile << "DsNorm_18      lnN  1.04      - " << endl; // normalisation factor computed on control channel
-         outFile << "fUnc_18        lnN  1.07      - " << endl; // B/D ratio
+         outFile << "fUnc_18        lnN  1.02      - " << endl; // B/D ratio
          outFile << "UncHLT_18      lnN  1.05      - " << endl; // uncertanty on 2018 HLT
          outFile << "UncL1_18       lnN  1.02      - " << endl; // events triggered by TripleMu
          outFile << "UncRatioAcc_18 lnN  1.01      - " << endl; //unc. on 3mu/2mu ratio acceptance
@@ -968,7 +968,7 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
 
       if (Run.Contains("2017")){
          outFile << "DsNorm_17      lnN  1.062      - " <<endl; //normalisation factor computed on control channel
-         outFile << "fUnc_17        lnN  1.07      - " <<endl;  //B/D ratio
+         outFile << "fUnc_17        lnN  1.02      - " <<endl;  //B/D ratio
          outFile << "UncL1_17       lnN  1.05      - " <<endl;  //events triggered by TripleMu
          outFile << "UncRatioAcc_17 lnN  1.01      - " <<endl;  //unc. on 3mu/2mu ratio acceptance
          outFile << "UncPionEff_17  lnN  1.022      - " << endl; //unc. on pion reconstruction efficiency
