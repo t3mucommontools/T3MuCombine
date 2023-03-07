@@ -195,9 +195,9 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
 
       //retrieving parameters from fitted shape
       // fix all the parameters except for the normalisation of signal
-      TString name_mean       = "m0_"+cat_reso[cr];
-      TString name_alpha_cb   = "alpha_cb_"+cat_reso[cr];
-      TString name_n_cb       = "n_cb_"+cat_reso[cr];
+      TString name_mean       = "m0_"+cat_reso[cr]+"_"+type+"_"+Run;
+      TString name_alpha_cb   = "alpha_cb_"+cat_reso[cr]+"_"+type+"_"+Run;
+      TString name_n_cb       = "n_cb_"+cat_reso[cr]+"_"+type+"_"+Run;
 
       RooRealVar mean    (name_mean,"mean", sig_m0->getVal(), sig_m0->getVal(), sig_m0->getVal() );
       RooRealVar alpha_cb (name_alpha_cb,"alpha_cb",sig_alpha->getVal(), sig_alpha->getVal(), sig_alpha->getVal());
@@ -211,16 +211,16 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
           std::string cat_name = cat_names.at(category).c_str();
           if(cat_name.rfind(cat_reso[cr], 0) == 0){ //A1,A2,A3
               //fraction can change depending on subcategory
-              TString name_f_cb   = TString::Format("f_cb_%s", cat_name.c_str());
+              TString name_f_cb   = TString::Format("f_cb_%s", cat_name.c_str())+"_"+type+"_"+Run;
               f_cb[category] = new RooRealVar (name_f_cb,"f_cb",sig_f[category]->getVal(), sig_f[category]->getVal(), sig_f[category]->getVal());
               f_cb[category]->setError(sig_f[category]->getError());
 
               //sigmas can change depending on subcategory
-              TString name_sigma  = TString::Format("sigma_%s", cat_name.c_str());
+              TString name_sigma  = TString::Format("sigma_%s", cat_name.c_str())+"_"+type+"_"+Run;
               sigma[category] = new RooRealVar(name_sigma,"sigma",sig_sigma[category]->getVal(), sig_sigma[category]->getVal(), sig_sigma[category]->getVal());              
               sigma[category]->setError(sig_sigma[category]->getError());
 
-              TString name_sigma_gaus = TString::Format("sigma_gaus_%s", cat_name.c_str());
+              TString name_sigma_gaus = TString::Format("sigma_gaus_%s", cat_name.c_str())+"_"+type+"_"+Run;
               sigma_gaus[category] = new RooRealVar(name_sigma_gaus,"sigma_gaus",sig_gaus_sigma[category]->getVal(), sig_gaus_sigma[category]->getVal(), sig_gaus_sigma[category]->getVal());              
               sigma_gaus[category]->setError(sig_gaus_sigma[category]->getError());
           }
@@ -237,7 +237,7 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
               UncMean.setVal(0.0);
               // According to ANv2 L798, "mean" is 0.09% smaller in data. So we scale MC mean by 0.9991, and assign 0.0009 uncertainty
               sprintf(line, "(1+0.0009*%s)*%.5f", "UncMean", sig_m0->getVal()*0.9991); // mass mean value
-              RooFormulaVar fmean("fmean_"+tcat_name,line,RooArgList(UncMean));
+              RooFormulaVar fmean("fmean_"+tcat_name+"_"+type+"_"+Run,line,RooArgList(UncMean));
 
               //Apply correction to the fixed sigmas
               char line2[100];
@@ -245,7 +245,7 @@ SigModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, Ro
               UncSigma.setVal(0.0);
               // According to Fig47, MC has up to 2% worse resolution! We don't scale the MC resolution, but only assign 2% uncertainty
               sprintf(line2, "(1+0.02*%s)*%.5f", "UncSigma", sigma[category]->getVal()); // mass mean value
-              RooFormulaVar fsigma("fsigma_"+tcat_name,line2,RooArgList(UncSigma));
+              RooFormulaVar fsigma("fsigma_"+tcat_name+"_"+type+"_"+Run,line2,RooArgList(UncSigma));
 
               //Define pdf for each subcategory
               //RooCBShape  CB_final("CB_final_"+tcat_name+"_"+type+"_"+Run,"CB PDF",*m3m,mean,*sigma[category],alpha_cb,n_cb) ;
@@ -448,7 +448,8 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
    RooPlot* plot[NCAT];
    for(unsigned int category=0; category< NCAT; category++){
       plot[category] = m3m->frame();
-      //signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kCyan+2),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.0), Binning(38, 1.620000, 2.00000));
+      //plot signal
+      signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kWhite),RooFit::MarkerStyle(1),RooFit::MarkerSize(0.0), RooFit::LineColor(kWhite), Binning(38, 1.620000, 2.00000));
       sigpdf[category]->plotOn(plot[category], RooFit::LineColor(kRed),RooFit::LineWidth(3));
 
       //signal integral
@@ -518,10 +519,10 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       legmc->SetFillStyle(0);
       legmc->SetTextFont(42);
       //legmc->SetTextSize(0.05);
-      legmc->AddEntry(plot[category]->getObject(1),"Data","PE");
+      legmc->AddEntry(plot[category]->getObject(2),"Data","PE");
       //legmc->AddEntry(plot[category]->getObject(0),"MC Signal (B=10^{-7})","LPE");
-      legmc->AddEntry(plot[category]->getObject(0),"Signal (B=10^{-7})","L");
-      legmc->AddEntry(plot[category]->getObject(2),"Background-only fit","L");
+      legmc->AddEntry(plot[category]->getObject(1),"Signal (B=10^{-7})","L");
+      legmc->AddEntry(plot[category]->getObject(3),"Background-only fit","L");
 
       legmc->Draw();
 
@@ -558,11 +559,12 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       latex.DrawLatex(posX_, posY_, "CMS");
       //add Category text
       latex.SetTextSize(cmsTextSize*t*0.80);
-      latex.DrawLatex(0.5, posY_, TString::Format("Category %s",cat_names.at(category).c_str()));     
+      latex.DrawLatex(0.5, posY_, TString::Format("HF Category %s",cat_names.at(category).c_str()));     
       //add Preliminary  text
       latex.SetTextFont(extraTextFont);
       latex.SetTextSize(cmsTextSize*t);
-      latex.DrawLatex(posX_, posY_ - 1.2*cmsTextSize*t, "Preliminary");
+      //latex.DrawLatex(posX_, posY_ - 1.2*cmsTextSize*t, "Preliminary");
+      latex.DrawLatex(posX_, posY_ - 1.2*cmsTextSize*t, " ");
 
       ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".png");
       ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".pdf");
