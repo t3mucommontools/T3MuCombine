@@ -129,12 +129,12 @@ shapes sig              ch2_ds_c1        ../../2016_combination/ds/sigWorkspace_
 shapes bkg              ch2_ds_c2        ../../2016_combination/ds/bkgWorkspace_multipdf_C2.root w:MultiPdfBkg
 shapes data_obs         ch2_ds_c2        ../../2016_combination/ds/dataWorkspace_C2.root w:data
 shapes sig              ch2_ds_c2        ../../2016_combination/ds/sigWorkspace_C2.root w:Signal
-shapes bkg              ch2_w_barrel     ../../2016_combination/w/datacard_barrel0.91.root t3m_shapes:bkg
-shapes data_obs         ch2_w_barrel     ../../2016_combination/w/datacard_barrel0.91.root t3m_shapes:data_obs
-shapes sig              ch2_w_barrel     ../../2016_combination/w/datacard_barrel0.91.root t3m_shapes:sig
-shapes bkg              ch2_w_endcap     ../../2016_combination/w/datacard_endcap0.76.root t3m_shapes:bkg
-shapes data_obs         ch2_w_endcap     ../../2016_combination/w/datacard_endcap0.76.root t3m_shapes:data_obs
-shapes sig              ch2_w_endcap     ../../2016_combination/w/datacard_endcap0.76.root t3m_shapes:sig
+shapes bkg              ch2_w_barrel     ../../2016_combination/w/datacard_barrel0.91_fix.root t3m_shapes:bkg
+shapes data_obs         ch2_w_barrel     ../../2016_combination/w/datacard_barrel0.91_fix.root t3m_shapes:data_obs
+shapes sig              ch2_w_barrel     ../../2016_combination/w/datacard_barrel0.91_fix.root t3m_shapes:sig
+shapes bkg              ch2_w_endcap     ../../2016_combination/w/datacard_endcap0.76_fix.root t3m_shapes:bkg
+shapes data_obs         ch2_w_endcap     ../../2016_combination/w/datacard_endcap0.76_fix.root t3m_shapes:data_obs
+shapes sig              ch2_w_endcap     ../../2016_combination/w/datacard_endcap0.76_fix.root t3m_shapes:sig
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          ch1_ch1_ch1_ch1  ch1_ch1_ch1_ch2  ch1_ch1_ch1_ch3  ch1_ch1_ch1_ch4  ch1_ch1_ch1_ch5  ch1_ch1_ch1_ch6  ch1_ch1_ch1_ch7  ch1_ch1_ch1_ch8  ch1_ch1_ch1_ch9  ch1_ch1_ch2_ch1  ch1_ch1_ch2_ch2  ch1_ch1_ch2_ch3  ch1_ch1_ch2_ch4  ch1_ch1_ch2_ch5  ch1_ch1_ch2_ch6  ch1_ch1_ch2_ch7  ch1_ch1_ch2_ch8  ch1_ch1_ch2_ch9  ch1_ch1_ch3_ch1  ch1_ch1_ch3_ch2  ch1_ch1_ch3_ch3  ch1_ch1_ch3_ch4  ch1_ch1_ch3_ch5  ch1_ch1_ch3_ch6  ch1_ch1_ch4_ch1  ch1_ch1_ch4_ch2  ch1_ch1_ch4_ch3  ch1_ch1_ch4_ch4  ch1_ch1_ch4_ch5  ch1_ch1_ch4_ch6  ch1_ch2_A17      ch1_ch2_B17      ch1_ch2_C17      ch1_ch2_A18      ch1_ch2_B18      ch1_ch2_C18      ch2_ds_a1        ch2_ds_a2        ch2_ds_b1        ch2_ds_b2        ch2_ds_c1        ch2_ds_c2        ch2_w_barrel     ch2_w_endcap   
 observation  -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               -1               337              2356             105              2089             359              1462             3                37             

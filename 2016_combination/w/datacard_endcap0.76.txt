@@ -3,9 +3,9 @@ imax 1 number of bins
 jmax * number of processes minus 1
 kmax * number of nuisance parameters
 --------------------------------------------------------------------------------
-shapes background    Wtau3mu_endcap0.76       datacard_endcap0.76.root t3m_shapes:bkg
-shapes signal        Wtau3mu_endcap0.76       datacard_endcap0.76.root t3m_shapes:sig
-shapes data_obs      Wtau3mu_endcap0.76       datacard_endcap0.76.root t3m_shapes:data_obs
+shapes background    Wtau3mu_endcap0.76       datacard_endcap0.76_fix.root t3m_shapes:bkg
+shapes signal        Wtau3mu_endcap0.76       datacard_endcap0.76_fix.root t3m_shapes:sig
+shapes data_obs      Wtau3mu_endcap0.76       datacard_endcap0.76_fix.root t3m_shapes:data_obs
 --------------------------------------------------------------------------------
 bin               Wtau3mu_endcap0.76
 observation       37

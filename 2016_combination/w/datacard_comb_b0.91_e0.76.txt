@@ -3,12 +3,12 @@ imax 2 number of bins
 jmax 1 number of processes minus 1
 kmax 16 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes background  barrel      datacard_barrel0.91.root t3m_shapes:bkg
-shapes data_obs    barrel      datacard_barrel0.91.root t3m_shapes:data_obs
-shapes signal      barrel      datacard_barrel0.91.root t3m_shapes:sig
-shapes background  endcap      datacard_endcap0.76.root t3m_shapes:bkg
-shapes data_obs    endcap      datacard_endcap0.76.root t3m_shapes:data_obs
-shapes signal      endcap      datacard_endcap0.76.root t3m_shapes:sig
+shapes background  barrel      datacard_barrel0.91_fix.root t3m_shapes:bkg
+shapes data_obs    barrel      datacard_barrel0.91_fix.root t3m_shapes:data_obs
+shapes signal      barrel      datacard_barrel0.91_fix.root t3m_shapes:sig
+shapes background  endcap      datacard_endcap0.76_fix.root t3m_shapes:bkg
+shapes data_obs    endcap      datacard_endcap0.76_fix.root t3m_shapes:data_obs
+shapes signal      endcap      datacard_endcap0.76_fix.root t3m_shapes:sig
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          barrel  endcap
 observation  3       37    
