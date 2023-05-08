@@ -55,7 +55,7 @@ if( $ARGV[0] eq "--Combine"){
     system(sprintf("echo \"cd HiggsAnalysis/CombinedLimit \" >> Install_Combine_$time"));
 
     system(sprintf("echo \"git fetch origin  \" >> Install_Combine_$time"));
-    system(sprintf("echo \"git checkout v9.0.0  \" >> Install_Combine_$time"));
+    system(sprintf("echo \"git checkout v9.1.0  \" >> Install_Combine_$time"));
     system(sprintf("echo \"scram b clean; scram b -j 4  \" >> Install_Combine_$time"));
 
     system(sprintf("echo \"cd ../../ \" >> Install_Combine_$time"));
