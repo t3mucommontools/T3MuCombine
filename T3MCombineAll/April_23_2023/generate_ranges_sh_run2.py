@@ -4,6 +4,7 @@ from collections import OrderedDict, deque
 import argparse
 parser = argparse.ArgumentParser('create a .sh file to export the ranges from the run2 workspace')
 parser.add_argument('-o', '--output', required=True)
+parser.add_argument('-i', '--input',  required=True)
 parser.add_argument('-S', '--scale' , default=5, type=float, help='Number of sigmas for the polynomial ranges')
 args = parser.parse_args()
 
@@ -40,7 +41,7 @@ class Category:
     'WNorm'       : lambda par: (-5,5),
     'hlt_'        : lambda par: (-5,5),
     'Unc'         : lambda par: (-5,5),
-    '_norm'       : lambda par: (0, 1e+5),
+    '_norm'       : lambda par: (0.99, 1.01),
     'c_Bernstein' : lambda par: (0,1),
     'sigma'       : lambda par: (0.001, 0.1),
     'c_Polynomial': lambda par: (par.getVal()-args.scale*par.getError(), par.getVal()+args.scale*par.getError()),
@@ -75,7 +76,7 @@ class Collection:
       output_file.write(towrite)
 
 
-run2_merged = ROOT.TFile.Open("CMS_T3MSignal_13TeV_HF_2017_combined.root", "READ")
+run2_merged = ROOT.TFile.Open(args.input, "READ")
 RUN2_GROUPS={'RUN2_PARS': ["Run2"]}
 RUN2_CATEGORY = Category(name="Run2", file=run2_merged, ID="RUN2", wspace="w")
 RUN2_CATEGORY.parse()

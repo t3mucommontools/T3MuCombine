@@ -47,6 +47,18 @@ ySig_dsmmp              lnN              1.08     -        1.08     -        1.0
 ySig_dstn               lnN              1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
 UncMean       param  0.0 1.0
 UncSigma      param  0.0 1.0
+roomultipdf_cat_2018_twoGlobalTracker_A1_norm  flatParam
+roomultipdf_cat_2018_twoGlobalTracker_A2_norm  flatParam
+roomultipdf_cat_2018_twoGlobalTracker_B1_norm  flatParam
+roomultipdf_cat_2018_twoGlobalTracker_B2_norm  flatParam
+roomultipdf_cat_2018_twoGlobalTracker_C1_norm  flatParam
+roomultipdf_cat_2018_twoGlobalTracker_C2_norm  flatParam
+roomultipdf_cat_2018_twoGlobalTracker_A1_norm  rateParam ch1 bkg 1. [0.99,1.01]
+roomultipdf_cat_2018_twoGlobalTracker_A2_norm  rateParam ch2 bkg 1. [0.99,1.01]
+roomultipdf_cat_2018_twoGlobalTracker_B1_norm  rateParam ch3 bkg 1. [0.99,1.01]
+roomultipdf_cat_2018_twoGlobalTracker_B2_norm  rateParam ch4 bkg 1. [0.99,1.01]
+roomultipdf_cat_2018_twoGlobalTracker_C1_norm  rateParam ch5 bkg 1. [0.99,1.01]
+roomultipdf_cat_2018_twoGlobalTracker_C2_norm  rateParam ch6 bkg 1. [0.99,1.01]
 roomultipdf_cat_2018_twoGlobalTracker_A1  discrete
 roomultipdf_cat_2018_twoGlobalTracker_A2  discrete
 roomultipdf_cat_2018_twoGlobalTracker_B1  discrete

@@ -30,5 +30,7 @@ UncPionEff_17  lnN  1.022      -
 UncMuonEff_17_2glbtk  lnN  1.04     - 
 UncMVAshape_17_2glbtk  lnN  1.04     - 
 roomultipdf_cat_2017_twoGlobalTracker_A1 discrete
+roomultipdf_cat_2017_twoGlobalTracker_A1_norm rateParam A1 bkg 1. [0.99,1.01]
+roomultipdf_cat_2017_twoGlobalTracker_A1_norm flatParam
 UncMean	param 	0.0	1.0	
 UncSigma	param 	0.0	1.0	
