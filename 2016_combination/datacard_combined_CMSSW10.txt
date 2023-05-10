@@ -66,6 +66,8 @@ UncSigma      param  0.0 1.0
 a0_barrel0.91  param  6.6328 7.8821
 UncMean       param  0.0 1.0
 a0_endcap0.76  param  -2.7457 1.9279
-bkgNorm_endcap0.76  rateParam w_endcap bkg 1.  
-bkgNorm_barrel0.91  rateParam w_barrel bkg 1.  
+bkgNorm_endcap0.76  rateParam w_endcap bkg 1. [0.80,1.18]
+bkgNorm_barrel0.91  rateParam w_barrel bkg 1. [0.40,1.56] 
+bkgNorm_endcap0.76  flatParam
+bkgNorm_barrel0.91  flatParam 
 pdf_index     discrete
