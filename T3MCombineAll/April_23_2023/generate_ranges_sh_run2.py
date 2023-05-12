@@ -60,6 +60,17 @@ class Category:
     wspace = self.file.Get(self.wspace)
     params = ROOT.RooArgList(wspace.allVars())
     params = [params.at(i) for i in range(params.getSize()) if not params.at(i).GetName() in Category.EXCLUDE]
+    params = [p for p in params if 'Bernstein' in p.GetName() or any(n in p.GetName() for n in [
+      'p0A',
+      'p0B',
+      'p0C',
+      'p1A',
+      'p1B',
+      'p1C',
+      'p4A',
+      'p4B',
+      'p4C',
+    ])]
     self.values = ':\\\n'.join(['{}={},{}'.format(p.GetName(),*Category.get_range(p)) for p in params])
 
 class Collection:
@@ -75,7 +86,8 @@ class Collection:
       output_file.write(towrite)
 
 
-run2_merged = ROOT.TFile.Open("CMS_T3MSignal_13TeV_HF_2017_combined.root", "READ")
+#run2_merged = ROOT.TFile.Open("CMS_T3MSignal_13TeV_HF_2017_combined.root", "READ")
+run2_merged = ROOT.TFile.Open("/gwpool/users/lguzzi/Tau3Mu/2017_2018/combine_test/T3MuCombine/T3MCombineAll/January_26_2023/HF_W_Run2_ls2_noReopt_pol0.root", "READ")
 RUN2_GROUPS={'RUN2_PARS': ["Run2"]}
 RUN2_CATEGORY = Category(name="Run2", file=run2_merged, ID="RUN2", wspace="w")
 RUN2_CATEGORY.parse()
