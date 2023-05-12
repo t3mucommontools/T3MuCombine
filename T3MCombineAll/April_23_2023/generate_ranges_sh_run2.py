@@ -61,6 +61,17 @@ class Category:
     wspace = self.file.Get(self.wspace)
     params = ROOT.RooArgList(wspace.allVars())
     params = [params.at(i) for i in range(params.getSize()) if not params.at(i).GetName() in Category.EXCLUDE]
+    params = [p for p in params if 'Bernstein' in p.GetName() or any(n in p.GetName() for n in [
+      'p0A',
+      'p0B',
+      'p0C',
+      'p1A',
+      'p1B',
+      'p1C',
+      'p4A',
+      'p4B',
+      'p4C',
+    ])]
     self.values = ':\\\n'.join(['{}={},{}'.format(p.GetName(),*Category.get_range(p)) for p in params])
 
 class Collection:
