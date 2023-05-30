@@ -2,6 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <map>
+#include "../../../HiggsAnalysis/CombinedLimit/interface/RooMultiPdf.h"
 
 using namespace RooFit;
 using namespace RooStats ;
@@ -67,8 +68,8 @@ createDataCards(TString inputfile, int signalsample = 0, bool blind = true, stri
    string configFile_prefix =  configFile.erase(configFile.size() - 4);
    if(!doscan) configFile_prefix = "";
 
-   TString  fileBaseName("CMS_"+signalname + configFile_prefix + "_13TeV");
-   TString  fileBkgName("CMS_"+bkgname + configFile_prefix + "_13TeV");
+   TString fileBaseName = "CMS_"+signalname + TString(configFile_prefix) + TString("_13TeV");
+   TString  fileBkgName = "CMS_"+bkgname + TString(configFile_prefix) + "_13TeV";
 
    TString card_name(modelCard);
    HLFactory hlf("HLFactory", card_name, false);
@@ -461,9 +462,9 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       if ( category%3==2 ) 
           i_sig = sigpdf[category]->createIntegral(RooArgSet(*m3m), RooArgSet(*m3m), "SIG_C");  
       //plot data 
-      if (category%3==0) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000));
-      if (category%3==1) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000));
-      if (category%3==2) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000));
+      if (category%3==0) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000), RooFit::XErrorSize(0));
+      if (category%3==1) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000), RooFit::XErrorSize(0));
+      if (category%3==2) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, 1.620000, 2.00000), RooFit::XErrorSize(0));
       if(blind){
           //plot pdf in sidebands
           if ( category%3==0 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_A,SB2_A"), RooFit::NormRange("SB1_A,SB2_A"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
@@ -500,21 +501,25 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       //bkgpdf[category]->paramOn( plot[category], Format("NELU", AutoPrecision(2)),ShowConstants(), Layout(0.4,0.99,0.9));
       plot[category]->SetTitle(""); //TString::Format("Category %s",cat_names.at(category).c_str()));     
       plot[category]->SetMinimum(0.00);
-      plot[category]->SetMaximum(1.40*plot[category]->GetMaximum());
-      plot[category]->GetXaxis()->SetTitle("m(3mu) [GeV]");
+      plot[category]->SetMaximum(1.50*plot[category]->GetMaximum());
+      plot[category]->GetXaxis()->SetTitle("m(3#mu) [GeV]");
       plot[category]->GetYaxis()->SetTitle("Events / 10 MeV");
+      plot[category]->GetXaxis()->SetTitleOffset(1.16);
+      plot[category]->GetYaxis()->SetTitleOffset(1.16);
+      plot[category]->GetXaxis()->SetTitleSize(0.045);
+      plot[category]->GetYaxis()->SetTitleSize(0.045);
 
       cout<<"chi2 bkg category: "<<cat_names.at(category).c_str()<<" "<<plot[category]->chiSquare()<<endl;
 
       TCanvas* ctmp_sig = new TCanvas(TString::Format("Category %s",cat_names.at(category).c_str()),"Categories",50,50,800,800);
       ctmp_sig->SetFrameLineWidth(3);
-      ctmp_sig->SetTickx();
-      ctmp_sig->SetTicky();
+      //ctmp_sig->SetTickx();
+      //ctmp_sig->SetTicky();
       plot[category]->Draw();
       plot[category]->Print();
       plot[category]->Draw("SAME");
 
-      TLegend *legmc = new TLegend(0.48,0.60,0.86,0.78);
+      TLegend *legmc = new TLegend(0.48,0.60,0.86,0.74);
       legmc->SetBorderSize(0);
       legmc->SetFillStyle(0);
       legmc->SetTextFont(42);
@@ -560,11 +565,16 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       //add Category text
       latex.SetTextSize(cmsTextSize*t*0.80);
       latex.DrawLatex(0.5, posY_, TString::Format("HF Category %s",cat_names.at(category).c_str()));     
+      TString addlabel = "three global muons";
+      if (type!="threeGlobal") addlabel = "two global one tracker";
+      latex.SetTextSize(cmsTextSize*t*0.60);
+      latex.SetTextFont(extraTextFont);
+      latex.DrawLatex(0.5, posY_- 1.2*cmsTextSize*t*0.65, addlabel);     
       //add Preliminary  text
       latex.SetTextFont(extraTextFont);
       latex.SetTextSize(cmsTextSize*t);
-      //latex.DrawLatex(posX_, posY_ - 1.2*cmsTextSize*t, "Preliminary");
-      latex.DrawLatex(posX_, posY_ - 1.2*cmsTextSize*t, " ");
+      latex.DrawLatex(posX_, posY_ - 1.2*cmsTextSize*t, "Preliminary");
+      //latex.DrawLatex(posX_, posY_ - 1.2*cmsTextSize*t, " ");
 
       ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".png");
       ctmp_sig->SaveAs("plots/"+TString::Format("Category_%s",cat_names.at(category).c_str())+".pdf");
@@ -708,7 +718,7 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
       cout<<"Importing signal "<<name<<" bdt selection "<<bdtcut<<endl;      
       for(int i = 0; i < 3; i++) {
           if(category%3==i) 
-              category_cut = categ_name+"=="+std::to_string(i);
+              category_cut = categ_name+"=="+TString(std::to_string(i));
       }
       RooDataSet sigds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+"&&"+omega_cut+")"), WeightVar(weight_name));
       sigds.Print();
@@ -724,7 +734,7 @@ AddData(TString file, TString era, RooWorkspace* w, const Int_t NCAT, std::vecto
       cout<<"Importing background "<<name<<" bdt selection "<<bdtcut<<endl;      
       for(int i = 0; i < 3; i++) {
           if(category%3==i) 
-              category_cut = categ_name+"=="+std::to_string(i);
+              category_cut = categ_name+"=="+TString(std::to_string(i));
       }
       RooDataSet bkgds(name, name, variables, Import(*tree), Cut("("+mc_cut+"&&"+category_cut+"&&"+bdtcut+"&&"+omega_cut+")"));
       bkgds.Print();
@@ -988,9 +998,14 @@ void MakeDataCard(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, c
       //outFile << Form("norm_"+type+"_"+Run+"_%s rateParam %s bkg 1.", cat_names.at(c).c_str(), cat_names.at(c).c_str()) << endl;
       if(dp) {
           outFile << Form("roomultipdf_cat_"+Run+"_"+type+"_%s discrete", cat_names.at(c).c_str()) << endl;
+          outFile << Form("roomultipdf_cat_"+Run+"_"+type+"_%s_norm rateParam %s bkg 1. [0.99,1.01]", cat_names.at(c).c_str(), cat_names.at(c).c_str()) << endl;
+          outFile << Form("roomultipdf_cat_"+Run+"_"+type+"_%s_norm flatParam", cat_names.at(c).c_str()) << endl;
       } else {
           outFile << Form("bkg_exp_slope_"+type+"_"+Run+"_%s flatParam", cat_names.at(c).c_str()) << endl;
+          outFile << Form("t3m_bkg_expo_"+type+"_"+Run+"_%s_norm rateParam %s bkg 1. [0.99,1.01]", cat_names.at(c).c_str(), cat_names.at(c).c_str()) << endl;
+          outFile << Form("t3m_bkg_expo_"+type+"_"+Run+"_%s_norm flatParam", cat_names.at(c).c_str()) << endl;
       }
+
       outFile << "UncMean	param 	0.0	1.0	" << endl;
       outFile << "UncSigma	param 	0.0	1.0	" << endl;
       outFile.close();
