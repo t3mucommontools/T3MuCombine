@@ -25,6 +25,8 @@ parser.add_argument('-T', '--sig-toys', action='store_true'     , help='run the 
 parser.add_argument('-L', '--lhscan'  , action='store_true'     , help='run the likelihood scan')
 parser.add_argument('-D', '--teststat', action='store_true'     , help='compute the test statistics distribution')
 parser.add_argument('-F', '--fit'     , action='store_true'     , help='compute the best fit for the signal strength')
+parser.add_argument('-G', '--gridscan', action='store_true'     , help='scan grid points for later limit computation')
+parser.add_argument('-P', '--rpoint'  , default=None            , help='r point to be used with --gridscan')
 parser.add_argument(      '--lhparams', default='r'             , help='parameters to run the likelihood scan in the form "par1 par2 par3"')
 parser.add_argument(      '--limit'   , action='store_true'     , help='run the upper limit with toys')
 parser.add_argument(      '--alimit'  , action='store_true'     , help='run the upper limit with asymptotic formulae')
@@ -33,7 +35,7 @@ parser.add_argument(      '--grid'    , default='0.5'           , help='quantile
 parser.add_argument(      '--tofreeze', default=None            , help='parameters to freeze to help the fit convergence')
 parser.add_argument('-m', '--method'  , default='CLs'           , help='method to use for upper limits', choices=['CLs', 'CLsplusb'])
 parser.add_argument(      '--rebin'   , default=None            , help='rebin the mass distribution when running FitDiagnostic fits')
-
+parser.add_argument('--generate-nuisances', action='store_true' , help='equivalent of combine argument --generateNuisances')
 args = parser.parse_args()
 
 class Command:
@@ -61,7 +63,7 @@ class Command:
 
     os.chdir(self.o)
     for i, cmd in enumerate(self.c):
-      cmd = cmd+'>{X} {O}/LOGFILE.txt'.format(X='>' if i>0 or args.log else '', O=self.o) if args.log else cmd
+      cmd = cmd+'>> {O}/LOGFILE.txt'.format(O=self.o) if args.log else cmd
 
       self.CODE(">> "+cmd)
       if args.log:
@@ -69,7 +71,7 @@ class Command:
         print(self.o+'/LOGFILE.txt')
 
       if args.log:
-        os.system('echo \>\> %s\n 2>&1' %cmd)
+        os.system('echo \>\> "%s 2>&1"' %cmd)
       ret = os.system(cmd)
       if ret:
         self.ERROR("an error was encountered when running the last command")
@@ -86,6 +88,7 @@ WORKSPACE  = os.path.basename(args.datacard).replace('.txt', '.root')
 PARAMETERS = '--setParameterRanges "{}"'.format(args.pranges) if args.pranges!='' else ''
 PARAMETERS = PARAMETERS + ' --freezeParameters "{}"'.format(args.tofreeze) if args.tofreeze is not None else PARAMETERS
 BLINDER    = '-t -1 --expectSignal {EXP}'.format(EXP=args.expected) if not args.unblind else ''
+MODE       = "--generateNuisances=1 --generateExternalMeasurements=0 --fitNuisances=0 --testStat LHC" if args.generate_nuisances else '--LHCmode LHC-limits'
 
 OUTPUT = os.path.abspath('_'.join([args.label, 'rMin'+args.rmin, 'rMax'+args.rmax]+['unblinded' if args.unblind else 'rAsimov'+args.expected]))
 OUTPUT_IMPACTS  = OUTPUT+'/impacts'
@@ -96,11 +99,12 @@ OUTPUT_TESTSTAT = OUTPUT+'/teststat'
 OUTPUT_LIMIT    = '_'.join([OUTPUT+'/limit', 'CL'+args.cl, 'grid'+args.grid.replace('.','p')])
 OUTPUT_ALIMIT   = '_'.join([OUTPUT+'/asymptoticlimit', 'CL'+args.cl])
 OUTPUT_FIT      = OUTPUT+'/bestfit'
+OUTPUT_GRIDSCAN = OUTPUT+'/gridscan{}'.format(args.rpoint.replace('.','p')) if args.rpoint is not None else None
 
 CMD_IMPACTS = '\n'.join([
   'combine -M FitDiagnostics -d {DAT} {B} --plots --rMin "{r}" --rMax "{R}" --minos all {PAR} {REB}',
-  'python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py -a fitDiagnostics.root -g plots.root',
-  'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
+  'python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py -a fitDiagnosticsTest.root -g plots.root',
+  'text2workspace.py {DAT} -m 1.777 -o {WSP} --dataMapName data_obs --X-assign-flatParam-prior',
   'combineTool.py -M Impacts -d {WSP} -m 1.777 {B} --doInitialFit --robustFit=1 --rMin "{r}" --rMax "{R}"',
   'combineTool.py -M Impacts -d {WSP} -m 1.777 {B} --doFits --parallel 5 --rMin "{r}" --rMax "{R}"',
   'combineTool.py -M Impacts -d {WSP} -m 1.777 {B} --rMin "{r}" --rMax "{R}" -o impacts.json',
@@ -134,7 +138,7 @@ CMD_SIGNIFICANCE_ASYM = '\n'.join([
 # then plot with
 # plot1DScan.py /path/to/main.root --others /path/to/additional.root --POI r --output myscan --main-label main_file
 CMD_LHSCAN = '\n'.join([
-  'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
+  'text2workspace.py {DAT} -m 1.777 -o {WSP} --dataMapName data_obs',
   'for nui in {NUI}; do \
     echo scanning $nui;\
     combine {WSP} -M MultiDimFit --algo grid --points 20 {PAR} -m 1.777 --rMin "{r}" --rMax "{R}" -P $nui -n scan_$nui {BLI} --squareDistPoiStep --autoRange 3;\
@@ -151,7 +155,7 @@ CMD_LHSCAN = '\n'.join([
 ).split('\n')
 
 CMD_TESTSTAT = '\n'.join([
-  'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
+  'text2workspace.py {DAT} -m 1.777 -o {WSP} --dataMapName data_obs',
   'for n in {{1..100}}; do \
     combine -M HybridNew {WSP} --LHCmode LHC-significance --saveToys --fullBToys --saveHybridResult -T {TOY} {PAR} --rMin {r} --rMax {R} -s -1; \
   done',
@@ -168,9 +172,12 @@ CMD_TESTSTAT = '\n'.join([
 ).split('\n')
 
 CMD_LIMIT = '\n'.join([
-  'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
-  "combine -M HybridNew {WSP} {BLI} --LHCmode LHC-limits -T {TOY} -C {CL}  --plot='limit_combined_hybridnew_{CL}.pdf' --rMin {r} --rMax {R} {PAR} --rule {RL}"
+  'text2workspace.py {DAT} -m 1.777 -o {WSP} --dataMapName data_obs --X-assign-flatParam-prior',
+#  'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
+  "combine -M HybridNew {WSP} {BLI} {MOD} --X-rtd MINIMIZER_freezeDisassociatedParams -T {TOY} -C {CL}  --plot='limit_combined_hybridnew_{CL}.pdf' --rMin {r} --rMax {R} {PAR} --rule {RL}"
+#  "combine -M HybridNew {WSP} {BLI}  --generateNuisances={GEN} --generateExternalMeasurements=0 --fitNuisances=0 --testStat LHC --X-rtd MINIMIZER_freezeDisassociatedParams -T {TOY} -C {CL}  --plot='limit_combined_hybridnew_{CL}.pdf' --rMin {r} --rMax {R} {PAR} --rule {RL}"
 ]).format(
+ #  GEN='1' if args.generate_nuisances else '0',
   DAT=DATACARD ,
   WSP=WORKSPACE,
   TOY=args.toys,
@@ -181,10 +188,11 @@ CMD_LIMIT = '\n'.join([
   R  =args.rmax,
   PAR=PARAMETERS,
   BLI='--expectedFromGrid {CI}'.format(CI=args.grid) if not args.unblind else '',
+  MOD=MODE,
 ).split('\n')
 
 CMD_FIT = '\n'.join([
-  'text2workspace.py {DAT} -m 1.777 -o {WSP} -D data_obs',
+  'text2workspace.py {DAT} -m 1.777 -o {WSP} --dataMapName data_obs',
   'combine -M FitDiagnostics {WSP} --plots --rMin {r} --rMax {R} {PAR}',
 ]).format(
   WSP=WORKSPACE,
@@ -202,6 +210,24 @@ CMD_ALIMIT = '\n'.join([
   DAT=DATACARD,
 ).split('\n')
 
+CMD_GRIDSCAN= '\n'.join([
+  "text2workspace.py {DAT} -m 1.777 -o {WSP} --dataMapName=data_obs {FLT}",
+  "combine {WSP} -M HybridNew -m 1.777 {MOD} --singlePoint {X} --saveToys --saveHybridResult -T {TOY} --clsAcc 0 --rMin {r} --expectedFromGrid 0.5 --rMax {R} {PAR}",
+#  "combine {WSP} -M HybridNew -m 1.777 --LHCmode LHC-limits --singlePoint {X} --saveToys --saveHybridResult -T {TOY} --clsAcc 0 --rMin {r} --expectedFromGrid 0.5 --rMax {R} {PAR} --rule {RL}",
+]).format(
+  DAT=DATACARD  ,
+  WSP=WORKSPACE ,
+  GEN='1' if args.generate_nuisances else '0',
+  TOY=args.toys,
+  R  =args.rmax,
+  r  =args.rmin,
+  PAR=PARAMETERS,
+  RL =args.method,
+  X  =args.rpoint,
+  MOD=MODE,
+  FLT="--X-assign-flatParam-prior" if args.generate_nuisances else ""
+).split('\n')
+
 impacts_cmd  = Command('Impacts'                , CMD_IMPACTS           , OUTPUT_IMPACTS ).run(args.impacts )
 sig_asym_cmd = Command('Asymptotic significance', CMD_SIGNIFICANCE_ASYM , OUTPUT_SIG_ASYM).run(args.sig_asym)
 sig_toys_cmd = Command('Toys significance'      , CMD_SIGNIFICANCE_TOYS , OUTPUT_SIG_TOYS).run(args.sig_toys)
@@ -210,3 +236,4 @@ limit_cmd    = Command('Upper limit'            , CMD_LIMIT             , OUTPUT
 alimit_cmd   = Command('Upper limit'            , CMD_ALIMIT            , OUTPUT_ALIMIT  ).run(args.alimit  )
 teststat_cmd = Command('Test-stat distribution' , CMD_TESTSTAT          , OUTPUT_TESTSTAT).run(args.teststat)
 fit_cmd      = Command('Test-stat distribution' , CMD_FIT               , OUTPUT_FIT     ).run(args.fit     )
+grid_cmd     = Command('grid scan'              , CMD_GRIDSCAN          , OUTPUT_GRIDSCAN).run(args.gridscan)
