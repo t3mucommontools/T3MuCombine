@@ -1,0 +1,3 @@
+T3MMiniTree,var_tauMassRefitted,bdt,category,dataMCType,eventWeight
+A1,B1,C1,A2,B2,C2
+0.94,0.97,0.95,0.71,0.86,0.78

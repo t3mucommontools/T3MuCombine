@@ -1,0 +1,3 @@
+ztau3mutaumu,tripletMass,bdt_cv,category,isMC,weight,dimu_OS1,dimu_OS2
+A1,B1,C1,A2,B2,C2
+0.329983,0.329983,0.329983,0.241196,0.241196,0.241196

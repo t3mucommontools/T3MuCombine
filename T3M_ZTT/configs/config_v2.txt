@@ -1,0 +1,3 @@
+treeName,var_tauMassRefitted,bdt_score,category,dataMCType,eventWeight
+A1,B1,C1,A2,B2,C2
+0.92,0.96,0.9,0.6,0.82,0.76
