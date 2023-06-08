@@ -564,7 +564,7 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       latex.DrawLatex(posX_, posY_, "CMS");
       //add Category text
       latex.SetTextSize(cmsTextSize*t*0.80);
-      latex.DrawLatex(0.5, posY_, TString::Format("HF Category %s",cat_names.at(category).c_str()));     
+      latex.DrawLatex(0.5, posY_, TString::Format("ZTT Category %s",cat_names.at(category).c_str()));     
       TString addlabel = "three global muons";
       if (type!="threeGlobal") addlabel = "two global one tracker";
       latex.SetTextSize(cmsTextSize*t*0.60);
