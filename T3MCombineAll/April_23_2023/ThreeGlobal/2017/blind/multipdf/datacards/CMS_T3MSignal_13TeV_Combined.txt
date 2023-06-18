@@ -56,6 +56,24 @@ ySig_dsmmp              lnN            1.08     -        1.08     -        1.08 
 ySig_dstn               lnN            1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -        1.03     -      
 UncMean       param  0.0 1.0
 UncSigma      param  0.0 1.0
+roomultipdf_cat_2017_threeGlobal_A1_norm  flatParam
+roomultipdf_cat_2017_threeGlobal_A2_norm  flatParam
+roomultipdf_cat_2017_threeGlobal_A3_norm  flatParam
+roomultipdf_cat_2017_threeGlobal_B1_norm  flatParam
+roomultipdf_cat_2017_threeGlobal_B2_norm  flatParam
+roomultipdf_cat_2017_threeGlobal_B3_norm  flatParam
+roomultipdf_cat_2017_threeGlobal_C1_norm  flatParam
+roomultipdf_cat_2017_threeGlobal_C2_norm  flatParam
+roomultipdf_cat_2017_threeGlobal_C3_norm  flatParam
+roomultipdf_cat_2017_threeGlobal_A1_norm  rateParam ch1 bkg 1. [0.99,1.01]
+roomultipdf_cat_2017_threeGlobal_A2_norm  rateParam ch2 bkg 1. [0.99,1.01]
+roomultipdf_cat_2017_threeGlobal_A3_norm  rateParam ch3 bkg 1. [0.99,1.01]
+roomultipdf_cat_2017_threeGlobal_B1_norm  rateParam ch4 bkg 1. [0.99,1.01]
+roomultipdf_cat_2017_threeGlobal_B2_norm  rateParam ch5 bkg 1. [0.99,1.01]
+roomultipdf_cat_2017_threeGlobal_B3_norm  rateParam ch6 bkg 1. [0.99,1.01]
+roomultipdf_cat_2017_threeGlobal_C1_norm  rateParam ch7 bkg 1. [0.99,1.01]
+roomultipdf_cat_2017_threeGlobal_C2_norm  rateParam ch8 bkg 1. [0.99,1.01]
+roomultipdf_cat_2017_threeGlobal_C3_norm  rateParam ch9 bkg 1. [0.99,1.01]
 roomultipdf_cat_2017_threeGlobal_A1  discrete
 roomultipdf_cat_2017_threeGlobal_A2  discrete
 roomultipdf_cat_2017_threeGlobal_A3  discrete
