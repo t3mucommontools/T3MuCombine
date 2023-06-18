@@ -75,7 +75,7 @@ class Collection:
       output_file.write(towrite)
 
 
-run2_merged = ROOT.TFile.Open("CMS_T3MSignal_13TeV_HF_2017_combined.root", "READ")
+run2_merged = ROOT.TFile.Open("CMS_T3MSignal_13TeV_3glb_2017_A3.root", "READ")
 RUN2_GROUPS={'RUN2_PARS': ["Run2"]}
 RUN2_CATEGORY = Category(name="Run2", file=run2_merged, ID="RUN2", wspace="w")
 RUN2_CATEGORY.parse()
