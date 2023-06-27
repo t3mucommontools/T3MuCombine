@@ -1,0 +1,236 @@
+/afs/cern.ch/work/m/mmadhu/Analysis/combinestats/t3mcombine/ZTT/CMSSW_11_3_4/src/CombineHarvester/T3M_ZTT/datacards /afs/cern.ch/work/m/mmadhu/Analysis/combinestats/t3mcombine/ZTT/CMSSW_11_3_4/src/CombineHarvester/T3M_ZTT/datacards
+/afs/cern.ch/work/m/mmadhu/Analysis/combinestats/t3mcombine/ZTT/CMSSW_11_3_4/src/CombineHarvester/T3M_ZTT/datacards
+>> pushd .; text2workspace.py -o workspace_Jun_13_2023_15_05_30.root CMS_T3MSignal_13TeV_Combined.txt; popd
+ <<< Combine >>> 
+>>> random number generator seed is 123456
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+Warning: Did not find a parameter with name bkg_exp_slope_A1
+Warning: Did not find a parameter with name bkg_exp_slope_B1
+Warning: Did not find a parameter with name bkg_exp_slope_C1
+Warning: Did not find a parameter with name bkg_exp_slope_A2
+Warning: Did not find a parameter with name bkg_exp_slope_B2
+Warning: Did not find a parameter with name bkg_exp_slope_C2
+Warning: Did not find a parameter with name bkg_norm_A1
+Warning: Did not find a parameter with name bkg_norm_B1
+Warning: Did not find a parameter with name bkg_norm_C1
+Warning: Did not find a parameter with name bkg_norm_A2
+Warning: Did not find a parameter with name bkg_norm_B2
+Warning: Did not find a parameter with name bkg_norm_C2
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch3_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+[#0] WARNING:Eval -- RooAddPdf::updateCoefCache(pdf_binch5_obsOnly) WARNING: sum of coefficients is zero 0
+SimNLL created with 6 channels, 0 generic constraints, 18 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ -- AsymptoticLimits ( CLs ) --
+Expected  2.5%: r < 4.4043
+Expected 16.0%: r < 7.4709
+Expected 50.0%: r < 13.7500
+Expected 84.0%: r < 26.1585
+Expected 97.5%: r < 46.6948
+
+Done in 0.00 min (cpu), 0.00 min (real)
+combineTool.py -M T2W -o workspace_Jun_13_2023_15_05_30.root -i CMS_T3MSignal_13TeV_Combined.txt;combineTool.py -M AsymptoticLimits --run blind -d workspace_Jun_13_2023_15_05_30.root --cl 0.90 -m 1.777 --noFitAsimov --setParameterRanges bkg_exp_slope_A1=-1000,100:bkg_exp_slope_B1=-1000,100:bkg_exp_slope_C1=-1000,100:bkg_exp_slope_A2=-1000,100:bkg_exp_slope_B2=-1000,100:bkg_exp_slope_C2=-1000,100:bkg_norm_A1=0,1000000:bkg_norm_B1=0,1000000:bkg_norm_C1=0,1000000:bkg_norm_A2=0,1000000:bkg_norm_B2=0,1000000:bkg_norm_C2=0,1000000 
