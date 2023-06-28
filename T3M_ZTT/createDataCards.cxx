@@ -7,8 +7,15 @@
 using namespace RooFit;
 using namespace RooStats ;
 
-Double_t MMIN = 1.62;
-Double_t MMAX = 2.0;
+Double_t MMIN = 1.4;
+Double_t MMAX = 2.1;
+Double_t SB1_A_val = 1.73;
+Double_t SB2_A_val = 1.82;
+Double_t SB1_B_val = 1.74;
+Double_t SB2_B_val = 1.82;
+Double_t SB1_C_val = 1.73;
+Double_t SB2_C_val = 1.83;
+int binwidth = 70;
 double signalScaler=1.;///10.;
 double analysisLumi = 1.;   // 1/fb
 
@@ -299,9 +306,9 @@ MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names
    m3m->setUnit("GeV");
 
    for(unsigned int category=0; category< NCAT; category++){
-      if (category%3==0)      sidebands = TCut(const_cast<char*>(("(m3m < 1.75 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.80)").c_str()));
-      else if (category%3==1) sidebands = TCut(const_cast<char*>(("(m3m < 1.74 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.82)").c_str()));
-      else if (category%3==2) sidebands = TCut(const_cast<char*>(("(m3m < 1.73 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.83)").c_str()));
+      if (category%3==0)      sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_A_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_A_val)+")").c_str()));
+      else if (category%3==1) sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_B_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_B_val)+")").c_str()));
+      else if (category%3==2) sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_C_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_C_val)+")").c_str()));
 
       signalAll[category]=  (RooDataSet*) w->data(TString::Format("Sig_%s",cat_names.at(category).c_str()));
       dataAll[category]=    (RooDataSet*) w->data(TString::Format("Bkg_%s",cat_names.at(category).c_str()));
@@ -319,8 +326,8 @@ MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names
       else bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("t3m_bkg_flat_poly_"+type+"_"+Run+"_%s",cat_names.at(category).c_str()));
    }
 
-   m3m->setRange("SB1_A",MMIN,1.75);
-   m3m->setRange("SB2_A",1.80,MMAX);
+   m3m->setRange("SB1_A",MMIN,SB1_A_val);
+   m3m->setRange("SB2_A",SB1_B_val,MMAX);
    m3m->setRange("SB1_B",MMIN,1.74);
    m3m->setRange("SB2_B",1.82,MMAX);
    m3m->setRange("SB1_C",MMIN,1.73);
@@ -335,13 +342,13 @@ MakePlotsSplusB(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names
    RooPlot* plot[NCAT];
    for(unsigned int category=0; category< NCAT; category++){
       plot[category] = m3m->frame();
-      signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kCyan+2),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.0), Binning(38, MMIN, MMAX));
+      signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kCyan+2),RooFit::MarkerStyle(6),RooFit::MarkerSize(0.0), Binning(binwidth, MMIN, MMAX));
       sigpdf[category]->plotOn(plot[category], RooFit::LineColor(kRed),RooFit::LineWidth(3));
   
       //plot data 
-      if (category%3==0) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, MMIN, MMAX));
-      if (category%3==1) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, MMIN, MMAX));
-      if (category%3==2) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, MMIN, MMAX));
+      if (category%3==0) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(binwidth, MMIN, MMAX));
+      if (category%3==1) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(binwidth, MMIN, MMAX));
+      if (category%3==2) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(binwidth, MMIN, MMAX));
       if(blind){
           //plot pdf in sidebands
           if ( category%3==0 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_A,SB2_A"), RooFit::NormRange("SB1_A,SB2_A"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
@@ -409,9 +416,9 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
    m3m->setUnit("GeV");
 
    for(unsigned int category=0; category< NCAT; category++){
-      if (category%3==0)      sidebands = TCut(const_cast<char*>(("(m3m < 1.75 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.80)").c_str()));
-      else if (category%3==1) sidebands = TCut(const_cast<char*>(("(m3m < 1.74 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.82)").c_str()));
-      else if (category%3==2) sidebands = TCut(const_cast<char*>(("(m3m < 1.73 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.83)").c_str()));
+      if (category%3==0)      sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_A_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_A_val)+")").c_str()));
+      else if (category%3==1) sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_B_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_B_val)+")").c_str()));
+      else if (category%3==2) sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_C_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_C_val)+")").c_str()));
 
       signalAll[category]=  (RooDataSet*) w->data(TString::Format("Sig_%s",cat_names.at(category).c_str()));
       dataAll[category]=    (RooDataSet*) w->data(TString::Format("Bkg_%s",cat_names.at(category).c_str()));
@@ -429,14 +436,14 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       else bkgpdf[category] =(RooAbsPdf*)w->pdf(TString::Format("t3m_bkg_flat_poly_"+type+"_"+Run+"_%s",cat_names.at(category).c_str()));
    }
 
-   m3m->setRange("SB1_A",MMIN,1.75);
-   m3m->setRange("SB2_A",1.80,MMAX);
+   m3m->setRange("SB1_A",MMIN,SB1_A_val);
+   m3m->setRange("SB2_A",SB1_B_val,MMAX);
    m3m->setRange("SB1_B",MMIN,1.74);
    m3m->setRange("SB2_B",1.82,MMAX);
    m3m->setRange("SB1_C",MMIN,1.73);
    m3m->setRange("SB2_C",1.83,MMAX);
 
-   m3m->setRange("SIG_A",1.75,1.80); //12MeV sigma
+   m3m->setRange("SIG_A",SB1_A_val,SB1_B_val); //12MeV sigma
    m3m->setRange("SIG_B",1.74,1.82); //19MeV sigma
    m3m->setRange("SIG_C",1.73,1.83); //23MeV sigma
    m3m->setRange("fullRange",MMIN,MMAX);
@@ -454,7 +461,7 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
    for(unsigned int category=0; category< NCAT; category++){
       plot[category] = m3m->frame();
       //plot signal
-      signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kWhite),RooFit::MarkerStyle(1),RooFit::MarkerSize(0.0), RooFit::LineColor(kWhite), Binning(38, MMIN, MMAX));
+      signalAll[category]->plotOn( plot[category],RooFit::MarkerColor(kWhite),RooFit::MarkerStyle(1),RooFit::MarkerSize(0.0), RooFit::LineColor(kWhite), Binning(binwidth, MMIN, MMAX));
       sigpdf[category]->plotOn(plot[category], RooFit::LineColor(kRed),RooFit::LineWidth(3));
 
       //signal integral
@@ -466,9 +473,9 @@ MakePlots(RooWorkspace* w, const Int_t NCAT, std::vector<string> cat_names, bool
       if ( category%3==2 ) 
           i_sig = sigpdf[category]->createIntegral(RooArgSet(*m3m), RooArgSet(*m3m), "SIG_C");  
       //plot data 
-      if (category%3==0) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, MMIN, MMAX), RooFit::XErrorSize(0));
-      if (category%3==1) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, MMIN, MMAX), RooFit::XErrorSize(0));
-      if (category%3==2) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(38, MMIN, MMAX), RooFit::XErrorSize(0));
+      if (category%3==0) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(binwidth, MMIN, MMAX), RooFit::XErrorSize(0));
+      if (category%3==1) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(binwidth, MMIN, MMAX), RooFit::XErrorSize(0));
+      if (category%3==2) dataToPlot[category]->plotOn(plot[category],RooFit::MarkerColor(kBlack),RooFit::MarkerStyle(8),RooFit::MarkerSize(1),RooFit::LineWidth(3), Binning(binwidth, MMIN, MMAX), RooFit::XErrorSize(0));
       if(blind){
           //plot pdf in sidebands
           if ( category%3==0 ) bkgpdf[category]->plotOn(plot[category], Range("SB1_A,SB2_A"), RooFit::NormRange("SB1_A,SB2_A"), RooFit::LineColor(kBlue), RooFit::LineWidth(3));
@@ -765,8 +772,8 @@ BkgModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string>, RooFitResult
    TCut sidebands;
 
    m3m->setUnit("GeV");
-   m3m->setRange("SB1_A",MMIN,1.75);
-   m3m->setRange("SB2_A",1.80,MMAX);
+   m3m->setRange("SB1_A",MMIN,SB1_A_val);
+   m3m->setRange("SB2_A",SB1_B_val,MMAX);
    m3m->setRange("SB1_B",MMIN,1.74);
    m3m->setRange("SB2_B",1.82,MMAX);
    m3m->setRange("SB1_C",MMIN,1.73);
@@ -776,9 +783,9 @@ BkgModelFit(RooWorkspace* w, const Int_t NCAT, std::vector<string>, RooFitResult
    for(unsigned int category=0; category< NCAT; category++)
    {
       dataAll[category]   = (RooDataSet*) w->data(TString::Format("Bkg_%s",cat_names.at(category).c_str()));
-      if (category%3==0)      sidebands = TCut(const_cast<char*>(("(m3m < 1.75 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.80)").c_str()));
-      else if (category%3==1) sidebands = TCut(const_cast<char*>(("(m3m < 1.74 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.82)").c_str()));
-      else if (category%3==2) sidebands = TCut(const_cast<char*>(("(m3m < 1.73 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.83)").c_str()));
+      if (category%3==0)      sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_A_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_A_val)+")").c_str()));
+      else if (category%3==1) sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_B_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_B_val)+")").c_str()));
+      else if (category%3==2) sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_C_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_C_val)+")").c_str()));
 
       //blind data
       if(blind) dataToFit[category] = (RooDataSet*)dataAll[category]->reduce(sidebands);
@@ -868,9 +875,9 @@ MakeBkgWS(RooWorkspace* w, const Int_t NCAT, const char* fileBaseName, std::vect
 
    for(unsigned int category=0; category < NCAT; category++){
 
-      if (category%3==0)      sidebands = TCut(const_cast<char*>(("(m3m < 1.75 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.80)").c_str()));
-      else if (category%3==1) sidebands = TCut(const_cast<char*>(("(m3m < 1.74 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.82)").c_str()));
-      else if (category%3==2) sidebands = TCut(const_cast<char*>(("(m3m < 1.73 && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > 1.83)").c_str()));
+      if (category%3==0)      sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_A_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_A_val)+")").c_str()));
+      else if (category%3==1) sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_B_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_B_val)+")").c_str()));
+      else if (category%3==2) sidebands = TCut(const_cast<char*>(("(m3m < "+std::to_string(SB1_C_val)+" && m3m > "+std::to_string(MMIN)+") || (m3m < "+std::to_string(MMAX)+" && m3m > "+std::to_string(SB2_C_val)+")").c_str()));
 
       dataAll[category] = (RooDataSet*) w->data(TString::Format("Bkg_%s",cat_names.at(category).c_str()));
       //blind data
