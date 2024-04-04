@@ -1,0 +1,28 @@
+BR_bds:
+  class: branching_ratios
+  description: uncertainty on BR(B->D+X)
+BR_bscal:
+  class: branching_ratios
+  description: uncertainty on scaling B0 and B+ to include Bs
+BR_btau:
+  class: branching_ratios
+  description: uncertainty on BR(B->tau+X)
+BR_dscal:
+  class: branching_ratios
+  description: uncertaninty on scaling Ds to include D+
+BR_dsmmp:
+  class: branching_ratios
+  description: uncertaninty on BR(Ds->phi(mumu)pi)
+BR_dstaunu:
+  class: branching_ratios
+  description: uncertainty on on BR(Ds->taunu)
+CMS_mc_norm_dsmmp_hf_201[6|7|8]:
+  class: custom
+  description: uncertainty on the signal normalisation factor computed on Ds->phi(mumu)pi channel
+CMS_mc_norm_bds_hf_201[6|7|8]:
+  class: custom
+  description: uncertainty related to extending the Ds->phi(mumu)pi channel for normalising signal from B decays, based on B->DsX channel
+CMS_eff_m_id_hf_[3glb|2glbtk]_201[6|7|8]:
+  class: muon_efficiency
+  description: uncertainty on muon reconstruction and identification
+
