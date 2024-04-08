@@ -23,7 +23,7 @@ variables = [v.GetName() for v in wspace.allVars()]
 
 formulas = [ v for v in wspace.allFunctions()]
 
-## bug in ROOT: it renames the formulas changing the terms *x[0] into *UncMean 
+## !!! bug in ROOT: it renames the formulas changing the terms *x[0] into *UncMean 
 ## for some reason, printing the formulaString() solves the issue
 for f in formulas:
   if 'RooFormulaVar' in str(type(f)):
