@@ -21,12 +21,21 @@ for j in jsons:
 
 variables = [v.GetName() for v in wspace.allVars()]
 
+formulas = [ v for v in wspace.allFunctions()]
+
+## bug in ROOT: it renames the formulas changing the terms *x[0] into *UncMean 
+## for some reason, printing the formulaString() solves the issue
+for f in formulas:
+  if 'RooFormulaVar' in str(type(f)):
+    print(f.formula().formulaString())
+
 for old, new in jmap.items():
   if not old in variables:
     print("WARNING: {} not found in the workspace. Skipping.".format(old))
     continue
   wspace.var(old).SetName(new)
-  
+  print(wspace.var(new).GetName())
+
 ofile = ROOT.TFile.Open(args.output, "RECREATE")
 ofile.cd()
 wspace.Write()

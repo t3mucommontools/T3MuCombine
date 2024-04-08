@@ -13,7 +13,6 @@
   "WNorm_17_3glb" : "CMS_mc_norm_wt3m_hf_3glb_2018",
   "UncHLT_18"   : "CMS_eff_m_trigger_hf_2018",
   "UncL1_18"    : "CMS_eff_m_triggerl1_hf_2018",
-  "UncHLT_17"   : "CMS_eff_m_trigger_hf_2017",
   "UncL1_17"    : "CMS_eff_m_triggerl1_hf_2017",
   "UncRatioAcc_18": "CMS_eff_m_accept_hf_2018",
   "UncRatioAcc_17": "CMS_eff_m_accept_hf_2017",
