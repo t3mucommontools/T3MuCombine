@@ -25,4 +25,15 @@ CMS_mc_norm_bds_hf_201[6|7|8]:
 CMS_eff_m_id_hf_[3glb|2glbtk]_201[6|7|8]:
   class: muon_efficiency
   description: uncertainty on muon reconstruction and identification
-
+CMS_eff_m_accept_hf_201[6|7|8]:
+  class: muon_efficiency
+  description: uncertainty related to the muon acceptance difference between 3mu and 2mu+1trk final states
+CMS_eff_m_mva_hf_[3glb|2glbtk]_201[7|8]:
+  class: custom
+  description: uncertainty on the custom MVA-based muon identification efficiency
+CMS_eff_tkm_reco_hf_201[6|7|8]:
+  class: track_efficiency
+  description: uncertainty on pion track reconstruction efficiency
+CMS_eff_bdt_hf:
+  class: custom
+  description: uncertainty on the BDT cut efficiency
