@@ -15,7 +15,7 @@ BR_dsmmp:
   description: uncertaninty on BR(Ds->phi(mumu)pi)
 BR_dstaunu:
   class: branching_ratios
-  description: uncertainty on on BR(Ds->taunu)
+  description: uncertainty on BR(Ds->taunu)
 CMS_mc_norm_dsmmp_hf_201[6|7|8]:
   class: custom
   description: uncertainty on the signal normalisation factor computed on Ds->phi(mumu)pi channel
@@ -37,3 +37,57 @@ CMS_eff_tkm_reco_hf_201[6|7|8]:
 CMS_eff_bdt_hf:
   class: custom
   description: uncertainty on the BDT cut efficiency
+BR_wmn:
+  class: branching_ratios
+  description: uncertainty on BR(W->munu)
+BR_wtn:
+  class: branching_ratios
+  description: uncertainty on BR(W->taunu)
+CMS_eff_m_id_w_barrel_2016:
+  class: muon_efficiency
+  description: uncertainty on muon reconstruction and identification
+CMS_eff_m_id_w_[a|b|c]_201[7|8]:
+  class: muon_efficiency
+  description: uncertainty on muon reconstruction and identification for the W channel
+CMS_eff_m_trigger_w_[barrel|endcap]_2016:
+  class: muon_efficiency
+  description: uncertainty on the trigger muon reconstruction for the W channel
+CMS_eff_m_trigger_w_[a|b|c]_201[7|8]:
+  class: muon_efficiency
+  description: uncertainty on the trigger muon reconstruction for the W channel
+CMS_eff_trk_trigger_w_[barrel|endcap]_2016:
+  class: muon_efficiency
+  description: uncertainty on the trigger tracker muon reconstruction for the W channel
+CMS_eff_tkm_trigger_w_[a|b|c]_201[7|8]:
+  class: muon_efficiency
+  description: uncertainty on the trigger tracker muon reconstruction for the W channel
+CMS_eff_iso_trigger_w_201[7|8]:
+  class: other_experimental
+  description: mismodeling of the trigger isolation selection for the W channel
+lumi_201[6|7|8]:
+  class: luminosity
+  description: uncertainty on the measurement of the integrated luminosity recorded by CMS
+w_gen_nlo_weights:
+  class: other_theoretical
+  description: uncertainty on the reweighting of the simulated W spectrum (transverse momentum and pseudorapidity)
+CMS_mc_stat_wt3m_w_[barrel|endcap]_2016:
+  class: custom
+  description: statistical uncertainty following the finite size of the Montecarlo signal sample for the W channel
+CMS_mc_stat_wt3m_w_[a|b|c]_201[7|8]:
+  class: custom
+  description: statistical uncertainty following the finite size of the Montecarlo signal sample for the W channel
+ppwx_xsec_13TeV:
+  class: other_experimental
+  description: uncertainty on the measurement of the pp -> W X, W->l nu_l cross section at 13 TeV
+signal_width_w_[a|b|c]_201[7|8]:
+  class: custom
+  description: uncertainty on the Montecarlo modeling of the signal width for the W channel
+bkg_scale_w_[barrel|endcap]_2016:
+  class: custom
+  description: uncertainty on the normalization of the expected background yield
+bkg_scale_w_[a|b|c]_201[7|8]:
+  class: custom
+  description: uncertainty on the normalization of the expected background yield
+bkg_slope_w_[barrel|endcap]_2016:
+  class: custom
+  description: uncertainty on the Montecarlo modeling of the background slope for the W channel
