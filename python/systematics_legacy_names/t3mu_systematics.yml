@@ -32,7 +32,7 @@ CMS_eff_m_mva_hf_[3glb|2glbtk]_201[7|8]:
   class: custom
   description: uncertainty on the custom MVA-based muon identification efficiency
 CMS_eff_tkm_reco_hf_201[6|7|8]:
-  class: track_efficiency
+  class: other_experimental
   description: uncertainty on pion track reconstruction efficiency
 CMS_eff_m_trigger_hf_201[7|8]:
   class: custom
